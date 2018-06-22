@@ -1,52 +1,51 @@
 # Flutter Cupertino Date Picker
 
-[pub packages](https://pub.dartlang.org/packages/flutter_cupertino_date_picker)
-|[中文说明](./README_zh-cn.md)
+[[Pub Packages]](https://pub.dartlang.org/packages/flutter_cupertino_date_picker)
 
-Flutter cupertino date picker.
+Flutter 的日期选择器控件，iOS 样式。
 
 ![示例](http://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/date_picker1.png!image_scale1)
 
-## Usage
+## 用法
 
-#### 1\. Depend
+#### 1\. 添加依赖
 
-Add this to you package's `pubspec.yaml` file:
+在项目的 `pubspec.yaml` 文件中添加依赖：
 
 ```yaml
 dependencies:
   flutter_cupertino_date_picker: ^0.0.2
 ```
 
-#### 2\. Install
+#### 2\. 获取包
 
-Run command:
+执行 Flutter 的命令获取包资源：
 
 ```bash
 $ flutter packages get
 ```
 
-#### 3\. Import
+#### 3\. 导入控件
 
-Import in Dart code:
+在项目中导入该控件：
 
 ```dart
 import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 ```
 
-#### 4\. Display DatePicker
+#### 4\. 显示控件
 
 ```dart
 ///
 /// context: BuildContext.
-/// showTitleActions: Display confirm and cancel button in title bar or not.
-/// minYear: Min value of year's selection range. Default is 1900.
-/// maxYear: Max value of year's selection range. Default is 2100.
-/// initialYear: Initial value of year.
-/// initialMonth: Initial value of month.
-/// initialDate: Initial value of date.
-/// onChange: An option callback when the currently selected datetime changes.
-/// onConfirm: An option callback when tap the confirm button in title bar.
+/// showTitleActions: 是否显示带有确定、取消按钮的标题栏。
+/// minYear: 年份选择器的最小值，默认值：1900年。
+/// maxYear: 年份选择器的最大值，默认值：2100年。
+/// initialYear: 年份选择器的初始值。
+/// initialMonth: 月份选择器的初始值。
+/// initialDate: 日期选择器的初始值。
+/// onChange: 当前选择的日期改变时的回调事件。
+/// onConfirm: 点击标题栏确定按钮的回调事件。
 DatePicker.showDatePicker(
   context,
   showTitleActions: true,
@@ -64,14 +63,14 @@ DatePicker.showDatePicker(
 
 ![示例: showTitleActions=false](http://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/date_picker2.png!image_scale1)
 
-## Example
+## 示例
 
-[Example sources](https://github.com/wuzhendev/flutter-cupertino-date-picker/tree/master/example)
+[示例源码](https://github.com/wuzhendev/flutter-cupertino-date-picker/tree/master/example)
 
 ## Futures
 
-1. Format datetime display.
-2. Internationalization.
+1. 对显示的日期进行格式化处理。
+2. 国际化。
 
 ## License
 

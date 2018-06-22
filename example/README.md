@@ -1,6 +1,6 @@
-# example
+# Date Picker Example
 
-A new Flutter application.
+A Flutter application example of DatePicker.
 
 ## Getting Started
 

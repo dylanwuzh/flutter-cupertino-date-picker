@@ -12,8 +12,8 @@ const double _kDatePickerTitleHeight = 44.0;
 const double _kDatePickerItemHeight = 36.0;
 const double _kDatePickerFontSize = 18.0;
 
-const int _kStartYear = 1900;
-const int _kYearRange = 200;
+const int _kDefaultMinYear = 1900;
+const int _kDefaultMaxYear = 200;
 
 const List<String> monthNames = const <String>[
   '1月',
@@ -33,12 +33,15 @@ const List<String> monthNames = const <String>[
 const List<int> leapYearMonths = [1, 3, 5, 7, 8, 10, 12];
 
 class DatePicker {
+  ///
+  /// Display date picker bottom sheet.
+  ///
   static void showDatePicker(
     BuildContext context, {
     bool showTitleActions: true,
-    int minYear: _kStartYear,
-    int maxYear: _kStartYear + _kYearRange,
-    int initialYear: _kStartYear,
+    int minYear: _kDefaultMinYear,
+    int maxYear: _kDefaultMaxYear,
+    int initialYear: _kDefaultMinYear,
     int initialMonth: 1,
     int initialDate: 1,
     DateChangedCallback onChanged,
@@ -130,8 +133,8 @@ class _DatePickerComponent extends StatefulWidget {
   _DatePickerComponent({
     Key key,
     @required this.route,
-    this.minYear: _kStartYear,
-    this.maxYear: _kStartYear + _kYearRange,
+    this.minYear: _kDefaultMinYear,
+    this.maxYear: _kDefaultMaxYear,
     this.initialYear: -1,
     this.initialMonth: 1,
     this.initialDate: 1,
