@@ -59,7 +59,8 @@ class DatePicker {
           onChanged: onChanged,
           onConfirm: onConfirm,
           theme: Theme.of(context, shadowThemeOnly: true),
-          barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+          barrierLabel:
+              MaterialLocalizations.of(context).modalBarrierDismissLabel,
         ));
   }
 }
@@ -102,13 +103,14 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   @override
   AnimationController createAnimationController() {
     assert(_animationController == null);
-    _animationController = BottomSheet.createAnimationController(navigator.overlay);
+    _animationController =
+        BottomSheet.createAnimationController(navigator.overlay);
     return _animationController;
   }
 
   @override
-  Widget buildPage(
-      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     Widget bottomSheet = new MediaQuery.removePadding(
       context: context,
       removeTop: true,
@@ -147,8 +149,8 @@ class _DatePickerComponent extends StatefulWidget {
   final _DatePickerRoute route;
 
   @override
-  State<StatefulWidget> createState() => _DatePickerState(
-      this.minYear, this.maxYear, this.initialYear, this.initialMonth, this.initialDate);
+  State<StatefulWidget> createState() => _DatePickerState(this.minYear,
+      this.maxYear, this.initialYear, this.initialMonth, this.initialDate);
 }
 
 class _DatePickerState extends State<_DatePickerComponent> {
@@ -157,8 +159,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
   int _dateCountOfMonth;
   FixedExtentScrollController yearScrollCtrl, monthScrollCtrl, dateScrollCtrl;
 
-  _DatePickerState(
-      this.minYear, this.maxYear, this._currentYear, this._currentMonth, this._currentDate) {
+  _DatePickerState(this.minYear, this.maxYear, this._currentYear,
+      this._currentMonth, this._currentDate) {
     if (this._currentYear == -1) {
       this._currentYear = this.minYear;
     }
@@ -183,9 +185,12 @@ class _DatePickerState extends State<_DatePickerComponent> {
       this._currentDate = 31;
     }
 
-    yearScrollCtrl = new FixedExtentScrollController(initialItem: _currentYear - this.minYear);
-    monthScrollCtrl = new FixedExtentScrollController(initialItem: _currentMonth - 1);
-    dateScrollCtrl = new FixedExtentScrollController(initialItem: _currentDate - 1);
+    yearScrollCtrl = new FixedExtentScrollController(
+        initialItem: _currentYear - this.minYear);
+    monthScrollCtrl =
+        new FixedExtentScrollController(initialItem: _currentMonth - 1);
+    dateScrollCtrl =
+        new FixedExtentScrollController(initialItem: _currentDate - 1);
     _dateCountOfMonth = _calcDateCount();
   }
 
@@ -249,7 +254,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
     if (leapYearMonths.contains(_currentMonth)) {
       return 31;
     } else if (_currentMonth == 2) {
-      if ((_currentYear % 4 == 0 && _currentYear % 100 != 0) || _currentYear % 400 == 0) {
+      if ((_currentYear % 4 == 0 && _currentYear % 100 != 0) ||
+          _currentYear % 400 == 0) {
         return 29;
       }
       return 28;
@@ -293,13 +299,16 @@ class _DatePickerState extends State<_DatePickerComponent> {
               onSelectedItemChanged: (int index) {
                 _setYear(index);
               },
-              children: List.generate(widget.maxYear - widget.minYear + 1, (int index) {
+              children: List.generate(widget.maxYear - widget.minYear + 1,
+                  (int index) {
                 return Container(
                   height: _kDatePickerItemHeight,
                   alignment: Alignment.center,
                   child: Text(
                     '${widget.minYear + index}年',
-                    style: TextStyle(color: Color(0xFF000046), fontSize: _kDatePickerFontSize),
+                    style: TextStyle(
+                        color: Color(0xFF000046),
+                        fontSize: _kDatePickerFontSize),
                     textAlign: TextAlign.start,
                   ),
                 );
@@ -326,7 +335,9 @@ class _DatePickerState extends State<_DatePickerComponent> {
                     alignment: Alignment.center,
                     child: Text(
                       monthNames[index],
-                      style: TextStyle(color: Color(0xFF000046), fontSize: _kDatePickerFontSize),
+                      style: TextStyle(
+                          color: Color(0xFF000046),
+                          fontSize: _kDatePickerFontSize),
                       textAlign: TextAlign.start,
                     ),
                   );
@@ -352,7 +363,9 @@ class _DatePickerState extends State<_DatePickerComponent> {
                     alignment: Alignment.center,
                     child: Text(
                       "${index + 1}日",
-                      style: TextStyle(color: Color(0xFF000046), fontSize: _kDatePickerFontSize),
+                      style: TextStyle(
+                          color: Color(0xFF000046),
+                          fontSize: _kDatePickerFontSize),
                       textAlign: TextAlign.start,
                     ),
                   );
@@ -398,7 +411,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
               ),
               onPressed: () {
                 if (widget.route.onConfirm != null) {
-                  widget.route.onConfirm(_currentYear, _currentMonth, _currentDate);
+                  widget.route
+                      .onConfirm(_currentYear, _currentMonth, _currentDate);
                 }
                 Navigator.pop(context);
               },
