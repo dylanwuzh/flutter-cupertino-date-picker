@@ -30,7 +30,7 @@ const List<String> monthNames = const <String>[
   '12月',
 ];
 
-const List<int> leapYearMonths = [1, 3, 5, 7, 8, 10, 12];
+const List<int> leapYearMonths = const <int>[1, 3, 5, 7, 8, 10, 12];
 
 class DatePicker {
   ///
