@@ -15,8 +15,6 @@ const double _kDatePickerFontSize = 18.0;
 const int _kDefaultMinYear = 1900;
 const int _kDefaultMaxYear = 200;
 
-String locale = 'en_NZ';
-
 const List<String> monthNames = const <String>[
   '1',
   '2',
@@ -48,7 +46,7 @@ class DatePicker {
     int initialDate: 1,
     DateChangedCallback onChanged,
     DateChangedCallback onConfirm,
-    this.locale
+    locale : 'en_NZ'
   }) {
     Navigator.push(
         context,
@@ -61,6 +59,7 @@ class DatePicker {
           initialDate: initialDate,
           onChanged: onChanged,
           onConfirm: onConfirm,
+          locale: locale,
           theme: Theme.of(context, shadowThemeOnly: true),
           barrierLabel:
               MaterialLocalizations.of(context).modalBarrierDismissLabel,
@@ -80,6 +79,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.onConfirm,
     this.theme,
     this.barrierLabel,
+    this.locale,
     RouteSettings settings,
   }) : super(settings: settings);
 
@@ -88,6 +88,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final DateChangedCallback onChanged;
   final DateChangedCallback onConfirm;
   final ThemeData theme;
+  final String locale;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 200);
@@ -124,6 +125,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
         initialMonth: initialMonth,
         initialDate: initialDate,
         onChanged: onChanged,
+        locale: this.locale,
         route: this,
       ),
     );
@@ -144,12 +146,15 @@ class _DatePickerComponent extends StatefulWidget {
     this.initialMonth: 1,
     this.initialDate: 1,
     this.onChanged,
+    this.locale
   });
 
   final DateChangedCallback onChanged;
   final int minYear, maxYear, initialYear, initialMonth, initialDate;
 
   final _DatePickerRoute route;
+
+  final String locale;
 
   @override
   State<StatefulWidget> createState() => _DatePickerState(this.minYear,
@@ -433,11 +438,11 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   String _localeDone()
   {
-    if(locale == null) {
+    if(widget.locale == null) {
       return 'Done';
     }
 
-    String lang = locale.split('_').first;
+    String lang = widget.locale.split('_').first;
 
     switch(lang) {
       case 'zh' :
@@ -452,11 +457,11 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   String _localeCancel()
   {
-    if(locale == null) {
+    if(widget.locale == null) {
       return 'Cancel';
     }
 
-    String lang = locale.split('_').first;
+    String lang = widget.locale.split('_').first;
 
     switch(lang) {
       case 'zh' :
@@ -471,11 +476,11 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   String _localeYear()
   {
-    if(locale == null) {
+    if(widget.locale == null) {
       return '';
     }
 
-    String lang = locale.split('_').first;
+    String lang = widget.locale.split('_').first;
 
     switch(lang) {
       case 'zh' :
@@ -490,11 +495,11 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   String _localeMonth()
   {
-    if(locale == null) {
+    if(widget.locale == null) {
       return '';
     }
 
-    String lang = locale.split('_').first;
+    String lang = widget.locale.split('_').first;
 
     switch(lang) {
       case 'zh' :
@@ -509,11 +514,11 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   String _localeDay()
   {
-    if(locale == null) {
+    if(widget.locale == null) {
       return '';
     }
 
-    String lang = locale.split('_').first;
+    String lang = widget.locale.split('_').first;
 
     switch(lang) {
       case 'zh' :
