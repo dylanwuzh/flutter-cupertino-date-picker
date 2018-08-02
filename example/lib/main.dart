@@ -34,8 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
       minYear: 1970,
       maxYear: 2020,
       initialYear: 2018,
-      initialMonth: 6,
-      initialDate: 21,
+      initialMonth: 8,
+      initialDate: 2,
       locale: 'zh',
       onChanged: (year, month, date) {
         print('onChanged date: $year-$month-$date');

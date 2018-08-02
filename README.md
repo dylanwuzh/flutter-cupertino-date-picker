@@ -5,7 +5,7 @@
 
 Flutter cupertino date picker.
 
-![示例](http://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/date_picker1.png!image_scale1)
+![Example][1]
 
 ## Usage
 
@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^0.0.3
+  flutter_cupertino_date_picker: ^0.0.4
 ```
 
 #### 2\. Install
@@ -40,6 +40,7 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 ///
 /// context: BuildContext.
 /// showTitleActions: Display confirm and cancel button in title bar or not.
+/// local: i18n, 'zh' for Chinese, default is English.
 /// minYear: Min value of year's selection range. Default is 1900.
 /// maxYear: Max value of year's selection range. Default is 2100.
 /// initialYear: Initial value of year.
@@ -50,6 +51,7 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 DatePicker.showDatePicker(
   context,
   showTitleActions: true,
+  locale: 'zh',
   minYear: 1970,
   maxYear: 2020,
   initialYear: 2018,
@@ -62,7 +64,16 @@ DatePicker.showDatePicker(
 
 ***showTitleActions: false***
 
-![示例: showTitleActions=false](http://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/date_picker2.png!image_scale1)
+![Example: showTitleActions=false][2]
+
+***locale: 'zh'***
+
+i18n, default is English
+
+[Thanks to: Robbie Boyd](https://github.com/vagrantrobbie)
+
+
+![Example: locale=zh][3]
 
 ## Example
 
@@ -71,7 +82,6 @@ DatePicker.showDatePicker(
 ## Futures
 
 1. Format datetime display.
-2. Internationalization.
 
 ## License
 
@@ -90,3 +100,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+[1]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_1.png
+[2]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_2.png
+[3]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_3.png
