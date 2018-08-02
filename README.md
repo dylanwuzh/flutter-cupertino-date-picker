@@ -101,6 +101,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-[1]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_1.png
-[2]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_2.png
-[3]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_3.png
+[1]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_1.png?x-oss-process=style/image_scale1
+[2]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_2.png?x-oss-process=style/image_scale1
+[3]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_3.png?x-oss-process=style/image_scale1
