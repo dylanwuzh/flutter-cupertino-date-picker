@@ -391,6 +391,10 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   // Title View
   Widget _renderTitleActionsView() {
+
+    String done = _localeDone();
+    String cancel = _localeCancel();
+
     return Container(
       height: _kDatePickerTitleHeight,
       decoration: BoxDecoration(color: Colors.white),
@@ -402,7 +406,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
             height: _kDatePickerTitleHeight,
             child: FlatButton(
               child: Text(
-                '$_localeCancel()',
+                '$cancel',
                 style: TextStyle(
                   color: Theme.of(context).unselectedWidgetColor,
                   fontSize: 16.0,
@@ -416,7 +420,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
             height: _kDatePickerTitleHeight,
             child: FlatButton(
               child: Text(
-                '$_localeDone()',
+                '$done',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 16.0,
