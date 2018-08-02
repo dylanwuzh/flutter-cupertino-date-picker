@@ -30,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showDatePicker() {
     DatePicker.showDatePicker(
       context,
-      showTitleActions: false,
+      showTitleActions: true,
       minYear: 1970,
       maxYear: 2020,
       initialYear: 2018,

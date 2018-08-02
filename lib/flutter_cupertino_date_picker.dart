@@ -402,7 +402,6 @@ class _DatePickerState extends State<_DatePickerComponent> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            width: 70.0,
             height: _kDatePickerTitleHeight,
             child: FlatButton(
               child: Text(
@@ -416,7 +415,6 @@ class _DatePickerState extends State<_DatePickerComponent> {
             ),
           ),
           Container(
-            width: 70.0,
             height: _kDatePickerTitleHeight,
             child: FlatButton(
               child: Text(
@@ -449,6 +447,10 @@ class _DatePickerState extends State<_DatePickerComponent> {
     String lang = widget.locale.split('_').first;
 
     switch(lang) {
+      case 'en' :
+        return 'Done';
+        break;
+
       case 'zh' :
         return '确定';
         break;
@@ -468,6 +470,10 @@ class _DatePickerState extends State<_DatePickerComponent> {
     String lang = widget.locale.split('_').first;
 
     switch(lang) {
+      case 'en' :
+        return 'Cancel';
+        break;
+
       case 'zh' :
         return '取消';
         break;
