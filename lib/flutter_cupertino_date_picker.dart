@@ -16,18 +16,18 @@ const int _kDefaultMinYear = 1900;
 const int _kDefaultMaxYear = 200;
 
 const List<String> monthNames = const <String>[
-  '1月',
-  '2月',
-  '3月',
-  '4月',
-  '5月',
-  '6月',
-  '7月',
-  '8月',
-  '9月',
-  '10月',
-  '11月',
-  '12月',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  '11',
+  '12',
 ];
 
 const List<int> leapYearMonths = const <int>[1, 3, 5, 7, 8, 10, 12];
@@ -46,6 +46,7 @@ class DatePicker {
     int initialDate: 1,
     DateChangedCallback onChanged,
     DateChangedCallback onConfirm,
+    locale : 'en_NZ'
   }) {
     Navigator.push(
         context,
@@ -58,6 +59,7 @@ class DatePicker {
           initialDate: initialDate,
           onChanged: onChanged,
           onConfirm: onConfirm,
+          locale: locale,
           theme: Theme.of(context, shadowThemeOnly: true),
           barrierLabel:
               MaterialLocalizations.of(context).modalBarrierDismissLabel,
@@ -77,6 +79,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.onConfirm,
     this.theme,
     this.barrierLabel,
+    this.locale,
     RouteSettings settings,
   }) : super(settings: settings);
 
@@ -85,6 +88,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final DateChangedCallback onChanged;
   final DateChangedCallback onConfirm;
   final ThemeData theme;
+  final String locale;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 200);
@@ -121,6 +125,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
         initialMonth: initialMonth,
         initialDate: initialDate,
         onChanged: onChanged,
+        locale: this.locale,
         route: this,
       ),
     );
@@ -141,12 +146,15 @@ class _DatePickerComponent extends StatefulWidget {
     this.initialMonth: 1,
     this.initialDate: 1,
     this.onChanged,
+    this.locale
   });
 
   final DateChangedCallback onChanged;
   final int minYear, maxYear, initialYear, initialMonth, initialDate;
 
   final _DatePickerRoute route;
+
+  final String locale;
 
   @override
   State<StatefulWidget> createState() => _DatePickerState(this.minYear,
@@ -283,6 +291,11 @@ class _DatePickerState extends State<_DatePickerComponent> {
   }
 
   Widget _renderItemView() {
+
+    String yearAppend = _localeYear();
+    String monthAppend = _localeMonth();
+    String dayAppend = _localeDay();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -305,7 +318,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
                   height: _kDatePickerItemHeight,
                   alignment: Alignment.center,
                   child: Text(
-                    '${widget.minYear + index}年',
+                    '${widget.minYear + index}$yearAppend',
                     style: TextStyle(
                         color: Color(0xFF000046),
                         fontSize: _kDatePickerFontSize),
@@ -334,7 +347,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
                     height: _kDatePickerItemHeight,
                     alignment: Alignment.center,
                     child: Text(
-                      monthNames[index],
+                      '${monthNames[index]}$monthAppend',
                       style: TextStyle(
                           color: Color(0xFF000046),
                           fontSize: _kDatePickerFontSize),
@@ -362,7 +375,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
                     height: _kDatePickerItemHeight,
                     alignment: Alignment.center,
                     child: Text(
-                      "${index + 1}日",
+                      "${index + 1}$dayAppend",
                       style: TextStyle(
                           color: Color(0xFF000046),
                           fontSize: _kDatePickerFontSize),
@@ -378,6 +391,10 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   // Title View
   Widget _renderTitleActionsView() {
+
+    String done = _localeDone();
+    String cancel = _localeCancel();
+
     return Container(
       height: _kDatePickerTitleHeight,
       decoration: BoxDecoration(color: Colors.white),
@@ -385,11 +402,10 @@ class _DatePickerState extends State<_DatePickerComponent> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            width: 70.0,
             height: _kDatePickerTitleHeight,
             child: FlatButton(
               child: Text(
-                '取消',
+                '$cancel',
                 style: TextStyle(
                   color: Theme.of(context).unselectedWidgetColor,
                   fontSize: 16.0,
@@ -399,11 +415,10 @@ class _DatePickerState extends State<_DatePickerComponent> {
             ),
           ),
           Container(
-            width: 70.0,
             height: _kDatePickerTitleHeight,
             child: FlatButton(
               child: Text(
-                '确定',
+                '$done',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 16.0,
@@ -421,6 +436,109 @@ class _DatePickerState extends State<_DatePickerComponent> {
         ],
       ),
     );
+  }
+
+  String _localeDone()
+  {
+    if(widget.locale == null) {
+      return 'Done';
+    }
+
+    String lang = widget.locale.split('_').first;
+
+    switch(lang) {
+      case 'en' :
+        return 'Done';
+        break;
+
+      case 'zh' :
+        return '确定';
+        break;
+
+      default :
+        return '';
+        break;
+    }
+  }
+
+  String _localeCancel()
+  {
+    if(widget.locale == null) {
+      return 'Cancel';
+    }
+
+    String lang = widget.locale.split('_').first;
+
+    switch(lang) {
+      case 'en' :
+        return 'Cancel';
+        break;
+
+      case 'zh' :
+        return '取消';
+        break;
+
+      default :
+        return '';
+        break;
+    }
+  }
+
+  String _localeYear()
+  {
+    if(widget.locale == null) {
+      return '';
+    }
+
+    String lang = widget.locale.split('_').first;
+
+    switch(lang) {
+      case 'zh' :
+        return '年';
+        break;
+
+      default :
+        return '';
+        break;
+    }
+  }
+
+  String _localeMonth()
+  {
+    if(widget.locale == null) {
+      return '';
+    }
+
+    String lang = widget.locale.split('_').first;
+
+    switch(lang) {
+      case 'zh' :
+        return '日';
+        break;
+
+      default :
+        return '';
+        break;
+    }
+  }
+
+  String _localeDay()
+  {
+    if(widget.locale == null) {
+      return '';
+    }
+
+    String lang = widget.locale.split('_').first;
+
+    switch(lang) {
+      case 'zh' :
+        return '月';
+        break;
+
+      default :
+        return '';
+        break;
+    }
   }
 }
 
