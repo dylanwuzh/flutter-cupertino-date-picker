@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Fix month and day in zh locale.
+
 ## 0.0.4
 
 * Support i18n.

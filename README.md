@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^0.0.4
+  flutter_cupertino_date_picker: ^0.0.5
 ```
 
 #### 2\. Install
@@ -101,6 +101,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-[1]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_1.png?x-oss-process=style/image_scale1
-[2]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_2.png?x-oss-process=style/image_scale1
-[3]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_3.png?x-oss-process=style/image_scale1
+[1]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_4.png?x-oss-process=style/image_scale1
+[2]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_5.png?x-oss-process=style/image_scale1
+[3]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_6.png?x-oss-process=style/image_scale1

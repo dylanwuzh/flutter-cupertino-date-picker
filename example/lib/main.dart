@@ -30,12 +30,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showDatePicker() {
     DatePicker.showDatePicker(
       context,
-      showTitleActions: true,
+      showTitleActions: false,
       minYear: 1970,
       maxYear: 2020,
       initialYear: 2018,
       initialMonth: 8,
-      initialDate: 2,
+      initialDate: 23,
       locale: 'zh',
       onChanged: (year, month, date) {
         print('onChanged date: $year-$month-$date');
