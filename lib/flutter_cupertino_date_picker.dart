@@ -513,7 +513,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
     switch(lang) {
       case 'zh' :
-        return '日';
+        return '月';
         break;
 
       default :
@@ -532,7 +532,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
     switch(lang) {
       case 'zh' :
-        return '月';
+        return '日';
         break;
 
       default :
