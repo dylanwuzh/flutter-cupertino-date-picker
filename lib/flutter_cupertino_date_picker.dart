@@ -46,7 +46,7 @@ class DatePicker {
     int initialDate: 1,
     DateChangedCallback onChanged,
     DateChangedCallback onConfirm,
-    locale : 'en_NZ',
+    locale : 'zh',
     dateFormat: "yyyy-mm-dd",
   }) {
     Navigator.push(
@@ -354,7 +354,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
                 child: Row(
                   children: <Widget>[
                     new Expanded(
-                      child:  Text((format == null) ? '${monthNames[index]}$monthAppend' : _formatMonthComplex(index, format),
+                      child:  Text((format == null) ? '${monthNames[index]}$monthAppend' : '${_formatMonthComplex(index, format)}$monthAppend',
                         style: TextStyle(
                           color: Color(0xFF000046),
                           fontSize: _kDatePickerFontSize),
