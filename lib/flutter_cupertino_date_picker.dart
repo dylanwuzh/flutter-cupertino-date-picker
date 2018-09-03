@@ -46,7 +46,8 @@ class DatePicker {
     int initialDate: 1,
     DateChangedCallback onChanged,
     DateChangedCallback onConfirm,
-    locale : 'en_NZ'
+    locale : 'zh',
+    dateFormat: "yyyy-mm-dd",
   }) {
     Navigator.push(
         context,
@@ -60,6 +61,7 @@ class DatePicker {
           onChanged: onChanged,
           onConfirm: onConfirm,
           locale: locale,
+          dateFormat: dateFormat,
           theme: Theme.of(context, shadowThemeOnly: true),
           barrierLabel:
               MaterialLocalizations.of(context).modalBarrierDismissLabel,
@@ -80,6 +82,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.theme,
     this.barrierLabel,
     this.locale,
+    this.dateFormat,
     RouteSettings settings,
   }) : super(settings: settings);
 
@@ -89,6 +92,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final DateChangedCallback onConfirm;
   final ThemeData theme;
   final String locale;
+  final String dateFormat;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 200);
@@ -125,7 +129,8 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
         initialMonth: initialMonth,
         initialDate: initialDate,
         onChanged: onChanged,
-        locale: this.locale,
+        locale: locale,
+        dateFormat: dateFormat,
         route: this,
       ),
     );
@@ -146,7 +151,8 @@ class _DatePickerComponent extends StatefulWidget {
     this.initialMonth: 1,
     this.initialDate: 1,
     this.onChanged,
-    this.locale
+    this.locale,
+    this.dateFormat
   });
 
   final DateChangedCallback onChanged;
@@ -155,6 +161,7 @@ class _DatePickerComponent extends StatefulWidget {
   final _DatePickerRoute route;
 
   final String locale;
+  final String dateFormat;
 
   @override
   State<StatefulWidget> createState() => _DatePickerState(this.minYear,
@@ -204,6 +211,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   @override
   Widget build(BuildContext context) {
+
     return new GestureDetector(
       child: new AnimatedBuilder(
         animation: widget.route.animation,
@@ -290,102 +298,134 @@ class _DatePickerState extends State<_DatePickerComponent> {
     return itemView;
   }
 
+  Widget _renderYearsPickerComponent(String yearAppend)
+  {
+    return new Expanded(
+      flex: 1,
+      child: Container(
+        padding: EdgeInsets.all(8.0),
+        height: _kDatePickerHeight,
+        decoration: BoxDecoration(color: Colors.white),
+        child: CupertinoPicker(
+          backgroundColor: Colors.white,
+          scrollController: yearScrollCtrl,
+          itemExtent: _kDatePickerItemHeight,
+          onSelectedItemChanged: (int index) {
+            _setYear(index);
+          },
+          children: List.generate(widget.maxYear - widget.minYear + 1,
+                  (int index) {
+            return Container(
+              height: _kDatePickerItemHeight,
+              alignment: Alignment.center,
+              child: Text(
+                '${widget.minYear + index}$yearAppend',
+                style: TextStyle(
+                    color: Color(0xFF000046),
+                    fontSize: _kDatePickerFontSize),
+                textAlign: TextAlign.start,
+              ),
+            );
+          }),
+        ),
+      ),
+    );
+  }
+
+  Widget _renderMonthsPickerComponent(String monthAppend, {String format})
+  {
+    return new Expanded(
+      flex: 1,
+      child: Container(
+          padding: EdgeInsets.all(8.0),
+          height: _kDatePickerHeight,
+          decoration: BoxDecoration(color: Colors.white),
+          child: CupertinoPicker(
+            backgroundColor: Colors.white,
+            scrollController: monthScrollCtrl,
+            itemExtent: _kDatePickerItemHeight,
+            onSelectedItemChanged: (int index) {
+              _setMonth(index);
+            },
+            children: List.generate(monthNames.length, (int index) {
+              return Container(
+                height: _kDatePickerItemHeight,
+                alignment: Alignment.center,
+                child: Row(
+                  children: <Widget>[
+                    new Expanded(
+                      child:  Text((format == null) ? '${monthNames[index]}$monthAppend' : '${_formatMonthComplex(index, format)}$monthAppend',
+                        style: TextStyle(
+                          color: Color(0xFF000046),
+                          fontSize: _kDatePickerFontSize),
+                        textAlign: TextAlign.center,
+                        softWrap: false,
+                        overflow: TextOverflow.fade,
+                      )
+                    )
+                  ],
+                )
+                ,
+              );
+            }),
+          )),
+    );
+  }
+
+  Widget _renderDaysPickerComponent(String dayAppend)
+  {
+    return new Expanded(
+      flex: 1,
+      child: Container(
+        padding: EdgeInsets.all(8.0),
+        height: _kDatePickerHeight,
+        decoration: BoxDecoration(color: Colors.white),
+        child: CupertinoPicker(
+          backgroundColor: Colors.white,
+          scrollController: dateScrollCtrl,
+          itemExtent: _kDatePickerItemHeight,
+          onSelectedItemChanged: (int index) {
+            _setDate(index);
+          },
+          children: List.generate(_dateCountOfMonth, (int index) {
+            return Container(
+              height: _kDatePickerItemHeight,
+              alignment: Alignment.center,
+              child: Text(
+                "${index + 1}$dayAppend",
+                style: TextStyle(
+                  color: Color(0xFF000046),
+                  fontSize: _kDatePickerFontSize),
+                textAlign: TextAlign.start,
+              ),
+            );
+          }),
+        )),
+    );
+  }
+
   Widget _renderItemView() {
 
     String yearAppend = _localeYear();
     String monthAppend = _localeMonth();
     String dayAppend = _localeDay();
 
+    List<Widget> pickers = new List<Widget>();
+    List<String> formatters = widget.dateFormat.split('-');
+    for(int i = 0; i < formatters.length; i++) {
+      var format = formatters[i];
+      if(format.contains("yy")) {
+        pickers.add(_renderYearsPickerComponent(yearAppend));
+      } else if(format.contains("mm")) {
+        pickers.add(_renderMonthsPickerComponent(monthAppend, format:format));
+      } else if(format.contains("dd")) {
+        pickers.add(_renderDaysPickerComponent(dayAppend));
+      }
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Container(
-            padding: EdgeInsets.all(8.0),
-            height: _kDatePickerHeight,
-            decoration: BoxDecoration(color: Colors.white),
-            child: CupertinoPicker(
-              backgroundColor: Colors.white,
-              scrollController: yearScrollCtrl,
-              itemExtent: _kDatePickerItemHeight,
-              onSelectedItemChanged: (int index) {
-                _setYear(index);
-              },
-              children: List.generate(widget.maxYear - widget.minYear + 1,
-                  (int index) {
-                return Container(
-                  height: _kDatePickerItemHeight,
-                  alignment: Alignment.center,
-                  child: Text(
-                    '${widget.minYear + index}$yearAppend',
-                    style: TextStyle(
-                        color: Color(0xFF000046),
-                        fontSize: _kDatePickerFontSize),
-                    textAlign: TextAlign.start,
-                  ),
-                );
-              }),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(
-              padding: EdgeInsets.all(8.0),
-              height: _kDatePickerHeight,
-              decoration: BoxDecoration(color: Colors.white),
-              child: CupertinoPicker(
-                backgroundColor: Colors.white,
-                scrollController: monthScrollCtrl,
-                itemExtent: _kDatePickerItemHeight,
-                onSelectedItemChanged: (int index) {
-                  _setMonth(index);
-                },
-                children: List.generate(monthNames.length, (int index) {
-                  return Container(
-                    height: _kDatePickerItemHeight,
-                    alignment: Alignment.center,
-                    child: Text(
-                      '${monthNames[index]}$monthAppend',
-                      style: TextStyle(
-                          color: Color(0xFF000046),
-                          fontSize: _kDatePickerFontSize),
-                      textAlign: TextAlign.start,
-                    ),
-                  );
-                }),
-              )),
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(
-              padding: EdgeInsets.all(8.0),
-              height: _kDatePickerHeight,
-              decoration: BoxDecoration(color: Colors.white),
-              child: CupertinoPicker(
-                backgroundColor: Colors.white,
-                scrollController: dateScrollCtrl,
-                itemExtent: _kDatePickerItemHeight,
-                onSelectedItemChanged: (int index) {
-                  _setDate(index);
-                },
-                children: List.generate(_dateCountOfMonth, (int index) {
-                  return Container(
-                    height: _kDatePickerItemHeight,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "${index + 1}$dayAppend",
-                      style: TextStyle(
-                          color: Color(0xFF000046),
-                          fontSize: _kDatePickerFontSize),
-                      textAlign: TextAlign.start,
-                    ),
-                  );
-                }),
-              )),
-        ),
-      ],
+      children: pickers,
     );
   }
 
@@ -518,6 +558,31 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
       default :
         return '';
+        break;
+    }
+  }
+
+  String _formatMonthComplex(int month, String format) {
+    if(widget.locale == null) {
+      return month.toString();
+    }
+
+    String lang = widget.locale.split('_').first;
+
+    switch(lang) {
+      case 'en' :
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        if(format.length <= 2) {
+          return month.toString();
+        } else if (format.length <= 3){
+          return months[month].substring(0,3);
+        } else {
+          return months[month];
+        }
+        break;
+
+      default :
+        return month.toString();
         break;
     }
   }

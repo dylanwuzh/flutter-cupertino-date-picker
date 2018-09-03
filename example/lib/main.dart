@@ -37,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
       initialMonth: 8,
       initialDate: 23,
       locale: 'zh',
+      dateFormat: 'yyyy-mm-dd',
       onChanged: (year, month, date) {
         print('onChanged date: $year-$month-$date');
       },
