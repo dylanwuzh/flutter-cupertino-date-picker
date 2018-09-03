@@ -25,28 +25,43 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _datetime = '';
+  int year = 2018;
+  int month = 9;
+  int date = 3;
 
   /// Display date picker.
   void _showDatePicker() {
+    final bool showTitleActions = false;
     DatePicker.showDatePicker(
       context,
-      showTitleActions: false,
+      showTitleActions: showTitleActions,
       minYear: 1970,
       maxYear: 2020,
-      initialYear: 2018,
-      initialMonth: 8,
-      initialDate: 23,
-      locale: 'zh',
-      dateFormat: 'yyyy-mm-dd',
+      initialYear: year,
+      initialMonth: month,
+      initialDate: date,
+      locale: 'en',
+      dateFormat: 'yyyy-mmm-dd',
       onChanged: (year, month, date) {
         print('onChanged date: $year-$month-$date');
+
+        if (!showTitleActions) {
+          settingDatetime(year, month, date);
+        }
       },
       onConfirm: (year, month, date) {
-        setState(() {
-          _datetime = '$year-$month-$date';
-        });
+        settingDatetime(year, month, date);
       },
     );
+  }
+
+  void settingDatetime(int year, int month, int date) {
+    setState(() {
+      this.year = year;
+      this.month = month;
+      this.date = date;
+      _datetime = '$year-$month-$date';
+    });
   }
 
   @override

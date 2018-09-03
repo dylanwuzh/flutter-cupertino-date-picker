@@ -564,7 +564,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   String _formatMonthComplex(int month, String format) {
     if(widget.locale == null) {
-      return month.toString();
+      return (month + 1).toString();
     }
 
     String lang = widget.locale.split('_').first;
@@ -573,7 +573,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
       case 'en' :
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         if(format.length <= 2) {
-          return month.toString();
+          print(format + ', ' + month.toString());
+          return (month + 1).toString();
         } else if (format.length <= 3){
           return months[month].substring(0,3);
         } else {
@@ -582,7 +583,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
         break;
 
       default :
-        return month.toString();
+        return (month + 1).toString();
         break;
     }
   }
