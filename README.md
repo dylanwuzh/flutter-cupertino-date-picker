@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^0.0.5
+  flutter_cupertino_date_picker: ^0.0.6
 ```
 
 #### 2\. Install
@@ -46,6 +46,7 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 /// initialYear: Initial value of year.
 /// initialMonth: Initial value of month.
 /// initialDate: Initial value of date.
+/// dateFormat: Format English months.
 /// onChange: An option callback when the currently selected datetime changes.
 /// onConfirm: An option callback when tap the confirm button in title bar.
 DatePicker.showDatePicker(
@@ -57,6 +58,7 @@ DatePicker.showDatePicker(
   initialYear: 2018,
   initialMonth: 6,
   initialDate: 21,
+  dateFormat: 'yyyy-mm-dd'
   onChanged: (year, month, date) { },
   onConfirm: (year, month, date) { },
 );
@@ -74,6 +76,20 @@ i18n, default is English
 
 
 ![Example: locale=zh][3]
+
+***dateFormat: 'yyyy-mmm-dd'***
+
+Just support English months.
+
+It will also put the Pickers in the same order. The date String output does not change
+
+```
+dd-mm-yyyy -> 1-10-2018
+dd-mmm-yyyy -> 1-Oct-2018
+dd-mmmm-yyyy -> 1-October-2018
+```
+
+![Example: dateFormat][4]
 
 ## Example
 
@@ -104,3 +120,4 @@ limitations under the License.
 [1]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_4.png?x-oss-process=style/image_scale1
 [2]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_5.png?x-oss-process=style/image_scale1
 [3]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_6.png?x-oss-process=style/image_scale1
+[4]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_7.png?x-oss-process=style/image_scale1

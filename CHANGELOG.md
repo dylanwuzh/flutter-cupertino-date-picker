@@ -1,3 +1,7 @@
+## 0.0.6
+
+* Support English months.
+
 ## 0.0.5
 
 * Fix month and day in zh locale.

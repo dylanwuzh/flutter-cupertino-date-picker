@@ -73,6 +73,18 @@ DatePicker.showDatePicker(
 
 ![Example: locale=zh][3]
 
+***dateFormat: 'yyyy-mmm-dd'***
+
+日期格式化，目前只支持英文月份
+
+```
+dd-mm-yyyy -> 1-10-2018
+dd-mmm-yyyy -> 1-Oct-2018
+dd-mmmm-yyyy -> 1-October-2018
+```
+
+![Example: dateFormat][4]
+
 ## 示例
 
 [示例源码](https://github.com/wuzhendev/flutter-cupertino-date-picker/tree/master/example)
@@ -102,3 +114,4 @@ limitations under the License.
 [1]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_4.png?x-oss-process=style/image_scale1
 [2]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_5.png?x-oss-process=style/image_scale1
 [3]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_6.png?x-oss-process=style/image_scale1
+[4]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_7.png?x-oss-process=style/image_scale1
