@@ -1,3 +1,7 @@
+## 0.0.7
+
+* Support locale Portuguese Brazil (pt-br)
+
 ## 0.0.6
 
 * Support English months.
