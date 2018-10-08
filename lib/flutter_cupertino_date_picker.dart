@@ -495,6 +495,10 @@ class _DatePickerState extends State<_DatePickerComponent> {
         return '确定';
         break;
 
+      case 'pt-br' :
+        return 'Feito';
+        break;
+
       default :
         return '';
         break;
@@ -516,6 +520,10 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
       case 'zh' :
         return '取消';
+        break;
+
+      case 'pt-br':
+        return 'Cancelar';
         break;
 
       default :
@@ -572,6 +580,18 @@ class _DatePickerState extends State<_DatePickerComponent> {
     switch(lang) {
       case 'en' :
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        if(format.length <= 2) {
+          print(format + ', ' + month.toString());
+          return (month + 1).toString();
+        } else if (format.length <= 3){
+          return months[month].substring(0,3);
+        } else {
+          return months[month];
+        }
+        break;
+
+      case 'pt-br' :
+        const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
         if(format.length <= 2) {
           print(format + ', ' + month.toString());
           return (month + 1).toString();
