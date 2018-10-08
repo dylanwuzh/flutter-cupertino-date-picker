@@ -46,7 +46,7 @@ class DatePicker {
     int initialDate: 1,
     DateChangedCallback onChanged,
     DateChangedCallback onConfirm,
-    locale : 'zh',
+    locale: 'zh',
     dateFormat: "yyyy-mm-dd",
   }) {
     Navigator.push(
@@ -142,18 +142,17 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
 }
 
 class _DatePickerComponent extends StatefulWidget {
-  _DatePickerComponent({
-    Key key,
-    @required this.route,
-    this.minYear: _kDefaultMinYear,
-    this.maxYear: _kDefaultMaxYear,
-    this.initialYear: -1,
-    this.initialMonth: 1,
-    this.initialDate: 1,
-    this.onChanged,
-    this.locale,
-    this.dateFormat
-  });
+  _DatePickerComponent(
+      {Key key,
+      @required this.route,
+      this.minYear: _kDefaultMinYear,
+      this.maxYear: _kDefaultMaxYear,
+      this.initialYear: -1,
+      this.initialMonth: 1,
+      this.initialDate: 1,
+      this.onChanged,
+      this.locale,
+      this.dateFormat});
 
   final DateChangedCallback onChanged;
   final int minYear, maxYear, initialYear, initialMonth, initialDate;
@@ -211,7 +210,6 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   @override
   Widget build(BuildContext context) {
-
     return new GestureDetector(
       child: new AnimatedBuilder(
         animation: widget.route.animation,
@@ -298,8 +296,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
     return itemView;
   }
 
-  Widget _renderYearsPickerComponent(String yearAppend)
-  {
+  Widget _renderYearsPickerComponent(String yearAppend) {
     return new Expanded(
       flex: 1,
       child: Container(
@@ -313,16 +310,15 @@ class _DatePickerState extends State<_DatePickerComponent> {
           onSelectedItemChanged: (int index) {
             _setYear(index);
           },
-          children: List.generate(widget.maxYear - widget.minYear + 1,
-                  (int index) {
+          children:
+              List.generate(widget.maxYear - widget.minYear + 1, (int index) {
             return Container(
               height: _kDatePickerItemHeight,
               alignment: Alignment.center,
               child: Text(
                 '${widget.minYear + index}$yearAppend',
                 style: TextStyle(
-                    color: Color(0xFF000046),
-                    fontSize: _kDatePickerFontSize),
+                    color: Color(0xFF000046), fontSize: _kDatePickerFontSize),
                 textAlign: TextAlign.start,
               ),
             );
@@ -332,8 +328,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
     );
   }
 
-  Widget _renderMonthsPickerComponent(String monthAppend, {String format})
-  {
+  Widget _renderMonthsPickerComponent(String monthAppend, {String format}) {
     return new Expanded(
       flex: 1,
       child: Container(
@@ -354,71 +349,69 @@ class _DatePickerState extends State<_DatePickerComponent> {
                 child: Row(
                   children: <Widget>[
                     new Expanded(
-                      child:  Text((format == null) ? '${monthNames[index]}$monthAppend' : '${_formatMonthComplex(index, format)}$monthAppend',
-                        style: TextStyle(
+                        child: Text(
+                      (format == null)
+                          ? '${monthNames[index]}$monthAppend'
+                          : '${_formatMonthComplex(index, format)}$monthAppend',
+                      style: TextStyle(
                           color: Color(0xFF000046),
                           fontSize: _kDatePickerFontSize),
-                        textAlign: TextAlign.center,
-                        softWrap: false,
-                        overflow: TextOverflow.fade,
-                      )
-                    )
+                      textAlign: TextAlign.center,
+                      softWrap: false,
+                      overflow: TextOverflow.fade,
+                    ))
                   ],
-                )
-                ,
+                ),
               );
             }),
           )),
     );
   }
 
-  Widget _renderDaysPickerComponent(String dayAppend)
-  {
+  Widget _renderDaysPickerComponent(String dayAppend) {
     return new Expanded(
       flex: 1,
       child: Container(
-        padding: EdgeInsets.all(8.0),
-        height: _kDatePickerHeight,
-        decoration: BoxDecoration(color: Colors.white),
-        child: CupertinoPicker(
-          backgroundColor: Colors.white,
-          scrollController: dateScrollCtrl,
-          itemExtent: _kDatePickerItemHeight,
-          onSelectedItemChanged: (int index) {
-            _setDate(index);
-          },
-          children: List.generate(_dateCountOfMonth, (int index) {
-            return Container(
-              height: _kDatePickerItemHeight,
-              alignment: Alignment.center,
-              child: Text(
-                "${index + 1}$dayAppend",
-                style: TextStyle(
-                  color: Color(0xFF000046),
-                  fontSize: _kDatePickerFontSize),
-                textAlign: TextAlign.start,
-              ),
-            );
-          }),
-        )),
+          padding: EdgeInsets.all(8.0),
+          height: _kDatePickerHeight,
+          decoration: BoxDecoration(color: Colors.white),
+          child: CupertinoPicker(
+            backgroundColor: Colors.white,
+            scrollController: dateScrollCtrl,
+            itemExtent: _kDatePickerItemHeight,
+            onSelectedItemChanged: (int index) {
+              _setDate(index);
+            },
+            children: List.generate(_dateCountOfMonth, (int index) {
+              return Container(
+                height: _kDatePickerItemHeight,
+                alignment: Alignment.center,
+                child: Text(
+                  "${index + 1}$dayAppend",
+                  style: TextStyle(
+                      color: Color(0xFF000046), fontSize: _kDatePickerFontSize),
+                  textAlign: TextAlign.start,
+                ),
+              );
+            }),
+          )),
     );
   }
 
   Widget _renderItemView() {
-
     String yearAppend = _localeYear();
     String monthAppend = _localeMonth();
     String dayAppend = _localeDay();
 
     List<Widget> pickers = new List<Widget>();
     List<String> formatters = widget.dateFormat.split('-');
-    for(int i = 0; i < formatters.length; i++) {
+    for (int i = 0; i < formatters.length; i++) {
       var format = formatters[i];
-      if(format.contains("yy")) {
+      if (format.contains("yy")) {
         pickers.add(_renderYearsPickerComponent(yearAppend));
-      } else if(format.contains("mm")) {
-        pickers.add(_renderMonthsPickerComponent(monthAppend, format:format));
-      } else if(format.contains("dd")) {
+      } else if (format.contains("mm")) {
+        pickers.add(_renderMonthsPickerComponent(monthAppend, format: format));
+      } else if (format.contains("dd")) {
         pickers.add(_renderDaysPickerComponent(dayAppend));
       }
     }
@@ -431,7 +424,6 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   // Title View
   Widget _renderTitleActionsView() {
-
     String done = _localeDone();
     String cancel = _localeCancel();
 
@@ -478,47 +470,45 @@ class _DatePickerState extends State<_DatePickerComponent> {
     );
   }
 
-  String _localeDone()
-  {
-    if(widget.locale == null) {
+  String _localeDone() {
+    if (widget.locale == null) {
       return 'Done';
     }
 
     String lang = widget.locale.split('_').first;
 
-    switch(lang) {
-      case 'en' :
+    switch (lang) {
+      case 'en':
         return 'Done';
         break;
 
-      case 'zh' :
+      case 'zh':
         return '确定';
         break;
 
-      case 'pt-br' :
+      case 'pt-br':
         return 'Feito';
         break;
 
-      default :
+      default:
         return '';
         break;
     }
   }
 
-  String _localeCancel()
-  {
-    if(widget.locale == null) {
+  String _localeCancel() {
+    if (widget.locale == null) {
       return 'Cancel';
     }
 
     String lang = widget.locale.split('_').first;
 
-    switch(lang) {
-      case 'en' :
+    switch (lang) {
+      case 'en':
         return 'Cancel';
         break;
 
-      case 'zh' :
+      case 'zh':
         return '取消';
         break;
 
@@ -526,102 +516,125 @@ class _DatePickerState extends State<_DatePickerComponent> {
         return 'Cancelar';
         break;
 
-      default :
+      default:
         return '';
         break;
     }
   }
 
-  String _localeYear()
-  {
-    if(widget.locale == null) {
+  String _localeYear() {
+    if (widget.locale == null) {
       return '';
     }
 
     String lang = widget.locale.split('_').first;
 
-    switch(lang) {
-      case 'zh' :
+    switch (lang) {
+      case 'zh':
         return '年';
         break;
 
-      default :
+      default:
         return '';
         break;
     }
   }
 
-  String _localeMonth()
-  {
-    if(widget.locale == null) {
+  String _localeMonth() {
+    if (widget.locale == null) {
       return '';
     }
 
     String lang = widget.locale.split('_').first;
 
-    switch(lang) {
-      case 'zh' :
+    switch (lang) {
+      case 'zh':
         return '月';
         break;
 
-      default :
+      default:
         return '';
         break;
     }
   }
 
   String _formatMonthComplex(int month, String format) {
-    if(widget.locale == null) {
+    if (widget.locale == null) {
       return (month + 1).toString();
     }
 
     String lang = widget.locale.split('_').first;
 
-    switch(lang) {
-      case 'en' :
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        if(format.length <= 2) {
+    switch (lang) {
+      case 'en':
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ];
+        if (format.length <= 2) {
           print(format + ', ' + month.toString());
           return (month + 1).toString();
-        } else if (format.length <= 3){
-          return months[month].substring(0,3);
+        } else if (format.length <= 3) {
+          return months[month].substring(0, 3);
         } else {
           return months[month];
         }
         break;
 
-      case 'pt-br' :
-        const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        if(format.length <= 2) {
+      case 'pt-br':
+        const months = [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ];
+        if (format.length <= 2) {
           print(format + ', ' + month.toString());
           return (month + 1).toString();
-        } else if (format.length <= 3){
-          return months[month].substring(0,3);
+        } else if (format.length <= 3) {
+          return months[month].substring(0, 3);
         } else {
           return months[month];
         }
         break;
 
-      default :
+      default:
         return (month + 1).toString();
         break;
     }
   }
 
-  String _localeDay()
-  {
-    if(widget.locale == null) {
+  String _localeDay() {
+    if (widget.locale == null) {
       return '';
     }
 
     String lang = widget.locale.split('_').first;
 
-    switch(lang) {
-      case 'zh' :
+    switch (lang) {
+      case 'zh':
         return '日';
         break;
 
-      default :
+      default:
         return '';
         break;
     }
