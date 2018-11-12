@@ -34,13 +34,13 @@ class _MyHomePageState extends State<MyHomePage> {
     final bool showTitleActions = false;
     DatePicker.showDatePicker(
       context,
-      showTitleActions: showTitleActions,
+      showTitleActions: true,
       minYear: 1970,
       maxYear: 2020,
       initialYear: year,
       initialMonth: month,
       initialDate: date,
-      locale: 'en',
+      locale: 'us',
       dateFormat: 'yyyy-mmm-dd',
       onChanged: (year, month, date) {
         print('onChanged date: $year-$month-$date');
