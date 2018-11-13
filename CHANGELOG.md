@@ -1,3 +1,7 @@
+## 0.1.0
+
+* Refactor locale message.
+
 ## 0.0.7
 
 * Support locale Portuguese Brazil (pt-br)

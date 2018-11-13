@@ -5,9 +5,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import './message_i18n.dart';
+import './locale_message.dart';
 
 typedef DateChangedCallback(int year, int month, int date);
+
+const String _kDateLocaleDefault = 'zh';
+const String _kDateFormatDefault = 'yyyy-mm-dd';
 
 const double _kDatePickerHeight = 210.0;
 const double _kDatePickerTitleHeight = 44.0;
@@ -15,24 +18,9 @@ const double _kDatePickerItemHeight = 36.0;
 const double _kDatePickerFontSize = 18.0;
 
 const int _kDefaultMinYear = 1900;
-const int _kDefaultMaxYear = 200;
+const int _kDefaultMaxYear = 2100;
 
 const int _kMonthCount = 12;
-
-//const List<String> monthNames = const <String>[
-//  '1',
-//  '2',
-//  '3',
-//  '4',
-//  '5',
-//  '6',
-//  '7',
-//  '8',
-//  '9',
-//  '10',
-//  '11',
-//  '12',
-//];
 
 const List<int> leapYearMonths = const <int>[1, 3, 5, 7, 8, 10, 12];
 
@@ -45,30 +33,47 @@ class DatePicker {
     bool showTitleActions: true,
     int minYear: _kDefaultMinYear,
     int maxYear: _kDefaultMaxYear,
-    int initialYear: _kDefaultMinYear,
-    int initialMonth: 1,
-    int initialDate: 1,
+    int initialYear,
+    int initialMonth,
+    int initialDate,
     DateChangedCallback onChanged,
     DateChangedCallback onConfirm,
-    locale: 'zh',
-    dateFormat: "yyyy-mm-dd",
+    locale: _kDateLocaleDefault,
+    dateFormat: _kDateFormatDefault,
   }) {
+    if (dateFormat == null || dateFormat.length == 0) {
+      dateFormat = _kDateFormatDefault;
+    }
+
+    DateTime now = DateTime.now();
+    if (initialYear == null) {
+      initialYear = now.year;
+    }
+    if (initialMonth == null) {
+      initialMonth = now.month;
+    }
+    if (initialDate == null) {
+      initialDate = now.day;
+    }
+
     Navigator.push(
-        context,
-        new _DatePickerRoute(
-          showTitleActions: showTitleActions,
-          minYear: minYear,
-          maxYear: maxYear,
-          initialYear: initialYear,
-          initialMonth: initialMonth,
-          initialDate: initialDate,
-          onChanged: onChanged,
-          onConfirm: onConfirm,
-          locale: locale,
-          dateFormat: dateFormat,
-          theme: Theme.of(context, shadowThemeOnly: true),
-          barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        ));
+      context,
+      new _DatePickerRoute(
+        showTitleActions: showTitleActions,
+        minYear: minYear,
+        maxYear: maxYear,
+        initialYear: initialYear,
+        initialMonth: initialMonth,
+        initialDate: initialDate,
+        onChanged: onChanged,
+        onConfirm: onConfirm,
+        locale: locale,
+        dateFormat: dateFormat,
+        theme: Theme.of(context, shadowThemeOnly: true),
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      ),
+    );
   }
 }
 
@@ -114,12 +119,14 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   @override
   AnimationController createAnimationController() {
     assert(_animationController == null);
-    _animationController = BottomSheet.createAnimationController(navigator.overlay);
+    _animationController =
+        BottomSheet.createAnimationController(navigator.overlay);
     return _animationController;
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     Widget bottomSheet = new MediaQuery.removePadding(
       context: context,
       removeTop: true,
@@ -164,8 +171,8 @@ class _DatePickerComponent extends StatefulWidget {
   final String dateFormat;
 
   @override
-  State<StatefulWidget> createState() =>
-      _DatePickerState(this.minYear, this.maxYear, this.initialYear, this.initialMonth, this.initialDate);
+  State<StatefulWidget> createState() => _DatePickerState(this.minYear,
+      this.maxYear, this.initialYear, this.initialMonth, this.initialDate);
 }
 
 class _DatePickerState extends State<_DatePickerComponent> {
@@ -174,7 +181,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
   int _dateCountOfMonth;
   FixedExtentScrollController yearScrollCtrl, monthScrollCtrl, dateScrollCtrl;
 
-  _DatePickerState(this.minYear, this.maxYear, this._currentYear, this._currentMonth, this._currentDate) {
+  _DatePickerState(this.minYear, this.maxYear, this._currentYear,
+      this._currentMonth, this._currentDate) {
     if (this._currentYear == -1) {
       this._currentYear = this.minYear;
     }
@@ -199,9 +207,12 @@ class _DatePickerState extends State<_DatePickerComponent> {
       this._currentDate = 31;
     }
 
-    yearScrollCtrl = new FixedExtentScrollController(initialItem: _currentYear - this.minYear);
-    monthScrollCtrl = new FixedExtentScrollController(initialItem: _currentMonth - 1);
-    dateScrollCtrl = new FixedExtentScrollController(initialItem: _currentDate - 1);
+    yearScrollCtrl = new FixedExtentScrollController(
+        initialItem: _currentYear - this.minYear);
+    monthScrollCtrl =
+        new FixedExtentScrollController(initialItem: _currentMonth - 1);
+    dateScrollCtrl =
+        new FixedExtentScrollController(initialItem: _currentDate - 1);
     _dateCountOfMonth = _calcDateCount();
   }
 
@@ -265,7 +276,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
     if (leapYearMonths.contains(_currentMonth)) {
       return 31;
     } else if (_currentMonth == 2) {
-      if ((_currentYear % 4 == 0 && _currentYear % 100 != 0) || _currentYear % 400 == 0) {
+      if ((_currentYear % 4 == 0 && _currentYear % 100 != 0) ||
+          _currentYear % 400 == 0) {
         return 29;
       }
       return 28;
@@ -306,13 +318,15 @@ class _DatePickerState extends State<_DatePickerComponent> {
           onSelectedItemChanged: (int index) {
             _setYear(index);
           },
-          children: List.generate(widget.maxYear - widget.minYear + 1, (int index) {
+          children:
+              List.generate(widget.maxYear - widget.minYear + 1, (int index) {
             return Container(
               height: _kDatePickerItemHeight,
               alignment: Alignment.center,
               child: Text(
                 '${widget.minYear + index}$yearAppend',
-                style: TextStyle(color: Color(0xFF000046), fontSize: _kDatePickerFontSize),
+                style: TextStyle(
+                    color: Color(0xFF000046), fontSize: _kDatePickerFontSize),
                 textAlign: TextAlign.start,
               ),
             );
@@ -348,7 +362,9 @@ class _DatePickerState extends State<_DatePickerComponent> {
                           // index is 0,1,2...11  month is 1,2,3...12
                           ? '${index + 1}$monthAppend'
                           : '${_formatMonthComplex(index, format)}$monthAppend',
-                      style: TextStyle(color: Color(0xFF000046), fontSize: _kDatePickerFontSize),
+                      style: TextStyle(
+                          color: Color(0xFF000046),
+                          fontSize: _kDatePickerFontSize),
                       textAlign: TextAlign.center,
                       softWrap: false,
                       overflow: TextOverflow.fade,
@@ -381,7 +397,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
                 alignment: Alignment.center,
                 child: Text(
                   "${index + 1}$dayAppend",
-                  style: TextStyle(color: Color(0xFF000046), fontSize: _kDatePickerFontSize),
+                  style: TextStyle(
+                      color: Color(0xFF000046), fontSize: _kDatePickerFontSize),
                   textAlign: TextAlign.start,
                 ),
               );
@@ -391,14 +408,14 @@ class _DatePickerState extends State<_DatePickerComponent> {
   }
 
   Widget _renderItemView() {
-    String yearAppend = _localeYear();
-    String monthAppend = _localeMonth();
-    String dayAppend = _localeDay();
+    String yearAppend = LocaleMessage.getLocaleYearUnit(widget.locale);
+    String monthAppend = LocaleMessage.getLocaleMonthUnit(widget.locale);
+    String dayAppend = LocaleMessage.getLocaleDayUnit(widget.locale);
 
     List<Widget> pickers = new List<Widget>();
-    List<String> formatters = widget.dateFormat.split('-');
-    for (int i = 0; i < formatters.length; i++) {
-      var format = formatters[i];
+    List<String> formatSplit = widget.dateFormat.split('-');
+    for (int i = 0; i < formatSplit.length; i++) {
+      var format = formatSplit[i];
       if (format.contains("yy")) {
         pickers.add(_renderYearsPickerComponent(yearAppend));
       } else if (format.contains("mm")) {
@@ -416,8 +433,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   // Title View
   Widget _renderTitleActionsView() {
-    String done = _localeDone();
-    String cancel = _localeCancel();
+    String done = LocaleMessage.getLocaleDone(widget.locale);
+    String cancel = LocaleMessage.getLocaleCancel(widget.locale);
 
     return Container(
       height: _kDatePickerTitleHeight,
@@ -450,7 +467,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
               ),
               onPressed: () {
                 if (widget.route.onConfirm != null) {
-                  widget.route.onConfirm(_currentYear, _currentMonth, _currentDate);
+                  widget.route
+                      .onConfirm(_currentYear, _currentMonth, _currentDate);
                 }
                 Navigator.pop(context);
               },
@@ -461,184 +479,24 @@ class _DatePickerState extends State<_DatePickerComponent> {
     );
   }
 
-  String _localeDone() {
-    return LocaleMessage.getLocaleDone(widget.locale);
-
-//    if (widget.locale == null) {
-//      return 'Done';
-//    }
-//
-//    String lang = widget.locale.split('_').first;
-//
-//    switch (lang) {
-//      case 'en':
-//        return 'Done';
-//        break;
-//
-//      case 'zh':
-//        return '确定';
-//        break;
-//
-//      case 'pt-br':
-//        return 'Feito';
-//        break;
-//
-//      default:
-//        return '';
-//        break;
-//    }
-  }
-
-  String _localeCancel() {
-    return LocaleMessage.getLocaleCancel(widget.locale);
-//
-//    if (widget.locale == null) {
-//      return 'Cancel';
-//    }
-//
-//    String lang = widget.locale.split('_').first;
-//
-//    switch (lang) {
-//      case 'en':
-//        return 'Cancel';
-//        break;
-//
-//      case 'zh':
-//        return '取消';
-//        break;
-//
-//      case 'pt-br':
-//        return 'Cancelar';
-//        break;
-//
-//      default:
-//        return '';
-//        break;
-//    }
-  }
-
-  String _localeYear() {
-    return LocaleMessage.getLocaleYearUnit(widget.locale);
-
-//    if (widget.locale == null) {
-//      return '';
-//    }
-//
-//    String lang = widget.locale.split('_').first;
-//
-//    switch (lang) {
-//      case 'zh':
-//        return '年';
-//        break;
-//
-//      default:
-//        return '';
-//        break;
-//    }
-  }
-
-  String _localeMonth() {
-    return LocaleMessage.getLocaleMonthUnit(widget.locale);
-
-//    if (widget.locale == null) {
-//      return '';
-//    }
-//
-//    String lang = widget.locale.split('_').first;
-//
-//    switch (lang) {
-//      case 'zh':
-//        return '月';
-//        break;
-//
-//      default:
-//        return '';
-//        break;
-//    }
-  }
-
+  // format month
   String _formatMonthComplex(int month, String format) {
     if (widget.locale == null) {
       return (month + 1).toString();
     }
 
-    String lang = widget.locale.split('_').first;
-
-    switch (lang) {
-      case 'en':
-        const months = [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December"
-        ];
-        if (format.length <= 2) {
-          print(format + ', ' + month.toString());
-          return (month + 1).toString();
-        } else if (format.length <= 3) {
-          return months[month].substring(0, 3);
-        } else {
-          return months[month];
-        }
-        break;
-
-      case 'pt-br':
-        const months = [
-          "Janeiro",
-          "Fevereiro",
-          "Março",
-          "Abril",
-          "Maio",
-          "Junho",
-          "Julho",
-          "Agosto",
-          "Setembro",
-          "Outubro",
-          "Novembro",
-          "Dezembro"
-        ];
-        if (format.length <= 2) {
-          print(format + ', ' + month.toString());
-          return (month + 1).toString();
-        } else if (format.length <= 3) {
-          return months[month].substring(0, 3);
-        } else {
-          return months[month];
-        }
-        break;
-
-      default:
-        return (month + 1).toString();
-        break;
+    List<String> months = LocaleMessage.getLocaleMonths(widget.locale);
+    if (months == null) {
+      return (month + 1).toString();
     }
-  }
 
-  String _localeDay() {
-    return LocaleMessage.getLocaleDayUnit(widget.locale);
-//
-//    if (widget.locale == null) {
-//      return '';
-//    }
-//
-//    String lang = widget.locale.split('_').first;
-//
-//    switch (lang) {
-//      case 'zh':
-//        return '日';
-//        break;
-//
-//      default:
-//        return '';
-//        break;
-//    }
+    if (format.length <= 2) {
+      return (month + 1).toString();
+    } else if (format.length <= 3) {
+      return months[month].substring(0, 3);
+    } else {
+      return months[month];
+    }
   }
 }
 
@@ -657,7 +515,10 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
     }
 
     return new BoxConstraints(
-        minWidth: constraints.maxWidth, maxWidth: constraints.maxWidth, minHeight: 0.0, maxHeight: maxHeight);
+        minWidth: constraints.maxWidth,
+        maxWidth: constraints.maxWidth,
+        minHeight: 0.0,
+        maxHeight: maxHeight);
   }
 
   @override

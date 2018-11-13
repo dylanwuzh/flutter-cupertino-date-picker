@@ -72,6 +72,49 @@ class LocaleMessage {
     }
   }
 
+  /// Get format month text
+  static getLocaleMonths(String locale) {
+    String lang = _getLocaleLang(locale);
+
+    switch (lang) {
+      case 'en':
+        return [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ];
+
+      case 'pt-br':
+        return [
+          "Janeiro",
+          "Fevereiro",
+          "Março",
+          "Abril",
+          "Maio",
+          "Junho",
+          "Julho",
+          "Agosto",
+          "Setembro",
+          "Outubro",
+          "Novembro",
+          "Dezembro"
+        ];
+
+      default:
+        return null;
+    }
+  }
+
+  // Get locale language
   static String _getLocaleLang(String locale) {
     return locale == null ? '' : locale.split('_').first;
   }
