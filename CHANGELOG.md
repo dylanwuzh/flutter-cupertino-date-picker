@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Add custom cancel and confirm button.
+
 ## 0.1.0
 
 * Refactor locale message.

@@ -59,6 +59,14 @@ class _MyHomePageState extends State<MyHomePage> {
       initialYear: _year,
       initialMonth: _month,
       initialDate: _date,
+      confirm: Text(
+        'custom ok',
+        style: TextStyle(color: Colors.red),
+      ),
+      cancel: Text(
+        'custom cancel',
+        style: TextStyle(color: Colors.cyan),
+      ),
       locale: _lang,
       dateFormat: _format,
       onChanged: (year, month, date) {

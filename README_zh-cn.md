@@ -45,6 +45,8 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 /// initialYear: 年份选择器的初始值。
 /// initialMonth: 月份选择器的初始值。
 /// initialDate: 日期选择器的初始值。
+/// cancel: 自定义的取消按钮。
+/// confirm: 自定义的确认按钮。
 /// onChange: 当前选择的日期改变时的回调事件。
 /// onConfirm: 点击标题栏确定按钮的回调事件。
 DatePicker.showDatePicker(
@@ -56,6 +58,8 @@ DatePicker.showDatePicker(
   initialYear: 2018,
   initialMonth: 6,
   initialDate: 21,
+  cancel: Text('custom cancel'),
+  confirm: Text('custom confirm'),
   onChanged: (year, month, date) { },
   onConfirm: (year, month, date) { },
 );
