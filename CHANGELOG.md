@@ -1,3 +1,7 @@
+## 0.4.0
+
+- Add `onCancel` callback.
+
 ## 0.3.0
 
 - Support Flutter v1.0.

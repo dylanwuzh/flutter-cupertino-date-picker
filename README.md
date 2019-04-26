@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^0.3.0
+  flutter_cupertino_date_picker: ^0.4.0
 ```
 
 #### 2\. Install
@@ -51,6 +51,7 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 /// dateFormat: Format English months.
 /// onChange: An option callback when the currently selected datetime changes.
 /// onConfirm: An option callback when tap the confirm button in title bar.
+/// onCancel: An option callback when tap the cancel button in title bar.
 DatePicker.showDatePicker(
   context,
   showTitleActions: true,
@@ -65,6 +66,7 @@ DatePicker.showDatePicker(
   dateFormat: 'yyyy-mm-dd'
   onChanged: (year, month, date) { },
   onConfirm: (year, month, date) { },
+  onCancel: () { },
 );
 ```
 
