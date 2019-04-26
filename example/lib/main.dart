@@ -51,35 +51,33 @@ class _MyHomePageState extends State<MyHomePage> {
   /// Display date picker.
   void _showDatePicker() {
     final bool showTitleActions = false;
-    DatePicker.showDatePicker(
-      context,
-      showTitleActions: _showTitleActions,
-      minYear: 1970,
-      maxYear: 2020,
-      initialYear: _year,
-      initialMonth: _month,
-      initialDate: _date,
-      confirm: Text(
-        'custom ok',
-        style: TextStyle(color: Colors.red),
-      ),
-      cancel: Text(
-        'custom cancel',
-        style: TextStyle(color: Colors.cyan),
-      ),
-      locale: _lang,
-      dateFormat: _format,
-      onChanged: (year, month, date) {
-        debugPrint('onChanged date: $year-$month-$date');
+    DatePicker.showDatePicker(context,
+        showTitleActions: _showTitleActions,
+        minYear: 1970,
+        maxYear: 2020,
+        initialYear: _year,
+        initialMonth: _month,
+        initialDate: _date,
+        confirm: Text(
+          'custom ok',
+          style: TextStyle(color: Colors.red),
+        ),
+        cancel: Text(
+          'custom cancel',
+          style: TextStyle(color: Colors.cyan),
+        ),
+        locale: _lang,
+        dateFormat: _format, onChanged: (year, month, date) {
+      debugPrint('onChanged date: $year-$month-$date');
 
-        if (!showTitleActions) {
-          _changeDatetime(year, month, date);
-        }
-      },
-      onConfirm: (year, month, date) {
+      if (!showTitleActions) {
         _changeDatetime(year, month, date);
-      },
-    );
+      }
+    }, onConfirm: (year, month, date) {
+      _changeDatetime(year, month, date);
+    }, onCancel: () {
+      debugPrint('onCancel');
+    });
   }
 
   void _changeDatetime(int year, int month, int date) {

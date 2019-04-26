@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import './locale_message.dart';
 
 typedef DateChangedCallback(int year, int month, int date);
+typedef VoidCallback();
 
 const String _kDateLocaleDefault = 'zh';
 const String _kDateFormatDefault = 'yyyy-mm-dd';
@@ -43,6 +44,7 @@ class DatePicker {
     Widget confirm,
     DateChangedCallback onChanged,
     DateChangedCallback onConfirm,
+    VoidCallback onCancel,
     locale: _kDateLocaleDefault,
     dateFormat: _kDateFormatDefault,
   }) {
@@ -74,6 +76,7 @@ class DatePicker {
         confirm: confirm,
         onChanged: onChanged,
         onConfirm: onConfirm,
+        onCancel: onCancel,
         locale: locale,
         dateFormat: dateFormat,
         theme: Theme.of(context, shadowThemeOnly: true),
@@ -95,6 +98,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.confirm,
     this.onChanged,
     this.onConfirm,
+    this.onCancel,
     this.theme,
     this.barrierLabel,
     this.locale,
@@ -107,6 +111,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final Widget cancel, confirm;
   final DateChangedCallback onChanged;
   final DateChangedCallback onConfirm;
+  final VoidCallback onCancel;
   final ThemeData theme;
   final String locale;
   final String dateFormat;
@@ -472,7 +477,12 @@ class _DatePickerState extends State<_DatePickerComponent> {
             height: _kDatePickerTitleHeight,
             child: FlatButton(
               child: cancelWidget,
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                if (widget.route.onCancel != null) {
+                  widget.route.onCancel();
+                }
+                Navigator.pop(context);
+              },
             ),
           ),
           Container(
