@@ -1,3 +1,11 @@
+## 0.5.0
+
+- Add `onChanged2(DateTime dateTime, List<int> selectedIndex)` callback.
+- Add `onConfirm2(DateTime dateTime, List<int> selectedIndex)` callback.
+- Add `minDateTime`.
+- Add `maxDateTime`.
+- Add `initialDateTime`.
+
 ## 0.4.0
 
 - Add `onCancel` callback.

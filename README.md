@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^0.4.0
+  flutter_cupertino_date_picker: ^0.5.0
 ```
 
 #### 2\. Install
@@ -46,11 +46,16 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 /// initialYear: Initial value of year.
 /// initialMonth: Initial value of month.
 /// initialDate: Initial value of date.
+/// minDateTime: Min value of year's selection range.
+/// maxDateTime: Max value of year's selection range.
+/// initialDateTime: Initial value of date time.
 /// cancel: Custom cancel button.
 /// confirm: Custom confirm button.
 /// dateFormat: Format English months.
-/// onChange: An option callback when the currently selected datetime changes.
+/// onChanged: An option callback when the currently selected datetime changes.
 /// onConfirm: An option callback when tap the confirm button in title bar.
+/// onChanged2: An option callback when the currently selected datetime changes.
+/// onConfirm2: An option callback when tap the confirm button in title bar.
 /// onCancel: An option callback when tap the cancel button in title bar.
 DatePicker.showDatePicker(
   context,
@@ -61,11 +66,16 @@ DatePicker.showDatePicker(
   initialYear: 2018,
   initialMonth: 6,
   initialDate: 21,
+  minDateTime: DateTime(2000),
+  maxDateTime: DateTime(2021),
+  initialDateTime: DateTime(2019, 1, 1),
   cancel: Text('custom cancel'),
   confirm: Text('custom confirm'),
   dateFormat: 'yyyy-mm-dd'
   onChanged: (year, month, date) { },
   onConfirm: (year, month, date) { },
+  onChanged2: (dateTime, List<int> indexList) { },
+  onConfirm2: (dateTime, List<int> indexList) { },
   onCancel: () { },
 );
 ```

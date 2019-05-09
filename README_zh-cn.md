@@ -14,7 +14,7 @@ Flutter 的日期选择器控件，iOS 样式。
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^0.4.0
+  flutter_cupertino_date_picker: ^0.5.0
 ```
 
 #### 2\. 获取包
@@ -45,10 +45,15 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 /// initialYear: 年份选择器的初始值。
 /// initialMonth: 月份选择器的初始值。
 /// initialDate: 日期选择器的初始值。
+/// minDateTime: 年份选择器的最小值，使用DateTime类型设置。
+/// maxDateTime: 年份选择器的最大值，使用DateTime类型设置。
+/// initialDateTime: 选择器的初始值。
 /// cancel: 自定义的取消按钮。
 /// confirm: 自定义的确认按钮。
-/// onChange: 当前选择的日期改变时的回调事件。
+/// onChanged: 当前选择的日期改变时的回调事件。
 /// onConfirm: 点击标题栏确定按钮的回调事件。
+/// onChanged2: 当前选择的日期改变时的回调事件。
+/// onConfirm2: 点击标题栏确定按钮的回调事件。
 /// onCancel: 点击标题栏取消按钮的回调事件。
 DatePicker.showDatePicker(
   context,
@@ -59,10 +64,15 @@ DatePicker.showDatePicker(
   initialYear: 2018,
   initialMonth: 6,
   initialDate: 21,
+  minDateTime: DateTime(2000),
+  maxDateTime: DateTime(2021),
+  initialDateTime: DateTime(2019, 1, 1),
   cancel: Text('custom cancel'),
   confirm: Text('custom confirm'),
   onChanged: (year, month, date) { },
   onConfirm: (year, month, date) { },
+  onChanged2: (dateTime, List<int> indexList) { },
+  onConfirm2: (dateTime, List<int> indexList) { },
   onCancel: () { },
 );
 ```

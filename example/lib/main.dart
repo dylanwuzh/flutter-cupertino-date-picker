@@ -51,33 +51,49 @@ class _MyHomePageState extends State<MyHomePage> {
   /// Display date picker.
   void _showDatePicker() {
     final bool showTitleActions = false;
-    DatePicker.showDatePicker(context,
-        showTitleActions: _showTitleActions,
-        minYear: 1970,
-        maxYear: 2020,
-        initialYear: _year,
-        initialMonth: _month,
-        initialDate: _date,
-        confirm: Text(
-          'custom ok',
-          style: TextStyle(color: Colors.red),
-        ),
-        cancel: Text(
-          'custom cancel',
-          style: TextStyle(color: Colors.cyan),
-        ),
-        locale: _lang,
-        dateFormat: _format, onChanged: (year, month, date) {
-      debugPrint('onChanged date: $year-$month-$date');
+    DatePicker.showDatePicker(
+      context,
+      showTitleActions: _showTitleActions,
+      minYear: 1970,
+      maxYear: 2020,
+      initialYear: _year,
+      initialMonth: _month,
+      initialDate: _date,
+      minDateTime: DateTime(2000),
+      maxDateTime: DateTime(2021),
+      initialDateTime: DateTime(2019, 1, 1),
+      confirm: Text(
+        'custom ok',
+        style: TextStyle(color: Colors.red),
+      ),
+      cancel: Text(
+        'custom cancel',
+        style: TextStyle(color: Colors.cyan),
+      ),
+      locale: _lang,
+      dateFormat: _format,
+      onChanged: (year, month, date) {
+        debugPrint('onChanged date: $year-$month-$date');
 
-      if (!showTitleActions) {
+        if (!showTitleActions) {
+          _changeDatetime(year, month, date);
+        }
+      },
+      onConfirm: (year, month, date) {
         _changeDatetime(year, month, date);
-      }
-    }, onConfirm: (year, month, date) {
-      _changeDatetime(year, month, date);
-    }, onCancel: () {
-      debugPrint('onCancel');
-    });
+      },
+      onCancel: () {
+        debugPrint('onCancel');
+      },
+      onChanged2: (dateTime, List<int> index) {
+        debugPrint('onChanged2 date: $dateTime');
+        debugPrint('onChanged2 index: $index');
+      },
+      onConfirm2: (dateTime, List<int> index) {
+        debugPrint('onConfirm2 date: $dateTime');
+        debugPrint('onConfirm2 index: $index');
+      },
+    );
   }
 
   void _changeDatetime(int year, int month, int date) {

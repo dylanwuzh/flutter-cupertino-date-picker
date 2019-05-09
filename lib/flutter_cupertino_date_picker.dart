@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import './locale_message.dart';
 
 typedef DateChangedCallback(int year, int month, int date);
+typedef DateValueCallback(DateTime dateTime, List<int> selectedIndex);
 typedef VoidCallback();
 
 const String _kDateLocaleDefault = 'zh';
@@ -35,6 +36,9 @@ class DatePicker {
   static void showDatePicker(
     BuildContext context, {
     bool showTitleActions: true,
+    DateTime minDateTime,
+    DateTime maxDateTime,
+    DateTime initialDateTime,
     int minYear: _kDefaultMinYear,
     int maxYear: _kDefaultMaxYear,
     int initialYear,
@@ -44,6 +48,8 @@ class DatePicker {
     Widget confirm,
     DateChangedCallback onChanged,
     DateChangedCallback onConfirm,
+    DateValueCallback onChanged2,
+    DateValueCallback onConfirm2,
     VoidCallback onCancel,
     locale: _kDateLocaleDefault,
     dateFormat: _kDateFormatDefault,
@@ -52,6 +58,15 @@ class DatePicker {
       dateFormat = _kDateFormatDefault;
     }
 
+    // handle the range of year
+    if (minDateTime != null) {
+      minYear = minDateTime.year;
+    }
+    if (maxDateTime != null) {
+      maxYear = maxDateTime.year;
+    }
+
+    // handle initial DateTime
     DateTime now = DateTime.now();
     if (initialYear == null) {
       initialYear = now.year;
@@ -61,6 +76,11 @@ class DatePicker {
     }
     if (initialDate == null) {
       initialDate = now.day;
+    }
+    if (initialDateTime != null) {
+      initialYear = initialDateTime.year;
+      initialMonth = initialDateTime.month;
+      initialDate = initialDateTime.day;
     }
 
     Navigator.push(
@@ -76,6 +96,8 @@ class DatePicker {
         confirm: confirm,
         onChanged: onChanged,
         onConfirm: onConfirm,
+        onChanged2: onChanged2,
+        onConfirm2: onConfirm2,
         onCancel: onCancel,
         locale: locale,
         dateFormat: dateFormat,
@@ -98,6 +120,8 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.confirm,
     this.onChanged,
     this.onConfirm,
+    this.onChanged2,
+    this.onConfirm2,
     this.onCancel,
     this.theme,
     this.barrierLabel,
@@ -111,6 +135,8 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final Widget cancel, confirm;
   final DateChangedCallback onChanged;
   final DateChangedCallback onConfirm;
+  final DateValueCallback onChanged2;
+  final DateValueCallback onConfirm2;
   final VoidCallback onCancel;
   final ThemeData theme;
   final String locale;
@@ -150,7 +176,6 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
         initialDate: initialDate,
         cancel: cancel,
         confirm: confirm,
-        onChanged: onChanged,
         locale: locale,
         dateFormat: dateFormat,
         route: this,
@@ -174,11 +199,9 @@ class _DatePickerComponent extends StatefulWidget {
       this.initialDate: 1,
       this.cancel,
       this.confirm,
-      this.onChanged,
       this.locale,
       this.dateFormat});
 
-  final DateChangedCallback onChanged;
   final int minYear, maxYear, initialYear, initialMonth, initialDate;
 
   final Widget cancel;
@@ -258,6 +281,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
     int year = widget.minYear + index;
     if (_currentYear != year) {
       _currentYear = year;
+      _changeDateRange();
       _notifyDateChanged();
     }
   }
@@ -266,16 +290,20 @@ class _DatePickerState extends State<_DatePickerComponent> {
     int month = index + 1;
     if (_currentMonth != month) {
       _currentMonth = month;
-      int dateCount = _calcDateCount();
-      if (_dateCountOfMonth != dateCount) {
-        setState(() {
-          _dateCountOfMonth = dateCount;
-        });
-      }
-      if (_currentDate > dateCount) {
-        _currentDate = dateCount;
-      }
+      _changeDateRange();
       _notifyDateChanged();
+    }
+  }
+
+  void _changeDateRange() {
+    int dateCount = _calcDateCount();
+    if (_dateCountOfMonth != dateCount) {
+      setState(() {
+        _dateCountOfMonth = dateCount;
+      });
+    }
+    if (_currentDate > dateCount) {
+      _currentDate = dateCount;
     }
   }
 
@@ -300,9 +328,20 @@ class _DatePickerState extends State<_DatePickerComponent> {
   }
 
   void _notifyDateChanged() {
-    if (widget.onChanged != null) {
-      widget.onChanged(_currentYear, _currentMonth, _currentDate);
+    if (widget.route.onChanged != null) {
+      widget.route.onChanged(_currentYear, _currentMonth, _currentDate);
     }
+    if (widget.route.onChanged2 != null) {
+      DateTime dateTime = DateTime(_currentYear, _currentMonth, _currentDate);
+      widget.route.onChanged2(dateTime, _calcSelectIndexList());
+    }
+  }
+
+  List<int> _calcSelectIndexList() {
+    int yearIndex = this._currentYear - this.minYear;
+    int monthIndex = this._currentMonth - 1;
+    int dateIndex = this._currentDate - 1;
+    return [yearIndex, monthIndex, dateIndex];
   }
 
   Widget _renderPickerView() {
@@ -492,6 +531,10 @@ class _DatePickerState extends State<_DatePickerComponent> {
               onPressed: () {
                 if (widget.route.onConfirm != null) {
                   widget.route.onConfirm(_currentYear, _currentMonth, _currentDate);
+                }
+                if (widget.route.onConfirm2 != null) {
+                  DateTime dateTime = DateTime(_currentYear, _currentMonth, _currentDate);
+                  widget.route.onConfirm2(dateTime, _calcSelectIndexList());
                 }
                 Navigator.pop(context);
               },
