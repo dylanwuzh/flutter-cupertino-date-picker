@@ -92,8 +92,8 @@ class LocaleMessage {
           "November",
           "December"
         ];
-        
-        case 'es':
+
+      case 'es':
         return [
           "Enero",
           "Febrero",
@@ -130,7 +130,7 @@ class LocaleMessage {
     }
   }
 
-  // Get locale language
+  /// Get locale language
   static String _getLocaleLang(String locale) {
     return locale == null ? '' : locale.split('_').first;
   }
