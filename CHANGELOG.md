@@ -1,3 +1,7 @@
+## 0.6.0
+
+- Add `DatePickerWidget` widget for display DatePicker in page.
+
 ## 0.5.0
 
 - Add `onChanged2(DateTime dateTime, List<int> selectedIndex)` callback.

@@ -14,7 +14,7 @@ Flutter 的日期选择器控件，iOS 样式。
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^0.5.0
+  flutter_cupertino_date_picker: ^0.6.0
 ```
 
 #### 2\. 获取包
@@ -34,6 +34,8 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 ```
 
 #### 4\. 显示控件
+
+##### BottomSheet形式
 
 ```dart
 ///
@@ -75,6 +77,18 @@ DatePicker.showDatePicker(
   onConfirm2: (dateTime, List<int> indexList) { },
   onCancel: () { },
 );
+```
+
+##### 普通控件，可以在页面上显示
+
+```dart
+DatePickerWidget(
+  minYear: 2005,
+  maxYear: 2019,
+  initDateTime: DateTime(2018, 1, 1),
+  dateFormat: 'mm-dd-yyyy',
+  onChanged2: (dateTime, selectedIndex) { },
+)
 ```
 
 ***showTitleActions: false***

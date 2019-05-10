@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^0.5.0
+  flutter_cupertino_date_picker: ^0.6.0
 ```
 
 #### 2\. Install
@@ -35,6 +35,8 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 ```
 
 #### 4\. Display DatePicker
+
+##### Bottom Sheet DatePicker
 
 ```dart
 ///
@@ -78,6 +80,18 @@ DatePicker.showDatePicker(
   onConfirm2: (dateTime, List<int> indexList) { },
   onCancel: () { },
 );
+```
+
+##### DatePicker Widget
+
+```dart
+DatePickerWidget(
+  minYear: 2005,
+  maxYear: 2019,
+  initDateTime: DateTime(2018, 1, 1),
+  dateFormat: 'mm-dd-yyyy',
+  onChanged2: (dateTime, selectedIndex) { },
+)
 ```
 
 ***showTitleActions: false***
