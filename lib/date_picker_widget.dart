@@ -43,7 +43,8 @@ class DatePickerWidget extends StatefulWidget {
   final DateValueCallback onChanged2, onConfirm2;
 
   @override
-  State<StatefulWidget> createState() => _DatePickerWidgetState(this.minYear, this.maxYear, this.initDateTime);
+  State<StatefulWidget> createState() =>
+      _DatePickerWidgetState(this.minYear, this.maxYear, this.initDateTime);
 }
 
 class _DatePickerWidgetState extends State<DatePickerWidget> {
@@ -64,15 +65,18 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     _dayCountOfMonth = _calcDayCountOfMonth();
 
     // create scroll controller
-    _yearScrollCtrl = FixedExtentScrollController(initialItem: _currentYear - minYear);
-    _monthScrollCtrl = FixedExtentScrollController(initialItem: _currentMonth - 1);
+    _yearScrollCtrl =
+        FixedExtentScrollController(initialItem: _currentYear - minYear);
+    _monthScrollCtrl =
+        FixedExtentScrollController(initialItem: _currentMonth - 1);
     _dayScrollCtrl = FixedExtentScrollController(initialItem: _currentDay - 1);
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Material(color: Colors.transparent, child: _renderPickerView(context)),
+      child: Material(
+          color: Colors.transparent, child: _renderPickerView(context)),
     );
   }
 
@@ -80,7 +84,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   Widget _renderPickerView(BuildContext context) {
     Widget datePickerWidget = _renderDatePickerWidget();
     if (widget.showTitleActions) {
-      return Column(children: <Widget>[_renderTitleWidget(context), datePickerWidget]);
+      return Column(
+          children: <Widget>[_renderTitleWidget(context), datePickerWidget]);
     }
     return datePickerWidget;
   }
@@ -90,13 +95,17 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     Widget cancelWidget = widget.cancel;
     if (cancelWidget == null) {
       var cancelText = LocaleMessage.getLocaleCancel(widget.locale);
-      cancelWidget = Text(cancelText, style: TextStyle(color: Theme.of(context).unselectedWidgetColor, fontSize: 16.0));
+      cancelWidget = Text(cancelText,
+          style: TextStyle(
+              color: Theme.of(context).unselectedWidgetColor, fontSize: 16.0));
     }
 
     Widget confirmWidget = widget.confirm;
     if (confirmWidget == null) {
       var confirmText = LocaleMessage.getLocaleDone(widget.locale);
-      confirmWidget = Text(confirmText, style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16.0));
+      confirmWidget = Text(confirmText,
+          style:
+              TextStyle(color: Theme.of(context).primaryColor, fontSize: 16.0));
     }
 
     return Container(
@@ -107,11 +116,13 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         children: <Widget>[
           Container(
             height: DATE_PICKER_TITLE_HEIGHT,
-            child: FlatButton(child: cancelWidget, onPressed: () => _onPressedCancel()),
+            child: FlatButton(
+                child: cancelWidget, onPressed: () => _onPressedCancel()),
           ),
           Container(
             height: DATE_PICKER_TITLE_HEIGHT,
-            child: FlatButton(child: confirmWidget, onPressed: () => _onPressedConfirm()),
+            child: FlatButton(
+                child: confirmWidget, onPressed: () => _onPressedConfirm()),
           ),
         ],
       ),
@@ -160,7 +171,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         pickers.add(_renderDaysPickerComponent(dayAppend));
       }
     }
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: pickers);
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween, children: pickers);
   }
 
   /// render the picker component of year
@@ -171,21 +183,24 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         padding: EdgeInsets.all(8.0),
         height: DATE_PICKER_HEIGHT,
         decoration: BoxDecoration(color: widget.backgroundColor),
-        child: CupertinoPicker(
+        child: CupertinoPicker.builder(
           backgroundColor: widget.backgroundColor,
           scrollController: _yearScrollCtrl,
           itemExtent: DATE_PICKER_ITEM_HEIGHT,
           onSelectedItemChanged: (int index) => _changeYearSelection(index),
-          children: List.generate(widget.maxYear - widget.minYear + 1, (int index) {
+          childCount: widget.maxYear - widget.minYear + 1,
+          itemBuilder: (context, index) {
             return Container(
               height: DATE_PICKER_ITEM_HEIGHT,
               alignment: Alignment.center,
               child: Text(
                 '${widget.minYear + index}$yearAppend',
-                style: TextStyle(color: DATE_PICKER_TEXT_COLOR, fontSize: DATE_PICKER_FONT_SIZE),
+                style: TextStyle(
+                    color: DATE_PICKER_TEXT_COLOR,
+                    fontSize: DATE_PICKER_FONT_SIZE),
               ),
             );
-          }),
+          },
         ),
       ),
     );
@@ -209,12 +224,13 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         padding: EdgeInsets.all(8.0),
         height: DATE_PICKER_HEIGHT,
         decoration: BoxDecoration(color: widget.backgroundColor),
-        child: CupertinoPicker(
+        child: CupertinoPicker.builder(
           backgroundColor: widget.backgroundColor,
           scrollController: _monthScrollCtrl,
           itemExtent: DATE_PICKER_ITEM_HEIGHT,
           onSelectedItemChanged: (int index) => _changeMonthSelection(index),
-          children: List.generate(DATE_PICKER_MONTH_COUNT, (int index) {
+          childCount: DATE_PICKER_MONTH_COUNT,
+          itemBuilder: (context, index) {
             return Container(
               height: DATE_PICKER_ITEM_HEIGHT,
               alignment: Alignment.center,
@@ -223,10 +239,12 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
                     // index is 0,1,2...11  month is 1,2,3...12
                     ? '${index + 1}$monthAppend'
                     : '${_formatMonthComplex(index, format)}$monthAppend',
-                style: TextStyle(color: DATE_PICKER_TEXT_COLOR, fontSize: DATE_PICKER_FONT_SIZE),
+                style: TextStyle(
+                    color: DATE_PICKER_TEXT_COLOR,
+                    fontSize: DATE_PICKER_FONT_SIZE),
               ),
             );
-          }),
+          },
         ),
       ),
     );
@@ -270,22 +288,24 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         padding: EdgeInsets.all(8.0),
         height: DATE_PICKER_HEIGHT,
         decoration: BoxDecoration(color: widget.backgroundColor),
-        child: CupertinoPicker(
-          backgroundColor: widget.backgroundColor,
-          scrollController: _dayScrollCtrl,
-          itemExtent: DATE_PICKER_ITEM_HEIGHT,
-          onSelectedItemChanged: (int index) => _changeDaySelection(index),
-          children: List.generate(_dayCountOfMonth, (int index) {
-            return Container(
-              height: DATE_PICKER_ITEM_HEIGHT,
-              alignment: Alignment.center,
-              child: Text(
-                "${index + 1}$dayAppend",
-                style: TextStyle(color: DATE_PICKER_TEXT_COLOR, fontSize: DATE_PICKER_FONT_SIZE),
-              ),
-            );
-          }),
-        ),
+        child: CupertinoPicker.builder(
+            backgroundColor: widget.backgroundColor,
+            scrollController: _dayScrollCtrl,
+            itemExtent: DATE_PICKER_ITEM_HEIGHT,
+            onSelectedItemChanged: (int index) => _changeDaySelection(index),
+            childCount: _dayCountOfMonth,
+            itemBuilder: (context, index) {
+              return Container(
+                height: DATE_PICKER_ITEM_HEIGHT,
+                alignment: Alignment.center,
+                child: Text(
+                  "${index + 1}$dayAppend",
+                  style: TextStyle(
+                      color: DATE_PICKER_TEXT_COLOR,
+                      fontSize: DATE_PICKER_FONT_SIZE),
+                ),
+              );
+            }),
       ),
     );
   }
@@ -305,6 +325,13 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     if (_dayCountOfMonth != dayCount) {
       setState(() {
         _dayCountOfMonth = dayCount;
+
+        // CupertinoPicker refresh data not working (https://github.com/flutter/flutter/issues/22999)
+        int currDay = _currentDay;
+        _dayScrollCtrl.jumpToItem(dayCount - 1);
+        if (currDay < dayCount) {
+          _dayScrollCtrl.jumpToItem(currDay - 1);
+        }
       });
     }
     if (_currentDay > dayCount) {

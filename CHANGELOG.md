@@ -1,3 +1,7 @@
+## 0.7.0
+
+- Change days in a month when moth changes.
+
 ## 0.6.0
 
 - Add `DatePickerWidget` widget for display DatePicker in page.
