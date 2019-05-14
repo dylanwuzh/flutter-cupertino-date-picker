@@ -45,7 +45,7 @@ class _PickerBottomSheetState extends State<PickerBottomSheet> {
       initialMonth: _month,
       initialDate: _date,
       minDateTime: DateTime(2000),
-      maxDateTime: DateTime(2021),
+      maxDateTime: DateTime(2021, 5, 15),
       initialDateTime: DateTime(2019, 1, 1),
       confirm: Text('custom ok', style: TextStyle(color: Colors.red)),
       cancel: Text('custom cancel', style: TextStyle(color: Colors.cyan)),

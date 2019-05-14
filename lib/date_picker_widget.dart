@@ -13,10 +13,12 @@ import 'package:flutter_cupertino_date_picker/locale_message.dart';
 class DatePickerWidget extends StatefulWidget {
   DatePickerWidget({
     Key key,
-    this.minYear,
-    this.maxYear,
+    @deprecated this.minYear,
+    @deprecated this.maxYear,
+    this.minDateTime,
+    this.maxDateTime,
     this.initDateTime,
-    this.dateFormat,
+    this.dateFormat: DATE_PICKER_FORMAT_DEFAULT,
     this.showTitleActions: false,
     this.locale: 'zh',
     this.backgroundColor: Colors.white,
@@ -29,8 +31,10 @@ class DatePickerWidget extends StatefulWidget {
     this.onConfirm2,
   }) : super(key: key);
 
+  @deprecated
   final int minYear, maxYear;
-  final DateTime initDateTime;
+
+  final DateTime minDateTime, maxDateTime, initDateTime;
   final String dateFormat;
 
   final bool showTitleActions;
@@ -43,33 +47,51 @@ class DatePickerWidget extends StatefulWidget {
   final DateValueCallback onChanged2, onConfirm2;
 
   @override
-  State<StatefulWidget> createState() =>
-      _DatePickerWidgetState(this.minYear, this.maxYear, this.initDateTime);
+  State<StatefulWidget> createState() => _DatePickerWidgetState(
+      this.minDateTime, this.maxDateTime, this.initDateTime,
+      minYear: this.minYear, maxYear: this.maxYear);
 }
 
 class _DatePickerWidgetState extends State<DatePickerWidget> {
-  int _currentYear, _currentMonth, _currentDay;
-  int _dayCountOfMonth;
+  DateTime _minDateTime, _maxDateTime;
+  int _currYear, _currMonth, _currDay;
+  List<int> _monthRange, _dayRange;
   FixedExtentScrollController _yearScrollCtrl, _monthScrollCtrl, _dayScrollCtrl;
 
-  _DatePickerWidgetState(minYear, maxYear, DateTime initDateTime) {
-    this._currentYear = initDateTime.year;
-    this._currentMonth = initDateTime.month;
-    this._currentDay = initDateTime.day;
+  _DatePickerWidgetState(
+      DateTime minDateTime, DateTime maxDateTime, DateTime initDateTime,
+      {int minYear: DATE_PICKER_MIN_YEAR_DEFAULT,
+      int maxYear: DATE_PICKER_MAX_YEAR_DEFAULT}) {
+    if (initDateTime == null) {
+      initDateTime = DateTime.now();
+    }
+    this._currYear = initDateTime.year;
+    this._currMonth = initDateTime.month;
+    this._currDay = initDateTime.day;
 
-    // limit the range of year、month、day
-    this._currentYear = min(max(minYear, this._currentYear), maxYear);
-    this._currentMonth = min(max(1, this._currentMonth), 12);
-    this._currentDay = min(max(1, this._currentDay), 31);
+    // limit the range of year
+    this._minDateTime =
+        minDateTime ?? DateTime(minYear ?? DATE_PICKER_MIN_YEAR_DEFAULT);
+    this._maxDateTime =
+        maxDateTime ?? DateTime(maxYear ?? DATE_PICKER_MAX_YEAR_DEFAULT);
+    this._currYear =
+        min(max(_minDateTime.year, this._currYear), _maxDateTime.year);
 
-    _dayCountOfMonth = _calcDayCountOfMonth();
+    // limit the range of month
+    this._monthRange = _calcMonthRange();
+    this._currMonth =
+        min(max(this._monthRange[0], this._currMonth), this._monthRange[1]);
+
+    // limit the range of day
+    this._dayRange = _calcDayRange();
+    this._currDay =
+        min(max(this._dayRange[0], this._currDay), this._dayRange[1]);
 
     // create scroll controller
     _yearScrollCtrl =
-        FixedExtentScrollController(initialItem: _currentYear - minYear);
-    _monthScrollCtrl =
-        FixedExtentScrollController(initialItem: _currentMonth - 1);
-    _dayScrollCtrl = FixedExtentScrollController(initialItem: _currentDay - 1);
+        FixedExtentScrollController(initialItem: _currYear - _minDateTime.year);
+    _monthScrollCtrl = FixedExtentScrollController(initialItem: _currMonth - 1);
+    _dayScrollCtrl = FixedExtentScrollController(initialItem: _currDay - 1);
   }
 
   @override
@@ -140,10 +162,10 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   /// pressed confirm widget
   void _onPressedConfirm() {
     if (widget.onConfirm != null) {
-      widget.onConfirm(_currentYear, _currentMonth, _currentDay);
+      widget.onConfirm(_currYear, _currMonth, _currDay);
     }
     if (widget.onConfirm2 != null) {
-      DateTime dateTime = DateTime(_currentYear, _currentMonth, _currentDay);
+      DateTime dateTime = DateTime(_currYear, _currMonth, _currDay);
       widget.onConfirm2(dateTime, _calcSelectIndexList());
     }
     Navigator.pop(context);
@@ -188,13 +210,13 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           scrollController: _yearScrollCtrl,
           itemExtent: DATE_PICKER_ITEM_HEIGHT,
           onSelectedItemChanged: (int index) => _changeYearSelection(index),
-          childCount: widget.maxYear - widget.minYear + 1,
+          childCount: this._maxDateTime.year - this._minDateTime.year + 1,
           itemBuilder: (context, index) {
             return Container(
               height: DATE_PICKER_ITEM_HEIGHT,
               alignment: Alignment.center,
               child: Text(
-                '${widget.minYear + index}$yearAppend',
+                '${this._minDateTime.year + index}$yearAppend',
                 style: TextStyle(
                     color: DATE_PICKER_TEXT_COLOR,
                     fontSize: DATE_PICKER_FONT_SIZE),
@@ -208,10 +230,10 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   /// change the selection of year picker
   void _changeYearSelection(int index) {
-    int year = widget.minYear + index;
-    if (_currentYear != year) {
-      _currentYear = year;
-      _changeDayRange();
+    int year = this._minDateTime.year + index;
+    if (_currYear != year) {
+      _currYear = year;
+      _changeDateRange();
       _notifyDateChanged();
     }
   }
@@ -229,16 +251,15 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           scrollController: _monthScrollCtrl,
           itemExtent: DATE_PICKER_ITEM_HEIGHT,
           onSelectedItemChanged: (int index) => _changeMonthSelection(index),
-          childCount: DATE_PICKER_MONTH_COUNT,
+          childCount: _monthRange.last - _monthRange.first + 1,
           itemBuilder: (context, index) {
             return Container(
               height: DATE_PICKER_ITEM_HEIGHT,
               alignment: Alignment.center,
               child: Text(
                 (format == null)
-                    // index is 0,1,2...11  month is 1,2,3...12
-                    ? '${index + 1}$monthAppend'
-                    : '${_formatMonthComplex(index, format)}$monthAppend',
+                    ? '${_monthRange.first + index}$monthAppend'
+                    : '${_formatMonthComplex(_monthRange.first + index, format)}$monthAppend',
                 style: TextStyle(
                     color: DATE_PICKER_TEXT_COLOR,
                     fontSize: DATE_PICKER_FONT_SIZE),
@@ -252,10 +273,10 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   /// change the selection of month picker
   void _changeMonthSelection(int index) {
-    int month = index + 1;
-    if (_currentMonth != month) {
-      _currentMonth = month;
-      _changeDayRange();
+    int month = _monthRange.first + index;
+    if (_currMonth != month) {
+      _currMonth = month;
+      _changeDateRange();
       _notifyDateChanged();
     }
   }
@@ -263,20 +284,20 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   /// format month
   String _formatMonthComplex(int month, String format) {
     if (widget.locale == null) {
-      return (month + 1).toString();
+      return month.toString();
     }
 
     List<String> months = LocaleMessage.getLocaleMonths(widget.locale);
     if (months == null) {
-      return (month + 1).toString();
+      return month.toString();
     }
 
     if (format.length <= 2) {
-      return (month + 1).toString();
+      return month.toString();
     } else if (format.length <= 3) {
-      return months[month].substring(0, 3);
+      return months[month - 1].substring(0, 3);
     } else {
-      return months[month];
+      return months[month - 1];
     }
   }
 
@@ -293,13 +314,13 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
             scrollController: _dayScrollCtrl,
             itemExtent: DATE_PICKER_ITEM_HEIGHT,
             onSelectedItemChanged: (int index) => _changeDaySelection(index),
-            childCount: _dayCountOfMonth,
+            childCount: _dayRange.last - _dayRange.first + 1,
             itemBuilder: (context, index) {
               return Container(
                 height: DATE_PICKER_ITEM_HEIGHT,
                 alignment: Alignment.center,
                 child: Text(
-                  "${index + 1}$dayAppend",
+                  "${_dayRange.first + index}$dayAppend",
                   style: TextStyle(
                       color: DATE_PICKER_TEXT_COLOR,
                       fontSize: DATE_PICKER_FONT_SIZE),
@@ -312,38 +333,69 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   /// change the selection of day picker
   void _changeDaySelection(int index) {
-    int dayOfMonth = index + 1;
-    if (_currentDay != dayOfMonth) {
-      _currentDay = dayOfMonth;
+    int dayOfMonth = _dayRange.first + index;
+    if (_currDay != dayOfMonth) {
+      _currDay = dayOfMonth;
       _notifyDateChanged();
     }
   }
 
-  /// change range of day_of_month
-  void _changeDayRange() {
-    int dayCount = _calcDayCountOfMonth();
-    if (_dayCountOfMonth != dayCount) {
-      setState(() {
-        _dayCountOfMonth = dayCount;
+  bool _isChangeDateRange = false;
 
-        // CupertinoPicker refresh data not working (https://github.com/flutter/flutter/issues/22999)
-        int currDay = _currentDay;
-        _dayScrollCtrl.jumpToItem(dayCount - 1);
-        if (currDay < dayCount) {
-          _dayScrollCtrl.jumpToItem(currDay - 1);
-        }
-      });
+  /// change range of month and day
+  void _changeDateRange() {
+    if (_isChangeDateRange) {
+      return;
     }
-    if (_currentDay > dayCount) {
-      _currentDay = dayCount;
+    _isChangeDateRange = true;
+
+    List<int> monthRange = _calcMonthRange();
+    bool monthRangeChanged = _monthRange.first != monthRange.first ||
+        _monthRange.last != monthRange.last;
+    if (monthRangeChanged) {
+      // selected year changed
+      _currMonth = max(min(_currMonth, monthRange.last), monthRange.first);
     }
+
+    List<int> dayRange = _calcDayRange();
+    bool dayRangeChanged =
+        _dayRange.first != dayRange.first || _dayRange.last != dayRange.last;
+    if (dayRangeChanged) {
+      // day range changed, need limit the value of selected day
+      _currDay = max(min(_currDay, dayRange.last), dayRange.first);
+    }
+
+    setState(() {
+      _monthRange = monthRange;
+      _dayRange = dayRange;
+    });
+
+    if (monthRangeChanged) {
+      // CupertinoPicker refresh data not working (https://github.com/flutter/flutter/issues/22999)
+      int currMonth = _currMonth;
+      _monthScrollCtrl.jumpToItem(monthRange.last - monthRange.first);
+      if (currMonth < monthRange.last) {
+        _monthScrollCtrl.jumpToItem(currMonth - monthRange.first);
+      }
+    }
+
+    if (dayRangeChanged) {
+      // CupertinoPicker refresh data not working (https://github.com/flutter/flutter/issues/22999)
+      int currDay = _currDay;
+      _dayScrollCtrl.jumpToItem(dayRange.last - dayRange.first);
+      if (currDay < dayRange.last) {
+        _dayScrollCtrl.jumpToItem(currDay - dayRange.first);
+      }
+    }
+
+    _isChangeDateRange = false;
   }
 
   /// calculate the count of day in current month
   int _calcDayCountOfMonth() {
-    if (_currentMonth == 2) {
-      return isLeapYear(_currentYear) ? 29 : 28;
-    } else if (DATE_PICKER_31_DAYS_MONTHS.contains(_currentMonth)) {
+    if (_currMonth == 2) {
+      return isLeapYear(_currYear) ? 29 : 28;
+    } else if (DATE_PICKER_31_DAYS_MONTHS.contains(_currMonth)) {
       return 31;
     }
     return 30;
@@ -357,19 +409,56 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   /// notify selected date changed
   void _notifyDateChanged() {
     if (widget.onChanged != null) {
-      widget.onChanged(_currentYear, _currentMonth, _currentDay);
+      widget.onChanged(_currYear, _currMonth, _currDay);
     }
     if (widget.onChanged2 != null) {
-      DateTime dateTime = DateTime(_currentYear, _currentMonth, _currentDay);
+      DateTime dateTime = DateTime(_currYear, _currMonth, _currDay);
       widget.onChanged2(dateTime, _calcSelectIndexList());
     }
   }
 
   /// calculate selected index list
   List<int> _calcSelectIndexList() {
-    int yearIndex = this._currentYear - widget.minYear;
-    int monthIndex = this._currentMonth - 1;
-    int dayIndex = this._currentDay - 1;
+    int yearIndex = this._currYear - this._minDateTime.year;
+    int monthIndex = this._currMonth - this._monthRange.first;
+    int dayIndex = this._currDay - this._dayRange.first;
     return [yearIndex, monthIndex, dayIndex];
+  }
+
+  /// calculate the range of month
+  List<int> _calcMonthRange() {
+    int minMonth = 1, maxMonth = 12;
+    int minYear = this._minDateTime.year;
+    int maxYear = this._maxDateTime.year;
+    if (minYear == this._currYear) {
+      // selected minimum year, limit month range
+      minMonth = _minDateTime.month;
+    }
+    if (maxYear == this._currYear) {
+      // selected maximum year, limit month range
+      maxMonth = this._maxDateTime.month;
+    }
+    return [minMonth, maxMonth];
+  }
+
+  /// calculate the range of day
+  List<int> _calcDayRange({currMonth}) {
+    int minDay = 1, maxDay = _calcDayCountOfMonth();
+    int minYear = this._minDateTime.year;
+    int maxYear = this._maxDateTime.year;
+    int minMonth = this._minDateTime.month;
+    int maxMonth = this._maxDateTime.month;
+    if (currMonth == null) {
+      currMonth = this._currMonth;
+    }
+    if (minYear == this._currYear && minMonth == this._currMonth) {
+      // selected minimum year and month, limit day range
+      minDay = this._minDateTime.day;
+    }
+    if (maxYear == this._currYear && maxMonth == this._currMonth) {
+      // selected maximum year and month, limit day range
+      maxDay = this._maxDateTime.day;
+    }
+    return [minDay, maxDay];
   }
 }

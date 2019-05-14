@@ -1,3 +1,7 @@
+## 0.8.0
+
+- Support set the value of minimum DateTime and maximum DateTime.
+
 ## 0.7.0
 
 - Change days in a month when moth changes.

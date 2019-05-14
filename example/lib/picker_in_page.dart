@@ -26,11 +26,13 @@ class _PickerInPageState extends State<PickerInPage> {
             Container(
               margin: EdgeInsets.only(bottom: 40.0),
               child: DatePickerWidget(
-                minYear: 2005,
-                maxYear: 2019,
-                initDateTime: DateTime(2018, 1, 1),
-                dateFormat: 'mm-dd-yyyy',
+//                minDateTime: DateTime(2005),
+//                maxDateTime: DateTime(2019),
+//                initDateTime: DateTime(2018, 1, 1),
+//                dateFormat: 'mm-dd-yyyy',
                 onChanged2: (dateTime, selectedIndex) {
+                  debugPrint(
+                      '****** dataTime=$dateTime\nselectedIndex=$selectedIndex');
                   setState(() {
                     _currDateTime = dateTime;
                   });
@@ -42,11 +44,14 @@ class _PickerInPageState extends State<PickerInPage> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text('Selected Date:', style: Theme.of(context).textTheme.subhead),
+                Text('Selected Date:',
+                    style: Theme.of(context).textTheme.subhead),
                 Container(
                   padding: EdgeInsets.only(left: 12.0),
                   child: Text(
-                    _currDateTime != null ? '${_currDateTime.year}-${_currDateTime.month}-${_currDateTime.day}' : '',
+                    _currDateTime != null
+                        ? '${_currDateTime.year}-${_currDateTime.month}-${_currDateTime.day}'
+                        : '',
                     style: Theme.of(context).textTheme.title,
                   ),
                 ),

@@ -41,11 +41,11 @@ class DatePicker {
     }
 
     // handle the range of year
-    if (minDateTime != null) {
-      minYear = minDateTime.year;
+    if (minDateTime == null) {
+      minDateTime = DateTime(minYear);
     }
-    if (maxDateTime != null) {
-      maxYear = maxDateTime.year;
+    if (maxDateTime == null) {
+      maxDateTime = DateTime(maxYear);
     }
 
     // handle initial DateTime
@@ -69,8 +69,8 @@ class DatePicker {
       context,
       new _DatePickerRoute(
         showTitleActions: showTitleActions,
-        minYear: minYear,
-        maxYear: maxYear,
+        minDateTime: minDateTime,
+        maxDateTime: maxDateTime,
         initialDateTime: initialDateTime,
         cancel: cancel,
         confirm: confirm,
@@ -82,7 +82,8 @@ class DatePicker {
         locale: locale,
         dateFormat: dateFormat,
         theme: Theme.of(context, shadowThemeOnly: true),
-        barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
       ),
     );
   }
@@ -91,8 +92,8 @@ class DatePicker {
 class _DatePickerRoute<T> extends PopupRoute<T> {
   _DatePickerRoute({
     this.showTitleActions,
-    this.minYear,
-    this.maxYear,
+    this.minDateTime,
+    this.maxDateTime,
     this.initialDateTime,
     this.cancel,
     this.confirm,
@@ -110,8 +111,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
 
   final bool showTitleActions;
 
-  final int minYear, maxYear;
-  final DateTime initialDateTime;
+  final DateTime minDateTime, maxDateTime, initialDateTime;
 
   final Widget cancel, confirm;
   final VoidCallback onCancel;
@@ -141,18 +141,22 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   @override
   AnimationController createAnimationController() {
     assert(_animationController == null);
-    _animationController = BottomSheet.createAnimationController(navigator.overlay);
+    _animationController =
+        BottomSheet.createAnimationController(navigator.overlay);
     return _animationController;
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     Widget bottomSheet = new MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: _DatePickerComponentStateless(
         route: this,
-        pickerHeight: showTitleActions ? DATE_PICKER_TITLE_HEIGHT + DATE_PICKER_HEIGHT : DATE_PICKER_HEIGHT,
+        pickerHeight: showTitleActions
+            ? DATE_PICKER_TITLE_HEIGHT + DATE_PICKER_HEIGHT
+            : DATE_PICKER_HEIGHT,
       ),
     );
     if (theme != null) {
@@ -166,7 +170,8 @@ class _DatePickerComponentStateless extends StatelessWidget {
   final _DatePickerRoute route;
   final double _pickerHeight;
 
-  _DatePickerComponentStateless({Key key, @required this.route, @required pickerHeight})
+  _DatePickerComponentStateless(
+      {Key key, @required this.route, @required pickerHeight})
       : this._pickerHeight = pickerHeight;
 
   @override
@@ -177,10 +182,11 @@ class _DatePickerComponentStateless extends StatelessWidget {
         builder: (BuildContext context, Widget child) {
           return new ClipRect(
             child: new CustomSingleChildLayout(
-              delegate: new _BottomPickerLayout(route.animation.value, pickerHeight: _pickerHeight),
+              delegate: new _BottomPickerLayout(route.animation.value,
+                  pickerHeight: _pickerHeight),
               child: DatePickerWidget(
-                minYear: route.minYear,
-                maxYear: route.maxYear,
+                minDateTime: route.minDateTime,
+                maxDateTime: route.maxDateTime,
                 initDateTime: route.initialDateTime,
                 dateFormat: route.dateFormat,
                 showTitleActions: route.showTitleActions,
