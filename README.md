@@ -127,7 +127,7 @@ dd-mmmm-yyyy -> 1-October-2018
 
 ## Futures
 
-1. Format datetime display.
+1. Support time picker.
 
 ## License
 

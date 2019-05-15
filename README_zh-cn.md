@@ -121,7 +121,7 @@ dd-mmmm-yyyy -> 1-October-2018
 
 ## Futures
 
-1. 对显示的日期进行格式化处理。
+1. 支持时间选择器。
 
 ## License
 
