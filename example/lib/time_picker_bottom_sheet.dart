@@ -1,93 +1,65 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
-class PickerBottomSheet extends StatefulWidget {
-  PickerBottomSheet({Key key}) : super(key: key);
+class TimePickerBottomSheet extends StatefulWidget {
+  TimePickerBottomSheet({Key key}) : super(key: key);
 
   @override
-  _PickerBottomSheetState createState() => _PickerBottomSheetState();
+  State<StatefulWidget> createState() => _TimePickerBottomSheetState();
 }
 
-class _PickerBottomSheetState extends State<PickerBottomSheet> {
+class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
   String _datetime = '';
-  int _year = 2018;
-  int _month = 11;
-  int _date = 11;
 
-  String _lang = 'zh';
-  String _format = 'yyyy-mm-dd';
+  String _format = 'HH:mm';
   bool _showTitleActions = true;
 
-  TextEditingController _langCtrl = TextEditingController();
   TextEditingController _formatCtrl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _langCtrl.text = 'zh';
-    _formatCtrl.text = 'yyyy-mm-dd';
-
-    DateTime now = DateTime.now();
-    _year = now.year;
-    _month = now.month;
-    _date = now.day;
+    _formatCtrl.text = _format;
   }
 
-  /// Display date picker.
-  void _showDatePicker() {
+  /// Display time picker.
+  void _showTimePicker() {
     final bool showTitleActions = false;
     DatePicker.showDatePicker(
       context,
       showTitleActions: _showTitleActions,
-      minYear: 1970,
-      maxYear: 2020,
-      initialYear: _year,
-      initialMonth: _month,
-      initialDate: _date,
-      minDateTime: DateTime(2000),
-      maxDateTime: DateTime(2021, 5, 15),
-      initialDateTime: DateTime(2019, 1, 1),
+      minDateTime: DateTime(2019, 5, 15, 9, 0, 0),
+      maxDateTime: DateTime(2021, 5, 15, 21, 0, 0),
+      initialDateTime: DateTime.now(),
       confirm: Text('custom ok', style: TextStyle(color: Colors.red)),
       cancel: Text('custom cancel', style: TextStyle(color: Colors.cyan)),
-      locale: _lang,
       dateFormat: _format,
-      onChanged: (year, month, date) {
-        debugPrint('onChanged date: $year-$month-$date');
-
-        if (!showTitleActions) {
-          _changeDatetime(year, month, date);
-        }
-      },
-      onConfirm: (year, month, date) {
-        _changeDatetime(year, month, date);
-      },
+      mode: DateTimePickerMode.time, // show TimePicker
       onCancel: () {
         debugPrint('onCancel');
       },
       onChanged2: (dateTime, List<int> index) {
-        debugPrint('onChanged2 date: $dateTime');
-        debugPrint('onChanged2 index: $index');
+        if (!showTitleActions) {
+          _changeDatetime(dateTime);
+        }
       },
       onConfirm2: (dateTime, List<int> index) {
-        debugPrint('onConfirm2 date: $dateTime');
-        debugPrint('onConfirm2 index: $index');
+        _changeDatetime(dateTime);
       },
     );
   }
 
-  void _changeDatetime(int year, int month, int date) {
+  void _changeDatetime(DateTime dateTime) {
     setState(() {
-      _year = year;
-      _month = month;
-      _date = date;
-      _datetime = '$year-$month-$date';
+      _datetime = DateFormat(_format).format(dateTime);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Date Picker Bottom Sheet')),
+      appBar: AppBar(title: Text('TimePicker Bottom Sheet')),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
@@ -105,30 +77,16 @@ class _PickerBottomSheetState extends State<PickerBottomSheet> {
               ],
             ),
 
-            // Language input field
-            TextField(
-              controller: _langCtrl,
-              keyboardType: TextInputType.url,
-              decoration: InputDecoration(
-                labelText: 'Language',
-                hintText: 'en / zh ...',
-                hintStyle: TextStyle(color: Colors.black26),
-              ),
-              onChanged: (value) => _lang = value,
-            ),
-
             // Formatter input field
             TextField(
               controller: _formatCtrl,
               keyboardType: TextInputType.url,
               decoration: InputDecoration(
                 labelText: 'Formatter',
-                hintText: 'yyyy-mm-dd / yyyy-mmm-dd / yyyy-mmmm-dd',
+                hintText: 'HH:mm:ss / H:m / H时:m分',
                 hintStyle: TextStyle(color: Colors.black26),
               ),
-              onChanged: (value) {
-                _format = value;
-              },
+              onChanged: (value) => _format = value,
             ),
 
             // Selected date
@@ -137,7 +95,7 @@ class _PickerBottomSheetState extends State<PickerBottomSheet> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text('Selected Date:', style: Theme.of(context).textTheme.subhead),
+                  Text('Selected Time:', style: Theme.of(context).textTheme.subhead),
                   Container(
                     padding: EdgeInsets.only(left: 12.0),
                     child: Text('$_datetime', style: Theme.of(context).textTheme.title),
@@ -149,9 +107,9 @@ class _PickerBottomSheetState extends State<PickerBottomSheet> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _showDatePicker,
-        tooltip: 'Show DatePicker',
-        child: Icon(Icons.date_range),
+        onPressed: _showTimePicker,
+        tooltip: 'Show TimePicker',
+        child: Icon(Icons.access_time),
       ),
     );
   }

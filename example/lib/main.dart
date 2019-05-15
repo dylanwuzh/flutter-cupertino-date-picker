@@ -1,7 +1,8 @@
+import 'package:example/date_picker_bottom_sheet.dart';
+import 'package:example/date_picker_in_page.dart';
+import 'package:example/time_picker_bottom_sheet.dart';
+import 'package:example/time_picker_in_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
-import './picker_in_page.dart';
-import './picker_bottom_sheet.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,19 +33,37 @@ class MyHomePage extends StatelessWidget {
           children: <Widget>[
             RaisedButton(
               color: Colors.blue,
-              child: Text("Date Picker Bottom Sheet", style: textStyle),
+              child: Text("DatePicker Bottom Sheet", style: textStyle),
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                  return PickerBottomSheet();
+                  return DatePickerBottomSheet();
                 }));
               },
             ),
             RaisedButton(
               color: Colors.blue,
-              child: Text("Date Picker In Page", style: textStyle),
+              child: Text("DatePicker In Page", style: textStyle),
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                  return PickerInPage();
+                  return DatePickerInPage();
+                }));
+              },
+            ),
+            RaisedButton(
+              color: Colors.blue,
+              child: Text("TimePicker Bottom Sheet", style: textStyle),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return TimePickerBottomSheet();
+                }));
+              },
+            ),
+            RaisedButton(
+              color: Colors.blue,
+              child: Text("TimePicker In Page", style: textStyle),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return TimePickerInPage();
                 }));
               },
             ),

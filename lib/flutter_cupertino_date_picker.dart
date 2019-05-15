@@ -7,6 +7,15 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_cupertino_date_picker/constants.dart';
 import 'package:flutter_cupertino_date_picker/date_picker_widget.dart';
+import 'package:flutter_cupertino_date_picker/time_picker_widget.dart';
+
+enum DateTimePickerMode {
+  /// Display DatePicker
+  date,
+
+  /// Display TimePicker
+  time,
+}
 
 class DatePicker {
   ///
@@ -35,6 +44,7 @@ class DatePicker {
     DateValueCallback onConfirm2,
     locale: DATE_PICKER_LOCALE_DEFAULT,
     dateFormat: DATE_PICKER_FORMAT_DEFAULT,
+    mode: DateTimePickerMode.date,
   }) {
     if (dateFormat == null || dateFormat.length == 0) {
       dateFormat = DATE_PICKER_FORMAT_DEFAULT;
@@ -81,9 +91,9 @@ class DatePicker {
         onCancel: onCancel,
         locale: locale,
         dateFormat: dateFormat,
+        mode: mode,
         theme: Theme.of(context, shadowThemeOnly: true),
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       ),
     );
   }
@@ -106,6 +116,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.barrierLabel,
     this.locale,
     this.dateFormat,
+    this.mode,
     RouteSettings settings,
   }) : super(settings: settings);
 
@@ -124,6 +135,8 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final String locale;
   final String dateFormat;
 
+  final DateTimePickerMode mode;
+
   @override
   Duration get transitionDuration => const Duration(milliseconds: 200);
 
@@ -141,22 +154,18 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   @override
   AnimationController createAnimationController() {
     assert(_animationController == null);
-    _animationController =
-        BottomSheet.createAnimationController(navigator.overlay);
+    _animationController = BottomSheet.createAnimationController(navigator.overlay);
     return _animationController;
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
     Widget bottomSheet = new MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: _DatePickerComponentStateless(
         route: this,
-        pickerHeight: showTitleActions
-            ? DATE_PICKER_TITLE_HEIGHT + DATE_PICKER_HEIGHT
-            : DATE_PICKER_HEIGHT,
+        pickerHeight: showTitleActions ? DATE_PICKER_TITLE_HEIGHT + DATE_PICKER_HEIGHT : DATE_PICKER_HEIGHT,
       ),
     );
     if (theme != null) {
@@ -170,35 +179,56 @@ class _DatePickerComponentStateless extends StatelessWidget {
   final _DatePickerRoute route;
   final double _pickerHeight;
 
-  _DatePickerComponentStateless(
-      {Key key, @required this.route, @required pickerHeight})
+  _DatePickerComponentStateless({Key key, @required this.route, @required pickerHeight})
       : this._pickerHeight = pickerHeight;
 
   @override
   Widget build(BuildContext context) {
+    Widget pickerWidget;
+    switch (route.mode) {
+      case DateTimePickerMode.date:
+        pickerWidget = DatePickerWidget(
+          minDateTime: route.minDateTime,
+          maxDateTime: route.maxDateTime,
+          initDateTime: route.initialDateTime,
+          dateFormat: route.dateFormat,
+          showTitleActions: route.showTitleActions,
+          locale: route.locale,
+          cancel: route.cancel,
+          confirm: route.confirm,
+          onCancel: route.onCancel,
+          onChanged: route.onChanged,
+          onConfirm: route.onConfirm,
+          onChanged2: route.onChanged2,
+          onConfirm2: route.onConfirm2,
+        );
+        break;
+      case DateTimePickerMode.time:
+        pickerWidget = TimePickerWidget(
+          minDateTime: route.minDateTime,
+          maxDateTime: route.maxDateTime,
+          initDateTime: route.initialDateTime,
+          dateFormat: route.dateFormat,
+          showTitleActions: route.showTitleActions,
+          locale: route.locale,
+          cancel: route.cancel,
+          confirm: route.confirm,
+          onCancel: route.onCancel,
+          onChanged: route.onChanged,
+          onConfirm: route.onConfirm,
+          onChanged2: route.onChanged2,
+          onConfirm2: route.onConfirm2,
+        );
+        break;
+    }
     return new GestureDetector(
       child: new AnimatedBuilder(
         animation: route.animation,
         builder: (BuildContext context, Widget child) {
           return new ClipRect(
             child: new CustomSingleChildLayout(
-              delegate: new _BottomPickerLayout(route.animation.value,
-                  pickerHeight: _pickerHeight),
-              child: DatePickerWidget(
-                minDateTime: route.minDateTime,
-                maxDateTime: route.maxDateTime,
-                initDateTime: route.initialDateTime,
-                dateFormat: route.dateFormat,
-                showTitleActions: route.showTitleActions,
-                locale: route.locale,
-                cancel: route.cancel,
-                confirm: route.confirm,
-                onCancel: route.onCancel,
-                onChanged: route.onChanged,
-                onConfirm: route.onConfirm,
-                onChanged2: route.onChanged2,
-                onConfirm2: route.onConfirm2,
-              ),
+              delegate: new _BottomPickerLayout(route.animation.value, pickerHeight: _pickerHeight),
+              child: pickerWidget,
             ),
           );
         },

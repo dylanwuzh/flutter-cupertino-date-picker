@@ -6,6 +6,9 @@ const String DATE_PICKER_LOCALE_DEFAULT = 'zh';
 /// Default value of date format
 const String DATE_PICKER_FORMAT_DEFAULT = 'yyyy-mm-dd';
 
+/// Default value of time format
+const String TIME_PICKER_FORMAT_DEFAULT = 'HH:mm:ss';
+
 /// The height of DatePicker
 const double DATE_PICKER_HEIGHT = 210.0;
 
@@ -34,6 +37,7 @@ const int DATE_PICKER_MONTH_COUNT = 12;
 const List<int> DATE_PICKER_31_DAYS_MONTHS = const <int>[1, 3, 5, 7, 8, 10, 12];
 
 /// Selected value of DatePicker. Use [DateValueCallback] instead of.
+/// If display one TimePicker, the parameters is hour, minute, second
 @deprecated
 typedef DateChangedCallback(int year, int month, int date);
 
