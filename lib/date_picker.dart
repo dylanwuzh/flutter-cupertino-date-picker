@@ -6,6 +6,7 @@ import 'package:flutter_cupertino_date_picker/date_picker_i18n.dart';
 import 'package:flutter_cupertino_date_picker/date_picker_theme.dart';
 import 'package:flutter_cupertino_date_picker/date_picker_widget.dart';
 import 'package:flutter_cupertino_date_picker/date_time_formatter.dart';
+import 'package:flutter_cupertino_date_picker/datetime_picker_widget.dart';
 import 'package:flutter_cupertino_date_picker/time_picker_widget.dart';
 
 enum DateTimePickerMode {
@@ -14,6 +15,9 @@ enum DateTimePickerMode {
 
   /// Display TimePicker
   time,
+
+  /// Display DateTimePicker
+  datetime,
 }
 
 ///
@@ -168,6 +172,19 @@ class _DatePickerComponent extends StatelessWidget {
         break;
       case DateTimePickerMode.time:
         pickerWidget = TimePickerWidget(
+          minDateTime: route.minDateTime,
+          maxDateTime: route.maxDateTime,
+          initDateTime: route.initialDateTime,
+          dateFormat: route.dateFormat,
+          locale: route.locale,
+          pickerTheme: route.pickerTheme,
+          onCancel: route.onCancel,
+          onChange: route.onChange,
+          onConfirm: route.onConfirm,
+        );
+        break;
+      case DateTimePickerMode.datetime:
+        pickerWidget = DateTimePickerWidget(
           minDateTime: route.minDateTime,
           maxDateTime: route.maxDateTime,
           initDateTime: route.initialDateTime,

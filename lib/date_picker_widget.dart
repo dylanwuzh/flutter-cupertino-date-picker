@@ -128,6 +128,14 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     Navigator.pop(context);
   }
 
+  /// notify selected date changed
+  void _onSelectedChange() {
+    if (widget.onChange != null) {
+      DateTime dateTime = DateTime(_currYear, _currMonth, _currDay);
+      widget.onChange(dateTime, _calcSelectIndexList());
+    }
+  }
+
   /// find scroll controller by specified format
   FixedExtentScrollController _findScrollCtrl(String format) {
     FixedExtentScrollController scrollCtrl;
@@ -218,7 +226,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     if (_currYear != year) {
       _currYear = year;
       _changeDateRange();
-      _notifyDateChanged();
+      _onSelectedChange();
     }
   }
 
@@ -228,7 +236,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     if (_currMonth != month) {
       _currMonth = month;
       _changeDateRange();
-      _notifyDateChanged();
+      _onSelectedChange();
     }
   }
 
@@ -237,7 +245,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     int dayOfMonth = _dayRange.first + index;
     if (_currDay != dayOfMonth) {
       _currDay = dayOfMonth;
-      _notifyDateChanged();
+      _onSelectedChange();
     }
   }
 
@@ -304,14 +312,6 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   /// whether or not is leap year
   bool isLeapYear(int year) {
     return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
-  }
-
-  /// notify selected date changed
-  void _notifyDateChanged() {
-    if (widget.onChange != null) {
-      DateTime dateTime = DateTime(_currYear, _currMonth, _currDay);
-      widget.onChange(dateTime, _calcSelectIndexList());
-    }
   }
 
   /// calculate selected index list

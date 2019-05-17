@@ -1,5 +1,7 @@
 import 'package:example/date_picker_bottom_sheet.dart';
 import 'package:example/date_picker_in_page.dart';
+import 'package:example/datetime_picker_bottom_sheet.dart';
+import 'package:example/datetime_picker_in_page.dart';
 import 'package:example/time_picker_bottom_sheet.dart';
 import 'package:example/time_picker_in_page.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +66,24 @@ class MyHomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                   return TimePickerInPage();
+                }));
+              },
+            ),
+            RaisedButton(
+              color: Colors.blue,
+              child: Text("DateTimePicker Bottom Sheet", style: textStyle),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return DateTimePickerBottomSheet();
+                }));
+              },
+            ),
+            RaisedButton(
+              color: Colors.blue,
+              child: Text("DateTimePicker In Page", style: textStyle),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return DateTimePickerInPage();
                 }));
               },
             ),

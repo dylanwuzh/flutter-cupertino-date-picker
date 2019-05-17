@@ -11,10 +11,13 @@ const String DATE_PICKER_MIN_DATETIME = "1900-01-01 00:00:00";
 const String DATE_PICKER_MAX_DATETIME = "2100-12-31 23:59:59";
 
 /// Default value of date format
-const String DATETIME_PICKER_DATE_FORMAT = 'yyyy-mm-dd';
+const String DATETIME_PICKER_DATE_FORMAT = 'yyyy-MM-dd';
 
 /// Default value of time format
 const String DATETIME_PICKER_TIME_FORMAT = 'HH:mm:ss';
+
+/// Default value of datetime format
+const String DATETIME_PICKER_DATETIME_FORMAT = 'yyyyMMdd HH:mm:ss';
 
 /// The count of month in one year.
 const int DATETIME_PICKER_MONTH_COUNT_OF_YEAR = 12;

@@ -3,7 +3,7 @@ import 'package:flutter_cupertino_date_picker/date_picker_constants.dart';
 import 'package:flutter_cupertino_date_picker/date_picker_i18n.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
-const String DATE_FORMAT_SEPARATOR = r'[-\._: ]';
+const String DATE_FORMAT_SEPARATOR = r'[|,-\._:]';
 
 class DateTimeFormatter {
   /// Get default value of date format.
@@ -16,16 +16,48 @@ class DateTimeFormatter {
         return DATETIME_PICKER_DATE_FORMAT;
       case DateTimePickerMode.time:
         return DATETIME_PICKER_TIME_FORMAT;
+      case DateTimePickerMode.datetime:
+        return DATETIME_PICKER_DATETIME_FORMAT;
     }
     return '';
   }
 
+  /// Check if the date format is for day(contain y、M、d、E) or not.
+  static bool isDayFormat(String format) {
+    return format.contains(new RegExp(r'[yMdE]'));
+  }
+
+  /// Check if the date format is for time(contain H、m、s) or not.
+  static bool isTimeFormat(String format) {
+    return format.contains(new RegExp(r'[Hms]'));
+  }
+
   /// Split date format to array.
-  static List<String> splitDateFormat(String dateFormat) {
+  static List<String> splitDateFormat(String dateFormat, {DateTimePickerMode mode}) {
     if (dateFormat == null || dateFormat.length == 0) {
       return [];
     }
-    return dateFormat.split(new RegExp(DATE_FORMAT_SEPARATOR));
+    List<String> result = dateFormat.split(new RegExp(DATE_FORMAT_SEPARATOR));
+    if (mode == DateTimePickerMode.datetime) {
+      // datetime类型的需要单独处理，拼接日期
+      List<String> temp = List<String>();
+      StringBuffer dayFormat = StringBuffer();
+      for (String format in result) {
+        if (isDayFormat(format)) {
+          dayFormat.write(format);
+        } else if (isTimeFormat(format)) {
+          temp.add(format);
+        }
+      }
+      if (dayFormat.length > 0) {
+        temp.insert(0, dayFormat.toString());
+      } else {
+        // add default date format
+        temp.insert(0, DATETIME_PICKER_DATE_FORMAT);
+      }
+      result = temp;
+    }
+    return result;
   }
 
   /// Format datetime string
@@ -34,31 +66,66 @@ class DateTimeFormatter {
       return value.toString();
     }
 
+    String result = format;
     // format year text
     if (format.contains('y')) {
-      return _formatYear(value, format, locale);
+      result = _formatYear(value, result, locale);
     }
     // format month text
-    else if (format.contains('M')) {
-      return _formatMonth(value, format, locale);
+    if (format.contains('M')) {
+      result = _formatMonth(value, result, locale);
     }
     // format day text
-    else if (format.contains('d')) {
-      return _formatDay(value, format, locale);
+    if (format.contains('d')) {
+      result = _formatDay(value, result, locale);
+    }
+    if (format.contains('E')) {
+      result = _formatWeek(value, result, locale);
     }
     // format hour text
-    else if (format.contains('H')) {
-      return _formatHour(value, format, locale);
+    if (format.contains('H')) {
+      result = _formatHour(value, result, locale);
     }
     // format minute text
-    else if (format.contains('m')) {
-      return _formatMinute(value, format, locale);
+    if (format.contains('m')) {
+      result = _formatMinute(value, result, locale);
     }
     // format second text
-    else if (format.contains('s')) {
-      return _formatSecond(value, format, locale);
+    if (format.contains('s')) {
+      result = _formatSecond(value, result, locale);
     }
-    return value.toString();
+    if (result == format) {
+      return value.toString();
+    }
+    return result;
+  }
+
+  /// Format day display
+  static String formatDate(DateTime dateTime, String format, DatePickerLocale locale) {
+    if (format == null || format.length == 0) {
+      return dateTime.toString();
+    }
+
+    String result = format;
+    // format year text
+    if (format.contains('y')) {
+      result = _formatYear(dateTime.year, result, locale);
+    }
+    // format month text
+    if (format.contains('M')) {
+      result = _formatMonth(dateTime.month, result, locale);
+    }
+    // format day text
+    if (format.contains('d')) {
+      result = _formatDay(dateTime.day, result, locale);
+    }
+    if (format.contains('E')) {
+      result = _formatWeek(dateTime.weekday, result, locale);
+    }
+    if (result == format) {
+      return dateTime.toString();
+    }
+    return result;
   }
 
   /// format year text
@@ -90,6 +157,18 @@ class DateTimeFormatter {
   /// format day text
   static String _formatDay(int value, String format, DatePickerLocale locale) {
     return _formatNumber(value, format, 'd');
+  }
+
+  /// format week text
+  static String _formatWeek(int value, String format, DatePickerLocale locale) {
+    if (format.contains('EEEE')) {
+      // EEEE: the full name of week, e.g. Monday
+      List<String> weeks = DatePickerI18n.getLocaleWeeks(locale);
+      return format.replaceAll('EEEE', weeks[value - 1]);
+    }
+    // EEE: the short name of week, e.g. Mon
+    List<String> weeks = DatePickerI18n.getLocaleWeeks(locale, false);
+    return format.replaceAll('EEE', weeks[value - 1]);
   }
 
   /// format hour text
