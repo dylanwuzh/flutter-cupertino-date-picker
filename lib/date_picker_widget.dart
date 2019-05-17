@@ -3,8 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:flutter_cupertino_date_picker/constants.dart';
-import 'package:flutter_cupertino_date_picker/locale_message.dart';
+import 'package:flutter_cupertino_date_picker/date_picker_constants.dart';
+import 'package:flutter_cupertino_date_picker/date_picker_i18n.dart';
+import 'package:flutter_cupertino_date_picker/date_picker_theme.dart';
+import 'package:flutter_cupertino_date_picker/date_picker_title_widget.dart';
+import 'package:flutter_cupertino_date_picker/date_time_formatter.dart';
 
 /// DatePicker widget.
 ///
@@ -13,63 +16,58 @@ import 'package:flutter_cupertino_date_picker/locale_message.dart';
 class DatePickerWidget extends StatefulWidget {
   DatePickerWidget({
     Key key,
-    @deprecated this.minYear,
-    @deprecated this.maxYear,
     this.minDateTime,
     this.maxDateTime,
-    this.initDateTime,
-    this.dateFormat: DATE_PICKER_FORMAT_DEFAULT,
-    this.showTitleActions: false,
-    this.locale: 'zh',
-    this.backgroundColor: Colors.white,
-    this.cancel,
-    this.confirm,
+    this.initialDateTime,
+    this.dateFormat: DATETIME_PICKER_DATE_FORMAT,
+    this.locale: DATETIME_PICKER_LOCALE_DEFAULT,
+    this.pickerTheme: DatePickerTheme.Default,
     this.onCancel,
-    this.onChanged,
+    this.onChange,
     this.onConfirm,
-    this.onChanged2,
-    this.onConfirm2,
-  }) : super(key: key);
+  }) : super(key: key) {
+    DateTime minTime = minDateTime ?? DateTime.parse(DATE_PICKER_MIN_DATETIME);
+    DateTime maxTime = maxDateTime ?? DateTime.parse(DATE_PICKER_MAX_DATETIME);
+    assert(minTime.compareTo(maxTime) < 0);
+  }
 
-  @deprecated
-  final int minYear, maxYear;
-
-  final DateTime minDateTime, maxDateTime, initDateTime;
+  final DateTime minDateTime, maxDateTime, initialDateTime;
   final String dateFormat;
+  final DatePickerLocale locale;
+  final DatePickerTheme pickerTheme;
 
-  final bool showTitleActions;
-  final String locale;
-  final Color backgroundColor;
-
-  final Widget cancel, confirm;
   final DateVoidCallback onCancel;
-  final DateChangedCallback onChanged, onConfirm;
-  final DateValueCallback onChanged2, onConfirm2;
+  final DateValueCallback onChange, onConfirm;
 
   @override
-  State<StatefulWidget> createState() => _DatePickerWidgetState(this.minDateTime, this.maxDateTime, this.initDateTime,
-      minYear: this.minYear, maxYear: this.maxYear);
+  State<StatefulWidget> createState() =>
+      _DatePickerWidgetState(this.minDateTime, this.maxDateTime, this.initialDateTime);
 }
 
 class _DatePickerWidgetState extends State<DatePickerWidget> {
   DateTime _minDateTime, _maxDateTime;
   int _currYear, _currMonth, _currDay;
-  List<int> _monthRange, _dayRange;
+  List<int> _yearRange, _monthRange, _dayRange;
   FixedExtentScrollController _yearScrollCtrl, _monthScrollCtrl, _dayScrollCtrl;
+
+  Map<String, FixedExtentScrollController> _scrollCtrlMap;
+  Map<String, List<int>> _valueRangeMap;
+
   bool _isChangeDateRange = false;
 
-  _DatePickerWidgetState(DateTime minDateTime, DateTime maxDateTime, DateTime initDateTime,
-      {int minYear: DATE_PICKER_MIN_YEAR_DEFAULT, int maxYear: DATE_PICKER_MAX_YEAR_DEFAULT}) {
-    if (initDateTime == null) {
-      initDateTime = DateTime.now();
-    }
+  _DatePickerWidgetState(DateTime minDateTime, DateTime maxDateTime, DateTime initialDateTime) {
+    // handle current selected year、month、day
+    DateTime initDateTime = initialDateTime ?? DateTime.now();
     this._currYear = initDateTime.year;
     this._currMonth = initDateTime.month;
     this._currDay = initDateTime.day;
 
+    // handle DateTime range
+    this._minDateTime = minDateTime ?? DateTime.parse(DATE_PICKER_MIN_DATETIME);
+    this._maxDateTime = maxDateTime ?? DateTime.parse(DATE_PICKER_MAX_DATETIME);
+
     // limit the range of year
-    this._minDateTime = minDateTime ?? DateTime(minYear ?? DATE_PICKER_MIN_YEAR_DEFAULT);
-    this._maxDateTime = maxDateTime ?? DateTime(maxYear ?? DATE_PICKER_MAX_YEAR_DEFAULT);
+    this._yearRange = _calcYearRange();
     this._currYear = min(max(_minDateTime.year, _currYear), _maxDateTime.year);
 
     // limit the range of month
@@ -81,9 +79,12 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     this._currDay = min(max(_dayRange.first, _currDay), _dayRange.last);
 
     // create scroll controller
-    _yearScrollCtrl = FixedExtentScrollController(initialItem: _currYear - _minDateTime.year);
+    _yearScrollCtrl = FixedExtentScrollController(initialItem: _currYear - _yearRange.first);
     _monthScrollCtrl = FixedExtentScrollController(initialItem: _currMonth - _monthRange.first);
     _dayScrollCtrl = FixedExtentScrollController(initialItem: _currDay - _dayRange.first);
+
+    _scrollCtrlMap = {'y': _yearScrollCtrl, 'M': _monthScrollCtrl, 'd': _dayScrollCtrl};
+    _valueRangeMap = {'y': _yearRange, 'M': _monthRange, 'd': _dayRange};
   }
 
   @override
@@ -96,43 +97,18 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   /// render date picker widgets
   Widget _renderPickerView(BuildContext context) {
     Widget datePickerWidget = _renderDatePickerWidget();
-    if (widget.showTitleActions) {
-      return Column(children: <Widget>[_renderTitleWidget(context), datePickerWidget]);
+
+    // display the title widget
+    if (widget.pickerTheme.title != null || widget.pickerTheme.showTitle) {
+      Widget titleWidget = DatePickerTitleWidget(
+        pickerTheme: widget.pickerTheme,
+        locale: widget.locale,
+        onCancel: () => _onPressedCancel(),
+        onConfirm: () => _onPressedConfirm(),
+      );
+      return Column(children: <Widget>[titleWidget, datePickerWidget]);
     }
     return datePickerWidget;
-  }
-
-  /// render title action widgets
-  Widget _renderTitleWidget(BuildContext context) {
-    Widget cancelWidget = widget.cancel;
-    if (cancelWidget == null) {
-      var cancelText = LocaleMessage.getLocaleCancel(widget.locale);
-      cancelWidget = Text(cancelText, style: TextStyle(color: Theme.of(context).unselectedWidgetColor, fontSize: 16.0));
-    }
-
-    Widget confirmWidget = widget.confirm;
-    if (confirmWidget == null) {
-      var confirmText = LocaleMessage.getLocaleDone(widget.locale);
-      confirmWidget = Text(confirmText, style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 16.0));
-    }
-
-    return Container(
-      height: DATE_PICKER_TITLE_HEIGHT,
-      decoration: BoxDecoration(color: widget.backgroundColor),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            height: DATE_PICKER_TITLE_HEIGHT,
-            child: FlatButton(child: cancelWidget, onPressed: () => _onPressedCancel()),
-          ),
-          Container(
-            height: DATE_PICKER_TITLE_HEIGHT,
-            child: FlatButton(child: confirmWidget, onPressed: () => _onPressedConfirm()),
-          ),
-        ],
-      ),
-    );
   }
 
   /// pressed cancel widget
@@ -146,108 +122,104 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   /// pressed confirm widget
   void _onPressedConfirm() {
     if (widget.onConfirm != null) {
-      widget.onConfirm(_currYear, _currMonth, _currDay);
-    }
-    if (widget.onConfirm2 != null) {
       DateTime dateTime = DateTime(_currYear, _currMonth, _currDay);
-      widget.onConfirm2(dateTime, _calcSelectIndexList());
+      widget.onConfirm(dateTime, _calcSelectIndexList());
     }
     Navigator.pop(context);
+  }
+
+  /// find scroll controller by specified format
+  FixedExtentScrollController _findScrollCtrl(String format) {
+    FixedExtentScrollController scrollCtrl;
+    _scrollCtrlMap.forEach((key, value) {
+      if (format.contains(key)) {
+        scrollCtrl = value;
+      }
+    });
+    return scrollCtrl;
+  }
+
+  /// find item value range by specified format
+  List<int> _findPickerItemRange(String format) {
+    List<int> valueRange;
+    _valueRangeMap.forEach((key, value) {
+      if (format.contains(key)) {
+        valueRange = value;
+      }
+    });
+    return valueRange;
   }
 
   /// render the picker widget of year、month and day
   Widget _renderDatePickerWidget() {
     List<Widget> pickers = List<Widget>();
-    List<String> formatSplit = widget.dateFormat.split('-');
-    for (int i = 0; i < formatSplit.length; i++) {
-      var format = formatSplit[i];
-      // contain year picker
-      if (format.contains("yy")) {
-        String yearAppend = LocaleMessage.getLocaleYearUnit(widget.locale);
-        pickers.add(_renderYearsPickerComponent(yearAppend));
-      }
-      // contain month picker
-      else if (format.toLowerCase().contains("mm")) {
-        String monthAppend = LocaleMessage.getLocaleMonthUnit(widget.locale);
-        pickers.add(_renderMonthsPickerComponent(monthAppend, format: format));
-      }
-      // contain day picker
-      else if (format.contains("dd")) {
-        String dayAppend = LocaleMessage.getLocaleDayUnit(widget.locale);
-        pickers.add(_renderDaysPickerComponent(dayAppend));
-      }
-    }
+    List<String> formatArr = DateTimeFormatter.splitDateFormat(widget.dateFormat);
+    formatArr.forEach((format) {
+      List<int> valueRange = _findPickerItemRange(format);
+      debugPrint(valueRange.toString());
+
+      Widget pickerColumn = _renderDatePickerColumnComponent(
+        scrollCtrl: _findScrollCtrl(format),
+        valueRange: valueRange,
+        format: format,
+        valueChanged: (value) {
+          if (format.contains('y')) {
+            _changeYearSelection(value);
+          } else if (format.contains('M')) {
+            _changeMonthSelection(value);
+          } else if (format.contains('d')) {
+            _changeDaySelection(value);
+          }
+        },
+      );
+      pickers.add(pickerColumn);
+    });
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: pickers);
   }
 
-  /// render the picker component of year
-  Widget _renderYearsPickerComponent(String yearAppend) {
+  Widget _renderDatePickerColumnComponent({
+    @required FixedExtentScrollController scrollCtrl,
+    @required List<int> valueRange,
+    @required String format,
+    @required ValueChanged<int> valueChanged,
+  }) {
     return Expanded(
       flex: 1,
       child: Container(
         padding: EdgeInsets.all(8.0),
-        height: DATE_PICKER_HEIGHT,
-        decoration: BoxDecoration(color: widget.backgroundColor),
+        height: widget.pickerTheme.pickerHeight,
+        decoration: BoxDecoration(color: widget.pickerTheme.backgroundColor),
         child: CupertinoPicker.builder(
-          backgroundColor: widget.backgroundColor,
-          scrollController: _yearScrollCtrl,
-          itemExtent: DATE_PICKER_ITEM_HEIGHT,
-          onSelectedItemChanged: (int index) => _changeYearSelection(index),
-          childCount: _maxDateTime.year - _minDateTime.year + 1,
-          itemBuilder: (context, index) {
-            return Container(
-              height: DATE_PICKER_ITEM_HEIGHT,
-              alignment: Alignment.center,
-              child: Text(
-                '${_minDateTime.year + index}$yearAppend',
-                style: TextStyle(color: DATE_PICKER_TEXT_COLOR, fontSize: DATE_PICKER_FONT_SIZE),
-              ),
-            );
-          },
+          backgroundColor: widget.pickerTheme.backgroundColor,
+          scrollController: scrollCtrl,
+          itemExtent: widget.pickerTheme.itemHeight,
+          onSelectedItemChanged: valueChanged,
+          childCount: valueRange.last - valueRange.first + 1,
+          itemBuilder: (context, index) => _renderDatePickerItemComponent(valueRange.first + index, format),
         ),
+      ),
+    );
+  }
+
+  Widget _renderDatePickerItemComponent(int value, String format) {
+    return Container(
+      height: widget.pickerTheme.itemHeight,
+      alignment: Alignment.center,
+      child: Text(
+        DateTimeFormatter.formatDateTime(value, format, widget.locale),
+        style: widget.pickerTheme.itemTextStyle ?? DATETIME_PICKER_ITEM_TEXT_STYLE,
       ),
     );
   }
 
   /// change the selection of year picker
   void _changeYearSelection(int index) {
-    int year = _minDateTime.year + index;
+    int year = _yearRange.first + index;
     if (_currYear != year) {
       _currYear = year;
       _changeDateRange();
       _notifyDateChanged();
     }
-  }
-
-  /// render the picker component of month
-  Widget _renderMonthsPickerComponent(String monthAppend, {String format}) {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        padding: EdgeInsets.all(8.0),
-        height: DATE_PICKER_HEIGHT,
-        decoration: BoxDecoration(color: widget.backgroundColor),
-        child: CupertinoPicker.builder(
-          backgroundColor: widget.backgroundColor,
-          scrollController: _monthScrollCtrl,
-          itemExtent: DATE_PICKER_ITEM_HEIGHT,
-          onSelectedItemChanged: (int index) => _changeMonthSelection(index),
-          childCount: _monthRange.last - _monthRange.first + 1,
-          itemBuilder: (context, index) {
-            return Container(
-              height: DATE_PICKER_ITEM_HEIGHT,
-              alignment: Alignment.center,
-              child: Text(
-                (format == null)
-                    ? '${_monthRange.first + index}$monthAppend'
-                    : '${_formatMonthComplex(_monthRange.first + index, format)}$monthAppend',
-                style: TextStyle(color: DATE_PICKER_TEXT_COLOR, fontSize: DATE_PICKER_FONT_SIZE),
-              ),
-            );
-          },
-        ),
-      ),
-    );
   }
 
   /// change the selection of month picker
@@ -258,54 +230,6 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       _changeDateRange();
       _notifyDateChanged();
     }
-  }
-
-  /// format month
-  String _formatMonthComplex(int month, String format) {
-    if (widget.locale == null) {
-      return month.toString();
-    }
-
-    List<String> months = LocaleMessage.getLocaleMonths(widget.locale);
-    if (months == null) {
-      return month.toString();
-    }
-
-    if (format.length <= 2) {
-      return month.toString();
-    } else if (format.length <= 3) {
-      return months[month - 1].substring(0, 3);
-    } else {
-      return months[month - 1];
-    }
-  }
-
-  /// render the picker component of day
-  Widget _renderDaysPickerComponent(String dayAppend) {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        padding: EdgeInsets.all(8.0),
-        height: DATE_PICKER_HEIGHT,
-        decoration: BoxDecoration(color: widget.backgroundColor),
-        child: CupertinoPicker.builder(
-            backgroundColor: widget.backgroundColor,
-            scrollController: _dayScrollCtrl,
-            itemExtent: DATE_PICKER_ITEM_HEIGHT,
-            onSelectedItemChanged: (int index) => _changeDaySelection(index),
-            childCount: _dayRange.last - _dayRange.first + 1,
-            itemBuilder: (context, index) {
-              return Container(
-                height: DATE_PICKER_ITEM_HEIGHT,
-                alignment: Alignment.center,
-                child: Text(
-                  "${_dayRange.first + index}$dayAppend",
-                  style: TextStyle(color: DATE_PICKER_TEXT_COLOR, fontSize: DATE_PICKER_FONT_SIZE),
-                ),
-              );
-            }),
-      ),
-    );
   }
 
   /// change the selection of day picker
@@ -341,6 +265,9 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     setState(() {
       _monthRange = monthRange;
       _dayRange = dayRange;
+
+      _valueRangeMap['M'] = monthRange;
+      _valueRangeMap['d'] = dayRange;
     });
 
     if (monthRangeChanged) {
@@ -368,7 +295,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   int _calcDayCountOfMonth() {
     if (_currMonth == 2) {
       return isLeapYear(_currYear) ? 29 : 28;
-    } else if (DATE_PICKER_31_DAYS_MONTHS.contains(_currMonth)) {
+    } else if (DATETIME_PICKER_31_DAYS_MONTHS.contains(_currMonth)) {
       return 31;
     }
     return 30;
@@ -381,12 +308,9 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   /// notify selected date changed
   void _notifyDateChanged() {
-    if (widget.onChanged != null) {
-      widget.onChanged(_currYear, _currMonth, _currDay);
-    }
-    if (widget.onChanged2 != null) {
+    if (widget.onChange != null) {
       DateTime dateTime = DateTime(_currYear, _currMonth, _currDay);
-      widget.onChanged2(dateTime, _calcSelectIndexList());
+      widget.onChange(dateTime, _calcSelectIndexList());
     }
   }
 
@@ -396,6 +320,11 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     int monthIndex = _currMonth - _monthRange.first;
     int dayIndex = _currDay - _dayRange.first;
     return [yearIndex, monthIndex, dayIndex];
+  }
+
+  /// calculate the range of year
+  List<int> _calcYearRange() {
+    return [_minDateTime.year, _maxDateTime.year];
   }
 
   /// calculate the range of month

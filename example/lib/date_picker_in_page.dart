@@ -27,10 +27,9 @@ class _DatePickerInPageState extends State<DatePickerInPage> {
               margin: EdgeInsets.only(bottom: 40.0),
               child: DatePickerWidget(
                 minDateTime: DateTime(2005, 5, 15),
-//                maxDateTime: DateTime(2019),
-                initDateTime: DateTime(2005, 5, 20),
-//                dateFormat: 'mm-dd-yyyy',
-                onChanged2: (dateTime, selectedIndex) {
+                initialDateTime: DateTime(2005, 5, 20),
+                dateFormat: 'MM-dd-yyyy',
+                onChange: (dateTime, selectedIndex) {
                   debugPrint('****** dataTime=$dateTime\nselectedIndex=$selectedIndex');
                   setState(() {
                     _currDateTime = dateTime;

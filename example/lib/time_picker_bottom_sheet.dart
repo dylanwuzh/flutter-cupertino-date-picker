@@ -1,6 +1,5 @@
-import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:flutter/material.dart';
 
 class TimePickerBottomSheet extends StatefulWidget {
   TimePickerBottomSheet({Key key}) : super(key: key);
@@ -12,7 +11,7 @@ class TimePickerBottomSheet extends StatefulWidget {
 class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
   String _datetime = '';
 
-  String _format = 'HH:mm';
+  String _format = 'H时:mm分';
   bool _showTitleActions = true;
 
   TextEditingController _formatCtrl = TextEditingController();
@@ -25,26 +24,33 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
 
   /// Display time picker.
   void _showTimePicker() {
-    final bool showTitleActions = false;
-    DatePicker.showDatePicker(
+    CupertinoDatePicker.showDatePicker(
       context,
-      showTitleActions: _showTitleActions,
       minDateTime: DateTime(2019, 5, 15, 9, 0, 0),
       maxDateTime: DateTime(2021, 5, 15, 21, 0, 0),
       initialDateTime: DateTime.now(),
-      confirm: Text('custom ok', style: TextStyle(color: Colors.red)),
-      cancel: Text('custom cancel', style: TextStyle(color: Colors.cyan)),
       dateFormat: _format,
-      mode: DateTimePickerMode.time, // show TimePicker
+      pickerMode: DateTimePickerMode.time, // show TimePicker
+      pickerTheme: DatePickerTheme(
+        title: Container(
+          decoration: BoxDecoration(color: Color(0xFFEFEFEF)),
+          width: double.infinity,
+          height: 56.0,
+          alignment: Alignment.center,
+          child: Text(
+            'custom Title',
+            style: TextStyle(color: Colors.green, fontSize: 24.0),
+          ),
+        ),
+        titleHeight: 56.0,
+      ),
       onCancel: () {
         debugPrint('onCancel');
       },
-      onChanged2: (dateTime, List<int> index) {
-        if (!showTitleActions) {
-          _changeDatetime(dateTime);
-        }
+      onChange: (dateTime, List<int> index) {
+        _changeDatetime(dateTime);
       },
-      onConfirm2: (dateTime, List<int> index) {
+      onConfirm: (dateTime, List<int> index) {
         _changeDatetime(dateTime);
       },
     );
@@ -52,7 +58,8 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
 
   void _changeDatetime(DateTime dateTime) {
     setState(() {
-      _datetime = DateFormat(_format).format(dateTime);
+      _datetime =
+          '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:${dateTime.second.toString().padLeft(2, '0')}';
     });
   }
 

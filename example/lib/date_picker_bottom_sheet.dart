@@ -10,12 +10,7 @@ class DatePickerBottomSheet extends StatefulWidget {
 
 class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   String _datetime = '';
-  int _year = 2018;
-  int _month = 11;
-  int _date = 11;
-
-  String _lang = 'zh';
-  String _format = 'yyyy-mm-dd';
+  String _format = 'yyyy-MM-dd';
   bool _showTitleActions = true;
 
   TextEditingController _langCtrl = TextEditingController();
@@ -25,62 +20,42 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   void initState() {
     super.initState();
     _langCtrl.text = 'zh';
-    _formatCtrl.text = 'yyyy-mm-dd';
-
-    DateTime now = DateTime.now();
-    _year = now.year;
-    _month = now.month;
-    _date = now.day;
+    _formatCtrl.text = _format;
   }
 
   /// Display date picker.
   void _showDatePicker() {
-    final bool showTitleActions = false;
-    DatePicker.showDatePicker(
+    CupertinoDatePicker.showDatePicker(
       context,
-      showTitleActions: _showTitleActions,
-      minYear: 1970,
-      maxYear: 2020,
-      initialYear: _year,
-      initialMonth: _month,
-      initialDate: _date,
+      pickerTheme: DatePickerTheme(
+        showTitle: _showTitleActions,
+        confirm: Text('custom ok', style: TextStyle(color: Colors.red)),
+        cancel: Text('custom cancel', style: TextStyle(color: Colors.cyan)),
+      ),
       minDateTime: DateTime(2000),
       maxDateTime: DateTime(2021, 5, 15),
       initialDateTime: DateTime(2019, 1, 1),
-      confirm: Text('custom ok', style: TextStyle(color: Colors.red)),
-      cancel: Text('custom cancel', style: TextStyle(color: Colors.cyan)),
-      locale: _lang,
       dateFormat: _format,
-      onChanged: (year, month, date) {
-        debugPrint('onChanged date: $year-$month-$date');
-
-        if (!showTitleActions) {
-          _changeDatetime(year, month, date);
-        }
-      },
-      onConfirm: (year, month, date) {
-        _changeDatetime(year, month, date);
-      },
+      locale: DatePickerLocale.zh_cn,
       onCancel: () {
         debugPrint('onCancel');
       },
-      onChanged2: (dateTime, List<int> index) {
-        debugPrint('onChanged2 date: $dateTime');
-        debugPrint('onChanged2 index: $index');
+      onChange: (dateTime, List<int> index) {
+        debugPrint('onChange date: $dateTime');
+        debugPrint('onChange index: $index');
+        _changeDatetime(dateTime.year, dateTime.month, dateTime.day);
       },
-      onConfirm2: (dateTime, List<int> index) {
+      onConfirm: (dateTime, List<int> index) {
         debugPrint('onConfirm2 date: $dateTime');
         debugPrint('onConfirm2 index: $index');
+        _changeDatetime(dateTime.year, dateTime.month, dateTime.day);
       },
     );
   }
 
-  void _changeDatetime(int year, int month, int date) {
+  void _changeDatetime(int year, int month, int day) {
     setState(() {
-      _year = year;
-      _month = month;
-      _date = date;
-      _datetime = '$year-$month-$date';
+      _datetime = '$year-$month-$day';
     });
   }
 
@@ -114,7 +89,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
                 hintText: 'en / zh ...',
                 hintStyle: TextStyle(color: Colors.black26),
               ),
-              onChanged: (value) => _lang = value,
+              onChanged: (value) {},
             ),
 
             // Formatter input field

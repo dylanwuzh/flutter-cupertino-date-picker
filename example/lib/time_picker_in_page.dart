@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_date_picker/time_picker_widget.dart';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 ///
 /// @author dylan wu
@@ -30,7 +30,8 @@ class _TimePickerInPageState extends State<TimePickerInPage> {
                 maxDateTime: DateTime(2019, 5, 15, 12, 20, 20),
                 initDateTime: DateTime(2019, 5, 15, 10, 1, 10),
                 dateFormat: 'HH时:mm分:s',
-                onChanged2: (dateTime, selectedIndex) {
+                pickerTheme: DatePickerTheme(showTitle: false),
+                onChange: (dateTime, selectedIndex) {
                   debugPrint('****** dataTime=$dateTime\nselectedIndex=$selectedIndex');
                   setState(() {
                     _currDateTime = dateTime;
@@ -48,7 +49,7 @@ class _TimePickerInPageState extends State<TimePickerInPage> {
                   padding: EdgeInsets.only(left: 12.0),
                   child: Text(
                     _currDateTime != null
-                        ? '${_currDateTime.hour}:${_currDateTime.minute}:${_currDateTime.second}'
+                        ? '${_currDateTime.hour.toString().padLeft(2, '0')}:${_currDateTime.minute.toString().padLeft(2, '0')}:${_currDateTime.second.toString().padLeft(2, '0')}'
                         : '',
                     style: Theme.of(context).textTheme.title,
                   ),
