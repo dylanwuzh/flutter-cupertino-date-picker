@@ -8,88 +8,125 @@ class DatePickerBottomSheet extends StatefulWidget {
   State<StatefulWidget> createState() => _DatePickerBottomSheetState();
 }
 
-class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
-  String _datetime = '';
-  String _format = 'yyyy-MM-dd';
-  bool _showTitleActions = true;
+const String MIN_DATETIME = '2010-05-12';
+const String MAX_DATETIME = '2021-11-25';
+const String INIT_DATETIME = '2019-05-17';
 
-  TextEditingController _langCtrl = TextEditingController();
+class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
+  bool _showTitle = true;
+  DatePickerLocale _locale = DatePickerLocale.en_us;
+  String _format = 'yyyy-MMMM-dd';
+
+  List<DatePickerLocale> _locales = DatePickerLocale.values;
+
   TextEditingController _formatCtrl = TextEditingController();
+
+  DateTime _dateTime;
 
   @override
   void initState() {
     super.initState();
-    _langCtrl.text = 'zh';
     _formatCtrl.text = _format;
-  }
-
-  /// Display date picker.
-  void _showDatePicker() {
-    CupertinoDatePicker.showDatePicker(
-      context,
-      pickerTheme: DatePickerTheme(
-        showTitle: _showTitleActions,
-        confirm: Text('custom ok', style: TextStyle(color: Colors.red)),
-        cancel: Text('custom cancel', style: TextStyle(color: Colors.cyan)),
-      ),
-      minDateTime: DateTime(2000),
-      maxDateTime: DateTime(2021, 5, 15),
-      initialDateTime: DateTime(2019, 1, 1),
-      dateFormat: _format,
-      locale: DatePickerLocale.zh_cn,
-      onCancel: () {
-        debugPrint('onCancel');
-      },
-      onChange: (dateTime, List<int> index) {
-        debugPrint('onChange date: $dateTime');
-        debugPrint('onChange index: $index');
-        _changeDatetime(dateTime.year, dateTime.month, dateTime.day);
-      },
-      onConfirm: (dateTime, List<int> index) {
-        debugPrint('onConfirm2 date: $dateTime');
-        debugPrint('onConfirm2 index: $index');
-        _changeDatetime(dateTime.year, dateTime.month, dateTime.day);
-      },
-    );
-  }
-
-  void _changeDatetime(int year, int month, int day) {
-    setState(() {
-      _datetime = '$year-$month-$day';
-    });
+    _dateTime = DateTime.parse(INIT_DATETIME);
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> radios = List<Widget>();
+    _locales.forEach((locale) {
+      radios.add(Container(
+        margin: EdgeInsets.only(right: 8.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Radio(
+                value: locale,
+                groupValue: _locale,
+                onChanged: (value) {
+                  setState(() {
+                    _locale = value;
+                  });
+                }),
+            Text(locale.toString().substring(locale.toString().indexOf('.') + 1)),
+          ],
+        ),
+      ));
+    });
     return Scaffold(
       appBar: AppBar(title: Text('DatePicker Bottom Sheet')),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            // show title actions checkbox
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 115.0,
+                    child: Text(
+                      'min DateTime:',
+                      style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999)),
+                    ),
+                  ),
+                  Text(MIN_DATETIME, style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 115.0,
+                    child: Text('max DateTime:',
+                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                  ),
+                  Text(MAX_DATETIME, style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 115.0,
+                    child: Text('init DateTime:',
+                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                  ),
+                  Text(INIT_DATETIME, style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
+            // show title widget checkbox
             Row(
               children: <Widget>[
-                Text('Show title actions', style: TextStyle(fontSize: 16.0)),
+                Text('Show title'),
                 Checkbox(
-                  value: _showTitleActions,
+                  value: _showTitle,
                   onChanged: (value) => setState(() {
-                        _showTitleActions = value;
+                        _showTitle = value;
                       }),
                 )
               ],
             ),
 
-            // Language input field
-            TextField(
-              controller: _langCtrl,
-              keyboardType: TextInputType.url,
-              decoration: InputDecoration(
-                labelText: 'Language',
-                hintText: 'en / zh ...',
-                hintStyle: TextStyle(color: Colors.black26),
+            Container(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text('Locale: '),
+                  Wrap(
+                    direction: Axis.horizontal,
+                    children: radios,
+                  )
+                ],
               ),
-              onChanged: (value) {},
             ),
 
             // Formatter input field
@@ -97,8 +134,8 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
               controller: _formatCtrl,
               keyboardType: TextInputType.url,
               decoration: InputDecoration(
-                labelText: 'Formatter',
-                hintText: 'yyyy-mm-dd / yyyy-mmm-dd / yyyy-mmmm-dd',
+                labelText: 'Date Format',
+                hintText: 'yyyy-MM-dd',
                 hintStyle: TextStyle(color: Colors.black26),
               ),
               onChanged: (value) {
@@ -115,7 +152,10 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
                   Text('Selected Date:', style: Theme.of(context).textTheme.subhead),
                   Container(
                     padding: EdgeInsets.only(left: 12.0),
-                    child: Text('$_datetime', style: Theme.of(context).textTheme.title),
+                    child: Text(
+                      '${_dateTime.year}-${_dateTime.month.toString().padLeft(2, '0')}-${_dateTime.day.toString().padLeft(2, '0')}',
+                      style: Theme.of(context).textTheme.title,
+                    ),
                   ),
                 ],
               ),
@@ -128,6 +168,36 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
         tooltip: 'Show DatePicker',
         child: Icon(Icons.date_range),
       ),
+    );
+  }
+
+  /// Display date picker.
+  void _showDatePicker() {
+    CupertinoDatePicker.showDatePicker(
+      context,
+      pickerTheme: DatePickerTheme(
+        showTitle: _showTitle,
+        confirm: Text('custom Done', style: TextStyle(color: Colors.red)),
+        cancel: Text('custom cancel', style: TextStyle(color: Colors.cyan)),
+      ),
+      minDateTime: DateTime.parse(MIN_DATETIME),
+      maxDateTime: DateTime.parse(MAX_DATETIME),
+      initialDateTime: _dateTime,
+      dateFormat: _format,
+      locale: _locale,
+      onCancel: () {
+        debugPrint('onCancel');
+      },
+      onChange: (dateTime, List<int> index) {
+        setState(() {
+          _dateTime = dateTime;
+        });
+      },
+      onConfirm: (dateTime, List<int> index) {
+        setState(() {
+          _dateTime = dateTime;
+        });
+      },
     );
   }
 }
