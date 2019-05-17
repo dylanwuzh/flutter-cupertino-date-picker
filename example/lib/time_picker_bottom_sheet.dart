@@ -8,27 +8,146 @@ class TimePickerBottomSheet extends StatefulWidget {
   State<StatefulWidget> createState() => _TimePickerBottomSheetState();
 }
 
-class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
-  String _datetime = '';
+const String MIN_DATETIME = '2010-05-12 05:15:20';
+const String MAX_DATETIME = '2021-11-25 22:45:10';
+const String INIT_DATETIME = '2019-05-17 18:13:15';
 
+class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
   String _format = 'H时:mm分';
-  bool _showTitleActions = true;
 
   TextEditingController _formatCtrl = TextEditingController();
+
+  DateTime _dateTime;
 
   @override
   void initState() {
     super.initState();
     _formatCtrl.text = _format;
+    _dateTime = DateTime.parse(INIT_DATETIME);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('TimePicker Bottom Sheet')),
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 115.0,
+                    child: Text(
+                      'min DateTime:',
+                      style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999)),
+                    ),
+                  ),
+                  Text(MIN_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 115.0,
+                    child: Text('max DateTime:',
+                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                  ),
+                  Text(MAX_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 115.0,
+                    child: Text('init DateTime:',
+                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                  ),
+                  Text(INIT_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
+            // show title actions checkbox
+            Row(
+              children: <Widget>[
+                Text('Show custom title', style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                Checkbox(value: true, onChanged: (value) {}),
+              ],
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(right: 8.0),
+                    child: Text(
+                      'custom title height:',
+                      style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999)),
+                    ),
+                  ),
+                  Text('56.0', style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
+            // Formatter input field
+            TextField(
+              controller: _formatCtrl,
+              keyboardType: TextInputType.url,
+              decoration: InputDecoration(
+                labelText: 'Formatter',
+                hintText: 'HH:mm:ss / H-m / H时.m分',
+                hintStyle: TextStyle(color: Colors.black26),
+              ),
+              onChanged: (value) => _format = value,
+            ),
+
+            // Selected date
+            Container(
+              margin: EdgeInsets.only(top: 40.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text('Selected Time:', style: Theme.of(context).textTheme.subhead),
+                  Container(
+                    padding: EdgeInsets.only(left: 12.0),
+                    child: Text(
+                        '${_dateTime.hour.toString().padLeft(2, '0')}:${_dateTime.minute.toString().padLeft(2, '0')}:${_dateTime.second.toString().padLeft(2, '0')}',
+                        style: Theme.of(context).textTheme.title),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showTimePicker,
+        tooltip: 'Show TimePicker',
+        child: Icon(Icons.access_time),
+      ),
+    );
   }
 
   /// Display time picker.
   void _showTimePicker() {
     CupertinoDatePicker.showDatePicker(
       context,
-      minDateTime: DateTime(2019, 5, 15, 9, 0, 0),
-      maxDateTime: DateTime(2021, 5, 15, 21, 0, 0),
-      initialDateTime: DateTime.now(),
+      minDateTime: DateTime.parse(MIN_DATETIME),
+      maxDateTime: DateTime.parse(MAX_DATETIME),
+      initialDateTime: DateTime.parse(INIT_DATETIME),
       dateFormat: _format,
       pickerMode: DateTimePickerMode.time, // show TimePicker
       pickerTheme: DatePickerTheme(
@@ -48,76 +167,15 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
         debugPrint('onCancel');
       },
       onChange: (dateTime, List<int> index) {
-        _changeDatetime(dateTime);
+        setState(() {
+          _dateTime = dateTime;
+        });
       },
       onConfirm: (dateTime, List<int> index) {
-        _changeDatetime(dateTime);
+        setState(() {
+          _dateTime = dateTime;
+        });
       },
-    );
-  }
-
-  void _changeDatetime(DateTime dateTime) {
-    setState(() {
-      _datetime =
-          '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:${dateTime.second.toString().padLeft(2, '0')}';
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('TimePicker Bottom Sheet')),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: <Widget>[
-            // show title actions checkbox
-            Row(
-              children: <Widget>[
-                Text('Show title actions', style: TextStyle(fontSize: 16.0)),
-                Checkbox(
-                  value: _showTitleActions,
-                  onChanged: (value) => setState(() {
-                        _showTitleActions = value;
-                      }),
-                )
-              ],
-            ),
-
-            // Formatter input field
-            TextField(
-              controller: _formatCtrl,
-              keyboardType: TextInputType.url,
-              decoration: InputDecoration(
-                labelText: 'Formatter',
-                hintText: 'HH:mm:ss / H:m / H时:m分',
-                hintStyle: TextStyle(color: Colors.black26),
-              ),
-              onChanged: (value) => _format = value,
-            ),
-
-            // Selected date
-            Container(
-              margin: EdgeInsets.only(top: 40.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text('Selected Time:', style: Theme.of(context).textTheme.subhead),
-                  Container(
-                    padding: EdgeInsets.only(left: 12.0),
-                    child: Text('$_datetime', style: Theme.of(context).textTheme.title),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showTimePicker,
-        tooltip: 'Show TimePicker',
-        child: Icon(Icons.access_time),
-      ),
     );
   }
 }
