@@ -119,13 +119,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('Locale: '),
-                  Wrap(
-                    direction: Axis.horizontal,
-                    children: radios,
-                  )
-                ],
+                children: <Widget>[Text('Locale: '), Wrap(direction: Axis.horizontal, children: radios)],
               ),
             ),
 

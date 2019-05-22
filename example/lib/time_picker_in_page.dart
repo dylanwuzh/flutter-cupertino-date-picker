@@ -11,8 +11,18 @@ class TimePickerInPage extends StatefulWidget {
   State<StatefulWidget> createState() => _TimePickerInPageState();
 }
 
+const String MIN_DATETIME = '2010-05-12 05:15:20';
+const String MAX_DATETIME = '2021-11-25 22:45:10';
+const String INIT_DATETIME = '2019-05-17 18:13:15';
+
 class _TimePickerInPageState extends State<TimePickerInPage> {
-  DateTime _currDateTime;
+  DateTime _dateTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _dateTime = DateTime.parse(INIT_DATETIME);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +33,61 @@ class _TimePickerInPageState extends State<TimePickerInPage> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 115.0,
+                    child: Text(
+                      'min DateTime:',
+                      style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999)),
+                    ),
+                  ),
+                  Text(MIN_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 115.0,
+                    child: Text('max DateTime:',
+                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                  ),
+                  Text(MAX_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 115.0,
+                    child: Text('init DateTime:',
+                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                  ),
+                  Text(INIT_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
             Container(
-              margin: EdgeInsets.only(bottom: 40.0),
+              margin: EdgeInsets.only(top: 8.0, bottom: 40.0),
               child: TimePickerWidget(
-                minDateTime: DateTime(2019, 5, 15, 8, 10, 10),
-                maxDateTime: DateTime(2019, 5, 15, 12, 20, 20),
-                initDateTime: DateTime(2019, 5, 15, 10, 1, 10),
+                minDateTime: DateTime.parse(MIN_DATETIME),
+                maxDateTime: DateTime.parse(MAX_DATETIME),
+                initDateTime: DateTime.parse(INIT_DATETIME),
                 dateFormat: 'HH时:mm分:s',
-                pickerTheme: DatePickerTheme(showTitle: false),
+                pickerTheme: DatePickerTheme(showTitle: false, backgroundColor: Color(0xFFe1bee7)),
                 onChange: (dateTime, selectedIndex) {
-                  debugPrint('****** dataTime=$dateTime\nselectedIndex=$selectedIndex');
                   setState(() {
-                    _currDateTime = dateTime;
+                    _dateTime = dateTime;
                   });
                 },
               ),
@@ -48,8 +101,8 @@ class _TimePickerInPageState extends State<TimePickerInPage> {
                 Container(
                   padding: EdgeInsets.only(left: 12.0),
                   child: Text(
-                    _currDateTime != null
-                        ? '${_currDateTime.hour.toString().padLeft(2, '0')}:${_currDateTime.minute.toString().padLeft(2, '0')}:${_currDateTime.second.toString().padLeft(2, '0')}'
+                    _dateTime != null
+                        ? '${_dateTime.hour.toString().padLeft(2, '0')}:${_dateTime.minute.toString().padLeft(2, '0')}:${_dateTime.second.toString().padLeft(2, '0')}'
                         : '',
                     style: Theme.of(context).textTheme.title,
                   ),

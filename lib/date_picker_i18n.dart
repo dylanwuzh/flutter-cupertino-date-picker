@@ -188,7 +188,12 @@ class DatePickerI18n {
       return WEEKS_FULL[locale] ?? WEEKS_FULL[DATETIME_PICKER_LOCALE_DEFAULT];
     }
 
-    if (WEEKS_SHORT[locale] == null && WEEKS_FULL[locale] != null) {
+    debugPrint('-------- getLocaleWeeks: locale=$locale, isFull=$isFull');
+
+    if (WEEKS_SHORT[locale] != null) {
+      return WEEKS_SHORT[locale];
+    }
+    if (WEEKS_FULL[locale] != null) {
       return WEEKS_FULL[locale].map((item) => item.substring(0, min(3, item.length))).toList();
     }
     return WEEKS_FULL[DATETIME_PICKER_LOCALE_DEFAULT].map((item) => item.substring(0, min(3, item.length))).toList();
