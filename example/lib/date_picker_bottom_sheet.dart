@@ -167,7 +167,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
 
   /// Display date picker.
   void _showDatePicker() {
-    CupertinoDatePicker.showDatePicker(
+    DatePicker.showDatePicker(
       context,
       pickerTheme: DatePickerTheme(
         showTitle: _showTitle,

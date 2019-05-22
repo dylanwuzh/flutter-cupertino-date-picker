@@ -23,7 +23,7 @@ enum DateTimePickerMode {
 ///
 /// author: Dylan Wu
 /// since: 2018/06/21
-class CupertinoDatePicker {
+class DatePicker {
   /// Display date picker bottom sheet.
   ///
   /// cancel: Custom cancel button

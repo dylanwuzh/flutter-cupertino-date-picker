@@ -143,7 +143,7 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
 
   /// Display time picker.
   void _showTimePicker() {
-    CupertinoDatePicker.showDatePicker(
+    DatePicker.showDatePicker(
       context,
       minDateTime: DateTime.parse(MIN_DATETIME),
       maxDateTime: DateTime.parse(MAX_DATETIME),
