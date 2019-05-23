@@ -28,7 +28,8 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle hintTextStyle = Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
+    TextStyle hintTextStyle =
+        Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
     return Scaffold(
       appBar: AppBar(title: Text("DateTimePicker In Page")),
       body: Container(
@@ -45,7 +46,8 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
                     width: 115.0,
                     child: Text('min DateTime:', style: hintTextStyle),
                   ),
-                  Text(MIN_DATETIME, style: Theme.of(context).textTheme.subhead),
+                  Text(MIN_DATETIME,
+                      style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -59,7 +61,8 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
                     width: 115.0,
                     child: Text('max DateTime:', style: hintTextStyle),
                   ),
-                  Text(MAX_DATETIME, style: Theme.of(context).textTheme.subhead),
+                  Text(MAX_DATETIME,
+                      style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -73,7 +76,8 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
                     width: 115.0,
                     child: Text('init DateTime:', style: hintTextStyle),
                   ),
-                  Text(INIT_DATETIME, style: Theme.of(context).textTheme.subhead),
+                  Text(INIT_DATETIME,
+                      style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -145,7 +149,8 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Selected DateTime:', style: Theme.of(context).textTheme.subhead),
+                Text('Selected DateTime:',
+                    style: Theme.of(context).textTheme.subhead),
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.only(top: 4.0),

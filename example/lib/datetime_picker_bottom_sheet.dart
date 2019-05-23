@@ -77,13 +77,16 @@ class _DateTimePickerBottomSheetState extends State<DateTimePickerBottomSheet> {
                     _locale = value;
                   });
                 }),
-            Text(locale.toString().substring(locale.toString().indexOf('.') + 1)),
+            Text(locale
+                .toString()
+                .substring(locale.toString().indexOf('.') + 1)),
           ],
         ),
       ));
     });
 
-    TextStyle hintTextStyle = Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
+    TextStyle hintTextStyle =
+        Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
     return Scaffold(
       appBar: AppBar(title: Text('DateTimePicker Bottom Sheet')),
       body: Container(
@@ -99,7 +102,8 @@ class _DateTimePickerBottomSheetState extends State<DateTimePickerBottomSheet> {
                     width: 115.0,
                     child: Text('min DateTime:', style: hintTextStyle),
                   ),
-                  Text(MIN_DATETIME, style: Theme.of(context).textTheme.subhead),
+                  Text(MIN_DATETIME,
+                      style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -113,7 +117,8 @@ class _DateTimePickerBottomSheetState extends State<DateTimePickerBottomSheet> {
                     width: 115.0,
                     child: Text('max DateTime:', style: hintTextStyle),
                   ),
-                  Text(MAX_DATETIME, style: Theme.of(context).textTheme.subhead),
+                  Text(MAX_DATETIME,
+                      style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -127,7 +132,8 @@ class _DateTimePickerBottomSheetState extends State<DateTimePickerBottomSheet> {
                     width: 115.0,
                     child: Text('init DateTime:', style: hintTextStyle),
                   ),
-                  Text(INIT_DATETIME, style: Theme.of(context).textTheme.subhead),
+                  Text(INIT_DATETIME,
+                      style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -167,7 +173,10 @@ class _DateTimePickerBottomSheetState extends State<DateTimePickerBottomSheet> {
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[Text('Locale: '), Wrap(direction: Axis.horizontal, children: radios)],
+                children: <Widget>[
+                  Text('Locale: '),
+                  Wrap(direction: Axis.horizontal, children: radios)
+                ],
               ),
             ),
 
@@ -178,7 +187,8 @@ class _DateTimePickerBottomSheetState extends State<DateTimePickerBottomSheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('Selected DateTime:', style: Theme.of(context).textTheme.subhead),
+                  Text('Selected DateTime:',
+                      style: Theme.of(context).textTheme.subhead),
                   Container(
                     padding: EdgeInsets.only(top: 4.0),
                     child: Text(

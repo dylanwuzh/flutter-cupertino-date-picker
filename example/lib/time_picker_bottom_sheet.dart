@@ -28,7 +28,8 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle hintTextStyle = Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
+    TextStyle hintTextStyle =
+        Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
     return Scaffold(
       appBar: AppBar(title: Text('TimePicker Bottom Sheet')),
       body: Container(
@@ -44,7 +45,8 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
                     width: 115.0,
                     child: Text('min DateTime:', style: hintTextStyle),
                   ),
-                  Text(MIN_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
+                  Text(MIN_DATETIME.substring(11),
+                      style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -58,7 +60,8 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
                     width: 115.0,
                     child: Text('max DateTime:', style: hintTextStyle),
                   ),
-                  Text(MAX_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
+                  Text(MAX_DATETIME.substring(11),
+                      style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -72,7 +75,8 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
                     width: 115.0,
                     child: Text('init DateTime:', style: hintTextStyle),
                   ),
-                  Text(INIT_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
+                  Text(INIT_DATETIME.substring(11),
+                      style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -117,7 +121,8 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text('Selected Time:', style: Theme.of(context).textTheme.subhead),
+                  Text('Selected Time:',
+                      style: Theme.of(context).textTheme.subhead),
                   Container(
                     padding: EdgeInsets.only(left: 12.0),
                     child: Text(
