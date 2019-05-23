@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^0.8.0
+  flutter_cupertino_date_picker: ^1.0.0
 ```
 
 #### 2\. Install
@@ -39,95 +39,228 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 ##### Bottom Sheet DatePicker
 
 ```dart
+/// Display date picker in bottom sheet.
 ///
-/// context: BuildContext.
-/// showTitleActions: Display confirm and cancel button in title bar or not.
-/// local: i18n, 'zh' for Chinese, default is English.
-/// minYear: Min value of year's selection range. Default is 1900.
-/// maxYear: Max value of year's selection range. Default is 2100.
-/// initialYear: Initial value of year.
-/// initialMonth: Initial value of month.
-/// initialDate: Initial value of date.
-/// minDateTime: Min value of year's selection range.
-/// maxDateTime: Max value of year's selection range.
-/// initialDateTime: Initial value of date time.
-/// cancel: Custom cancel button.
-/// confirm: Custom confirm button.
-/// dateFormat: Format English months.
-/// onChanged: An option callback when the currently selected datetime changes.
-/// onConfirm: An option callback when tap the confirm button in title bar.
-/// onChanged2: An option callback when the currently selected datetime changes.
-/// onConfirm2: An option callback when tap the confirm button in title bar.
-/// onCancel: An option callback when tap the cancel button in title bar.
+/// context: [BuildContext]
+/// minDateTime: [DateTime] minimum date time
+/// maxDateTime: [DateTime] maximum date time
+/// initialDateTime: [DateTime] initial date time for selected
+/// dateFormat: [String] date format pattern
+/// locale: [DateTimePickerLocale] internationalization
+/// pickerMode: [DateTimePickerMode] display mode: date(DatePicker)、time(TimePicker)、datetime(DateTimePicker)
+/// pickerTheme: [DateTimePickerTheme] the theme of date time picker
+/// onCancel: [DateVoidCallback] pressed title cancel widget event
+/// onChange: [DateValueCallback] selected date time changed event
+/// onConfirm: [DateValueCallback] pressed title confirm widget event
 DatePicker.showDatePicker(
-  context,
-  showTitleActions: true,
-  locale: 'zh',
-  minYear: 1970,
-  maxYear: 2020,
-  initialYear: 2018,
-  initialMonth: 6,
-  initialDate: 21,
-  minDateTime: DateTime(2000),
-  maxDateTime: DateTime(2021),
-  initialDateTime: DateTime(2019, 1, 1),
-  cancel: Text('custom cancel'),
-  confirm: Text('custom confirm'),
-  dateFormat: 'yyyy-mm-dd'
-  onChanged: (year, month, date) { },
-  onConfirm: (year, month, date) { },
-  onChanged2: (dateTime, List<int> indexList) { },
-  onConfirm2: (dateTime, List<int> indexList) { },
-  onCancel: () { },
-);
+  BuildContext context,
+  DateTime minDateTime,
+  DateTime maxDateTime,
+  DateTime initialDateTime,
+  String dateFormat,
+  DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
+  DateTimePickerMode pickerMode: DateTimePickerMode.date,
+  DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
+  DateVoidCallback onCancel,
+  DateValueCallback onChange,
+  DateValueCallback onConfirm,
+});
 ```
 
 ##### DatePicker Widget
 
 ```dart
-DatePickerWidget(
-  minYear: 2005,
-  maxYear: 2019,
-  initDateTime: DateTime(2018, 1, 1),
-  dateFormat: 'mm-dd-yyyy',
-  onChanged2: (dateTime, selectedIndex) { },
-)
+/// Display date picker widget.
+///
+/// minDateTime: [DateTime] minimum date time
+/// maxDateTime: [DateTime] maximum date time
+/// initialDateTime: [DateTime] initial date time for selected
+/// dateFormat: [String] date format pattern
+/// locale: [DateTimePickerLocale] internationalization
+/// pickerTheme: [DateTimePickerTheme] the theme of date time picker
+/// onCancel: [DateVoidCallback] pressed title cancel widget event
+/// onChange: [DateValueCallback] selected date time changed event
+/// onConfirm: [DateValueCallback] pressed title confirm widget event
+DatePickerWidget({
+  DateTime minDateTime,
+  DateTime maxDateTime,
+  DateTime initialDateTime,
+  String dateFormat: DATETIME_PICKER_DATE_FORMAT,
+  DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
+  DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
+  DateVoidCallback onCancel,
+  DateValueCallback onChange,
+  DateValueCallback onConfirm,
+})
 ```
 
-***showTitleActions: false***
+##### TimePicker Widget
 
-![Example: showTitleActions=false][2]
-
-***locale: 'zh'***
-
-i18n, default is English
-
-[Thanks to: Robbie Boyd](https://github.com/vagrantrobbie)
-
-
-![Example: locale=zh][3]
-
-***dateFormat: 'yyyy-mmm-dd'***
-
-Just support English months.
-
-It will also put the Pickers in the same order. The date String output does not change
-
+```dart
+/// Display time picker widget.
+///
+/// minDateTime: [DateTime] minimum date time
+/// maxDateTime: [DateTime] maximum date time
+/// initialDateTime: [DateTime] initial date time for selected
+/// dateFormat: [String] date format pattern
+/// locale: [DateTimePickerLocale] internationalization
+/// pickerTheme: [DateTimePickerTheme] the theme of date time picker
+/// onCancel: [DateVoidCallback] pressed title cancel widget event
+/// onChange: [DateValueCallback] selected date time changed event
+/// onConfirm: [DateValueCallback] pressed title confirm widget event
+TimePickerWidget({
+  DateTime minDateTime,
+  DateTime maxDateTime,
+  DateTime initialDateTime,
+  String dateFormat: DATETIME_PICKER_DATE_FORMAT,
+  DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
+  DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
+  DateVoidCallback onCancel,
+  DateValueCallback onChange,
+  DateValueCallback onConfirm,
+})
 ```
-dd-mm-yyyy -> 1-10-2018
-dd-mmm-yyyy -> 1-Oct-2018
-dd-mmmm-yyyy -> 1-October-2018
+
+##### DateTimePicker Widget
+
+```dart
+/// Display date time picker widget.
+///
+/// minDateTime: [DateTime] minimum date time
+/// maxDateTime: [DateTime] maximum date time
+/// initialDateTime: [DateTime] initial date time for selected
+/// dateFormat: [String] date format pattern
+/// locale: [DateTimePickerLocale] internationalization
+/// pickerTheme: [DateTimePickerTheme] the theme of date time picker
+/// onCancel: [DateVoidCallback] pressed title cancel widget event
+/// onChange: [DateValueCallback] selected date time changed event
+/// onConfirm: [DateValueCallback] pressed title confirm widget event
+DateTimePickerWidget({
+  DateTime minDateTime,
+  DateTime maxDateTime,
+  DateTime initialDateTime,
+  String dateFormat: DATETIME_PICKER_DATE_FORMAT,
+  DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
+  DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
+  DateVoidCallback onCancel,
+  DateValueCallback onChange,
+  DateValueCallback onConfirm,
+})
 ```
 
-![Example: dateFormat][4]
+#### 5\. DateTimePickerLocale
+
+Support:
+
+- en_us: English (EN) United States ***[Default locale]***
+- zh_cn: Chinese (ZH) Simplified
+- pt_br: Portuguese (PT) Brazil
+- es: Spanish (ES)
+
+##### Add more language
+
+Fork this project, add language text in `lib/date_picker_i18n.dart` file.
+
+```dart
+/// Done widget's text
+const Map<DateTimePickerLocale, String> DONE = { ... };
+
+/// Cancel widget's text
+const Map<DateTimePickerLocale, String> CANCEL = { ... };
+
+/// en_US
+const List<String> EN_US_MONTHS = [ ... ];
+
+/// en_US weeks with full name
+const List<String> EN_US_WEEKS_FULL = [ ... ];
+
+/// en_US weeks with short name
+const List<String> EN_US_WEEKS_SHORT = [ ... ];
+```
+
+#### 6\. dateFormat
+
+|Pattern|Meaning                |e.g.      |
+|:----|:------------------------|:---------|
+|yyyy |year                     |2019, 2020|
+|yy   |year, 2 digits           |19, 20|
+|MMMM |month                    |January(en_us), 01(zh_cn)|
+|MMM  |month, abbreviated       |Jan(en_us), 01(zh_cn)|
+|MM   |month, 2 digits          |01、11
+|M    |month                    |1, 11|
+|dd   |day in month, 2 digits   |05, 25|
+|d    |day in month             |5, 25|
+|EEEE |day of week              |Monday(en_us), 星期一(zh_cn)|
+|EEE  |day of week, abbreviated |Mon(en_us), 周一(zh_cn)|
+|HH   |hour (0~23), 2 digits    |04, 12, 20|
+|H    |hour (0~23)              |4, 12, 20|
+|mm   |minute, 2 digits         |05, 40|
+|m    |minute                   |5, 40|
+|ss   |second, 2 digits         |06, 55|
+|s    |second                   |6, 55|
+|yyyy年|format                   |2019年, 2020年|
+|H时   |format                   |5时, 21时|
+
+##### Date Format Separator
+
+Support separator: `|,-._: `.
+
+#### 7\. DateTimePickerTheme
+
+```dart
+/// DateTimePicker theme.
+///
+/// [backgroundColor] DatePicker's background color.
+/// [cancelTextStyle] Default cancel widget's [TextStyle].
+/// [confirmTextStyle] Default confirm widget's [TextStyle].
+/// [cancel] Custom cancel widget.
+/// [confirm] Custom confirm widget.
+/// [title] Custom title widget. If specify a title widget, the cancel and confirm widgets will not display. Must set [titleHeight] value for custom title widget.
+/// [showTitle] Whether display title widget or not. If set false, the default cancel and confirm widgets will not display, but the custom title widget will display if had specified one custom title widget.
+/// [pickerHeight] The value of DatePicker's height.
+/// [titleHeight] The value of DatePicker's title height.
+/// [itemHeight] The value of DatePicker's column height.
+/// [itemTextStyle] The value of DatePicker's column [TextStyle].
+const DateTimePickerTheme({
+  this.backgroundColor: DATETIME_PICKER_BACKGROUND_COLOR,
+  this.cancelTextStyle,
+  this.confirmTextStyle,
+  this.cancel,
+  this.confirm,
+  this.title,
+  this.showTitle: DATETIME_PICKER_SHOW_TITLE_DEFAULT,
+  this.pickerHeight: DATETIME_PICKER_HEIGHT,
+  this.titleHeight: DATETIME_PICKER_TITLE_HEIGHT,
+  this.itemHeight: DATETIME_PICKER_ITEM_HEIGHT,
+  this.itemTextStyle: DATETIME_PICKER_ITEM_TEXT_STYLE,
+});
+```
 
 ## Example
 
 [Example sources](https://github.com/wuzhendev/flutter-cupertino-date-picker/tree/master/example)
 
-## Futures
+[Example APK](https://raw.githubusercontent.com/wuzhendev/assets/master/flutter-datepicker/flutter_cupertino_date_picker_v1.0.0.apk)
 
-1. Support time picker.
+![Example APK Download](https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/date_picker_qrcode_v1.0.0.png?raw=true)
+
+### DatePicker
+
+![Example: DatePicker][1]
+
+![Example: DatePickerWidget][2]
+
+### TimePicker
+
+![Example: TimePicker][3]
+
+![Example: TimePickerWidget][4]
+
+### DateTimePicker
+
+![Example: DateTimePicker][5]
+
+![Example: DateTimePickerWidget][6]
 
 ## License
 
@@ -147,7 +280,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-[1]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_4.png?x-oss-process=style/image_scale1
-[2]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_5.png?x-oss-process=style/image_scale1
-[3]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_6.png?x-oss-process=style/image_scale1
-[4]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_7.png?x-oss-process=style/image_scale1
+[1]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_14.jpg?raw=true
+[2]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_15.jpg?raw=true
+[3]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_16.jpg?raw=true
+[4]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_17.jpg?raw=true
+[5]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_18.jpg?raw=true
+[6]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_19.jpg?raw=true

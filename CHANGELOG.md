@@ -1,3 +1,12 @@
+## 1.0.0
+
+- Refactor code.
+- Support `DatePicker`、`TimePicker`、`DateTimePicker`.
+- Support `DatePickerWidget`、`TimePickerWidget`、`DateTimePickerWidget`.
+- Upgrade date format.
+- Add `DateTimePickerTheme`.
+- Add `DateTimePickerLocale` for locale.
+
 ## 0.8.0
 
 - Support set the value of minimum DateTime and maximum DateTime.
