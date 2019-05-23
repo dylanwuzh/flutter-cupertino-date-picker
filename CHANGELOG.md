@@ -2,8 +2,10 @@
 
 - Refactor code.
 - Support `DatePicker`、`TimePicker`、`DateTimePicker`.
+- Support `DatePickerWidget`、`TimePickerWidget`、`DateTimePickerWidget`.
 - Upgrade date format.
-- Add `DatePickerTheme`.
+- Add `DateTimePickerTheme`.
+- Add `DateTimePickerLocale` for locale.
 
 ## 0.8.0
 

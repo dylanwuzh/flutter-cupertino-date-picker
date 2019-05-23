@@ -15,10 +15,16 @@ class DateTimePickerInPage extends StatefulWidget {
 const String MIN_DATETIME = '2019-05-15 20:10:55';
 const String MAX_DATETIME = '2019-07-01 12:30:40';
 const String INIT_DATETIME = '2019-05-16 09:00:58';
-const String DATE_FORMAT = 'yyyy-MM-dd,H:m';
+const String DATE_FORMAT = 'yyyy-MM-dd,H时:m分';
 
 class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
   DateTime _dateTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _dateTime = DateTime.parse(INIT_DATETIME);
+  }
 
   @override
   Widget build(BuildContext context) {

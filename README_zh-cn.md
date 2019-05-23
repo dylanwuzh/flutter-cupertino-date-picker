@@ -201,6 +201,10 @@ const List<String> EN_US_WEEKS_SHORT = [ ... ];
 |yyyy年|格式化            |2019年, 2020年|
 |H时   |格式化            |5时, 21时|
 
+##### Date Format Separator
+
+支持的分隔符: `|,-._: `.
+
 #### 7\. DateTimePickerTheme
 
 ```dart
@@ -236,6 +240,24 @@ const DateTimePickerTheme({
 
 [Example sources](https://github.com/wuzhendev/flutter-cupertino-date-picker/tree/master/example)
 
+### DatePicker
+
+![Example: DatePicker][1]
+
+![Example: DatePickerWidget][2]
+
+### TimePicker
+
+![Example: TimePicker][3]
+
+![Example: TimePickerWidget][4]
+
+### DateTimePicker
+
+![Example: DateTimePicker][5]
+
+![Example: DateTimePickerWidget][6]
+
 ## License
 
 ```
@@ -253,3 +275,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+[1]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_8.jpg?raw=true
+[2]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_9.jpg?raw=true
+[3]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_10.jpg?raw=true
+[4]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_11.jpg?raw=true
+[5]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_12.jpg?raw=true
+[6]:https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/flutter_date_picker_13.jpg?raw=true
