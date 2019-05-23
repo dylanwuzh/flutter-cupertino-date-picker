@@ -21,7 +21,7 @@ class DatePickerWidget extends StatefulWidget {
     this.initialDateTime,
     this.dateFormat: DATETIME_PICKER_DATE_FORMAT,
     this.locale: DATETIME_PICKER_LOCALE_DEFAULT,
-    this.pickerTheme: DatePickerTheme.Default,
+    this.pickerTheme: DateTimePickerTheme.Default,
     this.onCancel,
     this.onChange,
     this.onConfirm,
@@ -33,8 +33,8 @@ class DatePickerWidget extends StatefulWidget {
 
   final DateTime minDateTime, maxDateTime, initialDateTime;
   final String dateFormat;
-  final DatePickerLocale locale;
-  final DatePickerTheme pickerTheme;
+  final DateTimePickerLocale locale;
+  final DateTimePickerTheme pickerTheme;
 
   final DateVoidCallback onCancel;
   final DateValueCallback onChange, onConfirm;
@@ -164,7 +164,6 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     List<String> formatArr = DateTimeFormatter.splitDateFormat(widget.dateFormat);
     formatArr.forEach((format) {
       List<int> valueRange = _findPickerItemRange(format);
-      debugPrint(valueRange.toString());
 
       Widget pickerColumn = _renderDatePickerColumnComponent(
         scrollCtrl: _findScrollCtrl(format),

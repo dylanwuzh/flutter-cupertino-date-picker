@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 ///
@@ -27,6 +28,7 @@ class _DatePickerInPageState extends State<DatePickerInPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle hintTextStyle = Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
     return Scaffold(
       appBar: AppBar(title: Text("DatePicker In Page")),
       body: Container(
@@ -34,75 +36,71 @@ class _DatePickerInPageState extends State<DatePickerInPage> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
+            // min datetime hint
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
                   Container(
                     width: 115.0,
-                    child: Text(
-                      'min DateTime:',
-                      style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999)),
-                    ),
+                    child: Text('min DateTime:', style: hintTextStyle),
                   ),
                   Text(MIN_DATETIME, style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
+            // max datetime hint
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
-                  Container(
-                    width: 115.0,
-                    child: Text('max DateTime:',
-                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
-                  ),
+                  Container(width: 115.0, child: Text('max DateTime:', style: hintTextStyle)),
                   Text(MAX_DATETIME, style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
+            // init datetime hint
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
                   Container(
                     width: 115.0,
-                    child: Text('init DateTime:',
-                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                    child: Text('init DateTime:', style: hintTextStyle),
                   ),
                   Text(INIT_DATETIME, style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
+            // date format
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
                   Container(
                     width: 115.0,
-                    child: Text('Date Format:',
-                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                    child: Text('Date Format:', style: hintTextStyle),
                   ),
                   Text(DATE_FORMAT, style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
+            // date picker theme
             GestureDetector(
               onTap: () {
                 showDialog(
                   context: context,
                   builder: (_) => new AlertDialog(
                         titlePadding: EdgeInsets.only(left: 16.0, top: 16.0),
-                        title: new Text("DatePickerTheme"),
+                        title: new Text("DateTimePickerTheme"),
                         contentPadding: EdgeInsets.all(16.0),
                         content: new Text(
                           '''
-DatePickerTheme(
+DateTimePickerTheme(
         backgroundColor: Color(0xFF80cbc4),
         cancelTextStyle: TextStyle(color: Colors.white),
         confirmTextStyle: TextStyle(color: Colors.black),
@@ -130,8 +128,7 @@ DatePickerTheme(
                 child: Row(
                   children: <Widget>[
                     Container(
-                      child: Text('DatePickerTheme  ',
-                          style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                      child: Text('DateTimePickerTheme  ', style: hintTextStyle),
                     ),
                     Icon(Icons.remove_red_eye, color: Color(0xFF03a9f4)),
                   ],
@@ -139,6 +136,7 @@ DatePickerTheme(
               ),
             ),
 
+            // date picker widget
             Container(
               margin: EdgeInsets.only(top: 24.0, bottom: 40.0),
               child: DatePickerWidget(
@@ -146,7 +144,7 @@ DatePickerTheme(
                 maxDateTime: DateTime.parse(MAX_DATETIME),
                 initialDateTime: DateTime.parse(INIT_DATETIME),
                 dateFormat: DATE_FORMAT,
-                pickerTheme: DatePickerTheme(
+                pickerTheme: DateTimePickerTheme(
                   backgroundColor: Color(0xFFb2dfdb),
                   cancelTextStyle: TextStyle(color: Colors.white),
                   confirmTextStyle: TextStyle(color: Colors.black),
@@ -163,7 +161,7 @@ DatePickerTheme(
               ),
             ),
 
-            // Selected date
+            // selected date
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[

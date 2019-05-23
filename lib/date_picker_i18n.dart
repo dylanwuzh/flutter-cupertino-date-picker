@@ -1,8 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
-
-enum DatePickerLocale {
+enum DateTimePickerLocale {
   // English (EN) United States
   en_us,
 
@@ -16,20 +14,20 @@ enum DatePickerLocale {
   es,
 }
 
-const DATETIME_PICKER_LOCALE_DEFAULT = DatePickerLocale.en_us;
+const DATETIME_PICKER_LOCALE_DEFAULT = DateTimePickerLocale.en_us;
 
 /// Done widget's text
-const Map<DatePickerLocale, String> DONE = {
-  DatePickerLocale.en_us: 'Done',
-  DatePickerLocale.zh_cn: '确定',
-  DatePickerLocale.pt_br: 'Feito',
+const Map<DateTimePickerLocale, String> DONE = {
+  DateTimePickerLocale.en_us: 'Done',
+  DateTimePickerLocale.zh_cn: '确定',
+  DateTimePickerLocale.pt_br: 'Feito',
 };
 
 /// Cancel widget's text
-const Map<DatePickerLocale, String> CANCEL = {
-  DatePickerLocale.en_us: 'Cancel',
-  DatePickerLocale.zh_cn: '取消',
-  DatePickerLocale.pt_br: 'Cancelar',
+const Map<DateTimePickerLocale, String> CANCEL = {
+  DateTimePickerLocale.en_us: 'Cancel',
+  DateTimePickerLocale.zh_cn: '取消',
+  DateTimePickerLocale.pt_br: 'Cancelar',
 };
 
 const List<String> DEFAULT_MONTH = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
@@ -82,10 +80,10 @@ const List<String> PT_BR_MONTHS = [
   "Dezembro"
 ];
 
-const Map<DatePickerLocale, List<String>> MONTHS = {
-  DatePickerLocale.en_us: EN_US_MONTHS,
-  DatePickerLocale.pt_br: PT_BR_MONTHS,
-  DatePickerLocale.es: ES_MONTHS,
+const Map<DateTimePickerLocale, List<String>> MONTHS = {
+  DateTimePickerLocale.en_us: EN_US_MONTHS,
+  DateTimePickerLocale.pt_br: PT_BR_MONTHS,
+  DateTimePickerLocale.es: ES_MONTHS,
 };
 
 /// en_US weeks with full name
@@ -102,7 +100,7 @@ const List<String> EN_US_WEEKS_FULL = [
 /// en_US weeks with short name
 const List<String> EN_US_WEEKS_SHORT = [
   "Mon",
-  "Tues",
+  "Tue",
   "Wed",
   "Thur",
   "Fri",
@@ -154,41 +152,39 @@ const List<String> ZH_CN_WEEKS_SHORT = [
   "周日",
 ];
 
-const Map<DatePickerLocale, List<String>> WEEKS_FULL = {
-  DatePickerLocale.en_us: EN_US_WEEKS_FULL,
-  DatePickerLocale.zh_cn: ZH_CN_WEEKS_FULL,
-  DatePickerLocale.pt_br: PT_BR_WEEKS,
-  DatePickerLocale.es: ES_WEEKS,
+const Map<DateTimePickerLocale, List<String>> WEEKS_FULL = {
+  DateTimePickerLocale.en_us: EN_US_WEEKS_FULL,
+  DateTimePickerLocale.zh_cn: ZH_CN_WEEKS_FULL,
+  DateTimePickerLocale.pt_br: PT_BR_WEEKS,
+  DateTimePickerLocale.es: ES_WEEKS,
 };
 
-const Map<DatePickerLocale, List<String>> WEEKS_SHORT = {
-  DatePickerLocale.en_us: EN_US_WEEKS_SHORT,
-  DatePickerLocale.zh_cn: ZH_CN_WEEKS_SHORT,
+const Map<DateTimePickerLocale, List<String>> WEEKS_SHORT = {
+  DateTimePickerLocale.en_us: EN_US_WEEKS_SHORT,
+  DateTimePickerLocale.zh_cn: ZH_CN_WEEKS_SHORT,
 };
 
 class DatePickerI18n {
   /// Get done button text
-  static String getLocaleDone(DatePickerLocale locale) {
+  static String getLocaleDone(DateTimePickerLocale locale) {
     return DONE[locale] ?? DONE[DATETIME_PICKER_LOCALE_DEFAULT];
   }
 
   /// Get cancel button text
-  static String getLocaleCancel(DatePickerLocale locale) {
+  static String getLocaleCancel(DateTimePickerLocale locale) {
     return CANCEL[locale] ?? DONE[DATETIME_PICKER_LOCALE_DEFAULT];
   }
 
   /// Get locale month array
-  static List<String> getLocaleMonths(DatePickerLocale locale) {
+  static List<String> getLocaleMonths(DateTimePickerLocale locale) {
     return MONTHS[locale] ?? DEFAULT_MONTH;
   }
 
   /// Get locale week array
-  static List<String> getLocaleWeeks(DatePickerLocale locale, [bool isFull = true]) {
+  static List<String> getLocaleWeeks(DateTimePickerLocale locale, [bool isFull = true]) {
     if (isFull) {
       return WEEKS_FULL[locale] ?? WEEKS_FULL[DATETIME_PICKER_LOCALE_DEFAULT];
     }
-
-    debugPrint('-------- getLocaleWeeks: locale=$locale, isFull=$isFull');
 
     if (WEEKS_SHORT[locale] != null) {
       return WEEKS_SHORT[locale];

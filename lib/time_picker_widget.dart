@@ -20,7 +20,7 @@ class TimePickerWidget extends StatefulWidget {
     this.initDateTime,
     this.dateFormat: DATETIME_PICKER_TIME_FORMAT,
     this.locale: DATETIME_PICKER_LOCALE_DEFAULT,
-    this.pickerTheme: DatePickerTheme.Default,
+    this.pickerTheme: DateTimePickerTheme.Default,
     this.onCancel,
     this.onChange,
     this.onConfirm,
@@ -32,8 +32,8 @@ class TimePickerWidget extends StatefulWidget {
 
   final DateTime minDateTime, maxDateTime, initDateTime;
   final String dateFormat;
-  final DatePickerLocale locale;
-  final DatePickerTheme pickerTheme;
+  final DateTimePickerLocale locale;
+  final DateTimePickerTheme pickerTheme;
   final DateVoidCallback onCancel;
   final DateValueCallback onChange, onConfirm;
 
@@ -169,7 +169,6 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     List<String> formatArr = DateTimeFormatter.splitDateFormat(widget.dateFormat);
     formatArr.forEach((format) {
       List<int> valueRange = _findPickerItemRange(format);
-      debugPrint(valueRange.toString());
 
       Widget pickerColumn = _renderDatePickerColumnComponent(
         scrollCtrl: _findScrollCtrl(format),
@@ -269,7 +268,6 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     }
 
     List<int> secondRange = _calcSecondRange();
-    debugPrint('secondRange: $secondRange');
     bool secondRangeChanged = _secondRange.first != secondRange.first || _secondRange.last != secondRange.last;
     if (secondRangeChanged) {
       // second range changed, need limit the value of selected second
@@ -353,7 +351,6 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
       currMinute = _currMinute;
     }
 
-    debugPrint('currHour=$currHour, currMinute=$currMinute, minHour=$minHour, minMinute=$minMinute');
     if (minHour == currHour && minMinute == currMinute) {
       // selected minimum hour and minute, limit second range
       minSecond = _minTime.second;

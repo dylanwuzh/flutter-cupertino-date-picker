@@ -19,10 +19,10 @@ const double DATETIME_PICKER_ITEM_HEIGHT = 36.0;
 /// Default value of DatePicker's item [TextStyle].
 const TextStyle DATETIME_PICKER_ITEM_TEXT_STYLE = const TextStyle(color: Color(0xFF000046), fontSize: 16.0);
 
-class DatePickerTheme extends Diagnosticable {
+class DateTimePickerTheme extends Diagnosticable {
   final cancelDefault = const Text('OK');
 
-  /// DatePicker theme.
+  /// DateTimePicker theme.
   ///
   /// [backgroundColor] DatePicker's background color.
   /// [cancelTextStyle] Default cancel widget's [TextStyle].
@@ -35,7 +35,7 @@ class DatePickerTheme extends Diagnosticable {
   /// [titleHeight] The value of DatePicker's title height.
   /// [itemHeight] The value of DatePicker's column height.
   /// [itemTextStyle] The value of DatePicker's column [TextStyle].
-  const DatePickerTheme({
+  const DateTimePickerTheme({
     this.backgroundColor: DATETIME_PICKER_BACKGROUND_COLOR,
     this.cancelTextStyle,
     this.confirmTextStyle,
@@ -49,7 +49,7 @@ class DatePickerTheme extends Diagnosticable {
     this.itemTextStyle: DATETIME_PICKER_ITEM_TEXT_STYLE,
   });
 
-  static const DatePickerTheme Default = const DatePickerTheme();
+  static const DateTimePickerTheme Default = const DateTimePickerTheme();
 
   /// DatePicker's background color.
   final Color backgroundColor;

@@ -16,8 +16,8 @@ class DatePickerTitleWidget extends StatelessWidget {
     @required this.onConfirm,
   }) : super(key: key);
 
-  final DatePickerTheme pickerTheme;
-  final DatePickerLocale locale;
+  final DateTimePickerTheme pickerTheme;
+  final DateTimePickerLocale locale;
   final DateVoidCallback onCancel, onConfirm;
 
   @override

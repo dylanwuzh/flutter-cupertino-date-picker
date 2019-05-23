@@ -24,20 +24,28 @@ enum DateTimePickerMode {
 /// author: Dylan Wu
 /// since: 2018/06/21
 class DatePicker {
-  /// Display date picker bottom sheet.
+  /// Display date picker in bottom sheet.
   ///
-  /// cancel: Custom cancel button
-  /// confirm: Custom confirm button
-  ///
+  /// context: [BuildContext]
+  /// minDateTime: [DateTime] minimum date time
+  /// maxDateTime: [DateTime] maximum date time
+  /// initialDateTime: [DateTime] initial date time for selected
+  /// dateFormat: [String] date format pattern
+  /// locale: [DateTimePickerLocale] internationalization
+  /// pickerMode: [DateTimePickerMode] display mode: date(DatePicker)、time(TimePicker)、datetime(DateTimePicker)
+  /// pickerTheme: [DateTimePickerTheme] the theme of date time picker
+  /// onCancel: [DateVoidCallback] pressed title cancel widget event
+  /// onChange: [DateValueCallback] selected date time changed event
+  /// onConfirm: [DateValueCallback] pressed title confirm widget event
   static void showDatePicker(
     BuildContext context, {
     DateTime minDateTime,
     DateTime maxDateTime,
     DateTime initialDateTime,
     String dateFormat,
-    DatePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
+    DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
     DateTimePickerMode pickerMode: DateTimePickerMode.date,
-    DatePickerTheme pickerTheme: DatePickerTheme.Default,
+    DateTimePickerTheme pickerTheme: DateTimePickerTheme.Default,
     DateVoidCallback onCancel,
     DateValueCallback onChange,
     DateValueCallback onConfirm,
@@ -97,9 +105,9 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
 
   final DateTime minDateTime, maxDateTime, initialDateTime;
   final String dateFormat;
-  final DatePickerLocale locale;
+  final DateTimePickerLocale locale;
   final DateTimePickerMode pickerMode;
-  final DatePickerTheme pickerTheme;
+  final DateTimePickerTheme pickerTheme;
   final VoidCallback onCancel;
   final DateValueCallback onChange;
   final DateValueCallback onConfirm;

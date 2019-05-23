@@ -1,5 +1,6 @@
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 class TimePickerBottomSheet extends StatefulWidget {
   TimePickerBottomSheet({Key key}) : super(key: key);
@@ -14,7 +15,6 @@ const String INIT_DATETIME = '2019-05-17 18:13:15';
 
 class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
   String _format = 'H时:mm分';
-
   TextEditingController _formatCtrl = TextEditingController();
 
   DateTime _dateTime;
@@ -28,81 +28,78 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle hintTextStyle = Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
     return Scaffold(
       appBar: AppBar(title: Text('TimePicker Bottom Sheet')),
       body: Container(
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
+            // min datetime hint
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
                   Container(
                     width: 115.0,
-                    child: Text(
-                      'min DateTime:',
-                      style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999)),
-                    ),
+                    child: Text('min DateTime:', style: hintTextStyle),
                   ),
                   Text(MIN_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
+            // max datetime hint
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
                   Container(
                     width: 115.0,
-                    child: Text('max DateTime:',
-                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                    child: Text('max DateTime:', style: hintTextStyle),
                   ),
                   Text(MAX_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
+            // init datetime hint
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
                   Container(
                     width: 115.0,
-                    child: Text('init DateTime:',
-                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                    child: Text('init DateTime:', style: hintTextStyle),
                   ),
                   Text(INIT_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
-            // show title actions checkbox
+            // show custom title widget
             Row(
               children: <Widget>[
-                Text('Show custom title', style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                Text('show custom title', style: hintTextStyle),
                 Checkbox(value: true, onChanged: (value) {}),
               ],
             ),
 
+            // custom title height
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(right: 8.0),
-                    child: Text(
-                      'custom title height:',
-                      style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999)),
-                    ),
+                    child: Text('custom title height:', style: hintTextStyle),
                   ),
                   Text('56.0', style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
-            // Formatter input field
+            // date format input field
             TextField(
               controller: _formatCtrl,
               keyboardType: TextInputType.url,
@@ -114,7 +111,7 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
               onChanged: (value) => _format = value,
             ),
 
-            // Selected date
+            // selected time
             Container(
               margin: EdgeInsets.only(top: 40.0),
               child: Row(
@@ -150,7 +147,7 @@ class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
       initialDateTime: DateTime.parse(INIT_DATETIME),
       dateFormat: _format,
       pickerMode: DateTimePickerMode.time, // show TimePicker
-      pickerTheme: DatePickerTheme(
+      pickerTheme: DateTimePickerTheme(
         title: Container(
           decoration: BoxDecoration(color: Color(0xFFEFEFEF)),
           width: double.infinity,

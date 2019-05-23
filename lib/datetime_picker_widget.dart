@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_cupertino_date_picker/date_picker.dart';
 import 'package:flutter_cupertino_date_picker/date_picker_constants.dart';
 import 'package:flutter_cupertino_date_picker/date_picker_i18n.dart';
 import 'package:flutter_cupertino_date_picker/date_picker_theme.dart';
@@ -20,7 +21,7 @@ class DateTimePickerWidget extends StatefulWidget {
     this.initDateTime,
     this.dateFormat: DATETIME_PICKER_TIME_FORMAT,
     this.locale: DATETIME_PICKER_LOCALE_DEFAULT,
-    this.pickerTheme: DatePickerTheme.Default,
+    this.pickerTheme: DateTimePickerTheme.Default,
     this.onCancel,
     this.onChange,
     this.onConfirm,
@@ -32,8 +33,8 @@ class DateTimePickerWidget extends StatefulWidget {
 
   final DateTime minDateTime, maxDateTime, initDateTime;
   final String dateFormat;
-  final DatePickerLocale locale;
-  final DatePickerTheme pickerTheme;
+  final DateTimePickerLocale locale;
+  final DateTimePickerTheme pickerTheme;
   final DateVoidCallback onCancel;
   final DateValueCallback onChange, onConfirm;
 
@@ -85,7 +86,6 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     // limit the range of date
     this._dayRange = _calcDayRange();
     int currDate = initTime.difference(_baselineDate).inDays;
-    debugPrint('---- currDate:$currDate');
     this._currDay = min(max(_dayRange.first, currDate), _dayRange.last);
 
     // limit the range of hour
@@ -186,7 +186,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
   /// render the picker widget of year、month and day
   Widget _renderDatePickerWidget() {
     List<Widget> pickers = List<Widget>();
-    List<String> formatArr = DateTimeFormatter.splitDateFormat(widget.dateFormat);
+    List<String> formatArr = DateTimeFormatter.splitDateFormat(widget.dateFormat, mode: DateTimePickerMode.datetime);
     int count = formatArr.length;
     int dayFlex = count > 3 ? count - 1 : count;
 
@@ -208,7 +208,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     // render time picker column
     formatArr.forEach((format) {
       List<int> valueRange = _findPickerItemRange(format);
-      debugPrint(valueRange.toString());
+
       Widget pickerColumn = _renderDatePickerColumnComponent(
         scrollCtrl: _findScrollCtrl(format),
         valueRange: valueRange,
@@ -252,7 +252,6 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
             itemBuilder ?? (context, index) => _renderDatePickerItemComponent(valueRange.first + index, format),
       ),
     );
-    debugPrint('-------count=$flex');
     return Expanded(
       flex: flex,
       child: columnWidget,
@@ -345,7 +344,6 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     }
 
     List<int> secondRange = _calcSecondRange();
-    debugPrint('secondRange: $secondRange');
     bool secondRangeChanged = _secondRange.first != secondRange.first || _secondRange.last != secondRange.last;
     if (secondRangeChanged) {
       // second range changed, need limit the value of selected second

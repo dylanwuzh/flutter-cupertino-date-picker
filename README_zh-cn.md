@@ -37,91 +37,204 @@ import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dar
 
 ##### BottomSheet形式
 
+
 ```dart
-///
-/// context: BuildContext.
-/// showTitleActions: 是否显示带有确定、取消按钮的标题栏。
-/// locale: 国际化标题文字、年、月、日，默认显示英文，'zh' 为中文。
-/// minYear: 年份选择器的最小值，默认值：1900年。
-/// maxYear: 年份选择器的最大值，默认值：2100年。
-/// initialYear: 年份选择器的初始值。
-/// initialMonth: 月份选择器的初始值。
-/// initialDate: 日期选择器的初始值。
-/// minDateTime: 年份选择器的最小值，使用DateTime类型设置。
-/// maxDateTime: 年份选择器的最大值，使用DateTime类型设置。
-/// initialDateTime: 选择器的初始值。
-/// cancel: 自定义的取消按钮。
-/// confirm: 自定义的确认按钮。
-/// onChanged: 当前选择的日期改变时的回调事件。
-/// onConfirm: 点击标题栏确定按钮的回调事件。
-/// onChanged2: 当前选择的日期改变时的回调事件。
-/// onConfirm2: 点击标题栏确定按钮的回调事件。
-/// onCancel: 点击标题栏取消按钮的回调事件。
+/// 显示BottomSheet形式的日期时间选择器。
+/// 
+/// context: [BuildContext]
+/// minDateTime: [DateTime] 日期选择器的最小值
+/// maxDateTime: [DateTime] 日期选择器的最大值
+/// initialDateTime: [DateTime] 日期选择器的初始值
+/// dateFormat: [String] 日期时间格式化
+/// locale: [DateTimePickerLocale] 国际化，语言地区
+/// pickerMode: [DateTimePickerMode] 显示的类型: date(日期选择器)、time(时间选择器)、datetime(日期时间选择器)
+/// pickerTheme: [DateTimePickerTheme] 日期选择器的样式
+/// onCancel: [DateVoidCallback] 点击标题取消按钮的回调事件
+/// onChange: [DateValueCallback] 选择的日期时间改变的事件
+/// onConfirm: [DateValueCallback] 点击标题确定按钮的回调事件
 DatePicker.showDatePicker(
-  context,
-  showTitleActions: true,
-  locale: 'zh',
-  minYear: 1970,
-  maxYear: 2020,
-  initialYear: 2018,
-  initialMonth: 6,
-  initialDate: 21,
-  minDateTime: DateTime(2000),
-  maxDateTime: DateTime(2021),
-  initialDateTime: DateTime(2019, 1, 1),
-  cancel: Text('custom cancel'),
-  confirm: Text('custom confirm'),
-  onChanged: (year, month, date) { },
-  onConfirm: (year, month, date) { },
-  onChanged2: (dateTime, List<int> indexList) { },
-  onConfirm2: (dateTime, List<int> indexList) { },
-  onCancel: () { },
-);
+  BuildContext context,
+  DateTime minDateTime,
+  DateTime maxDateTime,
+  DateTime initialDateTime,
+  String dateFormat,
+  DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
+  DateTimePickerMode pickerMode: DateTimePickerMode.date,
+  DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
+  DateVoidCallback onCancel,
+  DateValueCallback onChange,
+  DateValueCallback onConfirm,
+});
 ```
 
-##### 普通控件，可以在页面上显示
+##### 日期选择器控件，可以在页面上显示
 
 ```dart
-DatePickerWidget(
-  minYear: 2005,
-  maxYear: 2019,
-  initDateTime: DateTime(2018, 1, 1),
-  dateFormat: 'mm-dd-yyyy',
-  onChanged2: (dateTime, selectedIndex) { },
-)
+/// 显示日期选择器
+///
+/// minDateTime: [DateTime] 日期选择器的最小值
+/// maxDateTime: [DateTime] 日期选择器的最大值
+/// initialDateTime: [DateTime] 日期选择器的初始值
+/// dateFormat: [String] 日期时间格式化
+/// locale: [DateTimePickerLocale] 国际化，语言地区
+/// pickerTheme: [DateTimePickerTheme] 日期选择器的样式
+/// onCancel: [DateVoidCallback] 点击标题取消按钮的回调事件
+/// onChange: [DateValueCallback] 选择的日期时间改变的事件
+/// onConfirm: [DateValueCallback] 点击标题确定按钮的回调事件
+DatePickerWidget({
+  DateTime minDateTime,
+  DateTime maxDateTime,
+  DateTime initialDateTime,
+  String dateFormat: DATETIME_PICKER_DATE_FORMAT,
+  DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
+  DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
+  DateVoidCallback onCancel,
+  DateValueCallback onChange,
+  DateValueCallback onConfirm,
+})
 ```
 
-***showTitleActions: false***
+##### TimePicker Widget
 
-![示例: showTitleActions=false][2]
-
-***locale: 'zh'***
-
-中文显示标题按钮、年、月、日
-
-[Thanks to: Robbie Boyd](https://github.com/vagrantrobbie)
-
-![Example: locale=zh][3]
-
-***dateFormat: 'yyyy-mmm-dd'***
-
-日期格式化，目前只支持英文月份
-
+```dart
+/// 显示时间选择器
+/// 
+/// minDateTime: [DateTime] 日期选择器的最小值
+/// maxDateTime: [DateTime] 日期选择器的最大值
+/// initialDateTime: [DateTime] 日期选择器的初始值
+/// dateFormat: [String] 日期时间格式化
+/// locale: [DateTimePickerLocale] 国际化，语言地区
+/// pickerTheme: [DateTimePickerTheme] 日期选择器的样式
+/// onCancel: [DateVoidCallback] 点击标题取消按钮的回调事件
+/// onChange: [DateValueCallback] 选择的日期时间改变的事件
+/// onConfirm: [DateValueCallback] 点击标题确定按钮的回调事件
+TimePickerWidget({
+  DateTime minDateTime,
+  DateTime maxDateTime,
+  DateTime initialDateTime,
+  String dateFormat: DATETIME_PICKER_DATE_FORMAT,
+  DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
+  DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
+  DateVoidCallback onCancel,
+  DateValueCallback onChange,
+  DateValueCallback onConfirm,
+})
 ```
-dd-mm-yyyy -> 1-10-2018
-dd-mmm-yyyy -> 1-Oct-2018
-dd-mmmm-yyyy -> 1-October-2018
+
+##### DateTimePicker Widget
+
+```dart
+/// 显示日期时间选择器
+/// 
+/// minDateTime: [DateTime] 日期选择器的最小值
+/// maxDateTime: [DateTime] 日期选择器的最大值
+/// initialDateTime: [DateTime] 日期选择器的初始值
+/// dateFormat: [String] 日期时间格式化
+/// locale: [DateTimePickerLocale] 国际化，语言地区
+/// pickerTheme: [DateTimePickerTheme] 日期选择器的样式
+/// onCancel: [DateVoidCallback] 点击标题取消按钮的回调事件
+/// onChange: [DateValueCallback] 选择的日期时间改变的事件
+/// onConfirm: [DateValueCallback] 点击标题确定按钮的回调事件
+DateTimePickerWidget({
+  DateTime minDateTime,
+  DateTime maxDateTime,
+  DateTime initialDateTime,
+  String dateFormat: DATETIME_PICKER_DATE_FORMAT,
+  DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
+  DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
+  DateVoidCallback onCancel,
+  DateValueCallback onChange,
+  DateValueCallback onConfirm,
+})
 ```
 
-![Example: dateFormat][4]
+#### 5\. DateTimePickerLocale
 
-## 示例
+多语言支持:
 
-[示例源码](https://github.com/wuzhendev/flutter-cupertino-date-picker/tree/master/example)
+- en_us: 美式英语 ***[Default locale]***
+- zh_cn: 简体中文
+- pt_br: 葡萄牙语(巴西)
+- es: 西班牙语
 
-## Futures
+##### 添加更多的语言
 
-1. 支持时间选择器。
+Fork 该项目, 在 `lib/date_picker_i18n.dart` 文件中添加语言对应的文字（标题栏按钮、月份、星期）.
+
+```dart
+/// Done widget's text
+const Map<DateTimePickerLocale, String> DONE = { ... };
+
+/// Cancel widget's text
+const Map<DateTimePickerLocale, String> CANCEL = { ... };
+
+/// en_US
+const List<String> EN_US_MONTHS = [ ... ];
+
+/// en_US weeks with full name
+const List<String> EN_US_WEEKS_FULL = [ ... ];
+
+/// en_US weeks with short name
+const List<String> EN_US_WEEKS_SHORT = [ ... ];
+```
+
+#### 6\. dateFormat
+
+|Pattern|Meaning        |e.g.       |
+|:----|:----------------|:----------|
+|yyyy |年份              |2019, 2020|
+|yy   |年份, 2位数字      |19, 20|
+|MMMM |月份              |January(en_us), 01(zh_cn)|
+|MMM  |月份, 缩写         |Jan(en_us), 01(zh_cn)|
+|MM   |月份, 2位数字      |01、11
+|M    |月份              |1, 11|
+|dd   |日期, 2位数字      |05, 25|
+|d    |日期              |5, 25|
+|EEEE |星期              |Monday(en_us), 星期一(zh_cn)|
+|EEE  |星期, 缩写         |Mon(en_us), 周一(zh_cn)|
+|HH   |时 (0~23), 2位数字 |04, 12, 20|
+|H    |时 (0~23)         |4, 12, 20|
+|mm   |分, 2位数字        |05, 40|
+|m    |分                |5, 40|
+|ss   |秒, 2位数字        |06, 55|
+|s    |秒                |6, 55|
+|yyyy年|格式化            |2019年, 2020年|
+|H时   |格式化            |5时, 21时|
+
+#### 7\. DateTimePickerTheme
+
+```dart
+/// 日期时间选择器的样式
+///
+/// [backgroundColor] 背景色
+/// [cancelTextStyle] 默认标题栏取消按钮的样式 [TextStyle]
+/// [confirmTextStyle] 默认标题栏确定按钮的样式 [TextStyle]
+/// [cancel] 自定义标题栏取消按钮
+/// [confirm] 自定义标题栏确定按钮
+/// [title] 自定义标题栏。如果指定了自定义标题栏，不显示默认的标题栏。指定自定义的标题栏时必须指定 [titleHeight] 的值
+/// [showTitle] 是否显示默认的标题栏。如果设置为false，默认的取消、确定按钮都不会显示，自定义的标题栏不受影响
+/// [pickerHeight] 日期选择器的高度
+/// [titleHeight] 标题栏的高度
+/// [itemHeight] 选择器每一行的高度
+/// [itemTextStyle] 选择器每一行的样式 [TextStyle]
+const DateTimePickerTheme({
+  this.backgroundColor: DATETIME_PICKER_BACKGROUND_COLOR,
+  this.cancelTextStyle,
+  this.confirmTextStyle,
+  this.cancel,
+  this.confirm,
+  this.title,
+  this.showTitle: DATETIME_PICKER_SHOW_TITLE_DEFAULT,
+  this.pickerHeight: DATETIME_PICKER_HEIGHT,
+  this.titleHeight: DATETIME_PICKER_TITLE_HEIGHT,
+  this.itemHeight: DATETIME_PICKER_ITEM_HEIGHT,
+  this.itemTextStyle: DATETIME_PICKER_ITEM_TEXT_STYLE,
+});
+```
+
+## Example
+
+[Example sources](https://github.com/wuzhendev/flutter-cupertino-date-picker/tree/master/example)
 
 ## License
 
@@ -140,8 +253,3 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
-
-[1]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_4.png?x-oss-process=style/image_scale1
-[2]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_5.png?x-oss-process=style/image_scale1
-[3]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_6.png?x-oss-process=style/image_scale1
-[4]:https://openproject.oss-cn-beijing.aliyuncs.com/images/flutter/flutter_date_picker_7.png?x-oss-process=style/image_scale1

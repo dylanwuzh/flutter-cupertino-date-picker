@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 ///
@@ -14,6 +15,7 @@ class TimePickerInPage extends StatefulWidget {
 const String MIN_DATETIME = '2010-05-12 05:15:20';
 const String MAX_DATETIME = '2021-11-25 22:45:10';
 const String INIT_DATETIME = '2019-05-17 18:13:15';
+const String DATE_FORMAT = 'HH时:mm分:s';
 
 class _TimePickerInPageState extends State<TimePickerInPage> {
   DateTime _dateTime;
@@ -26,6 +28,7 @@ class _TimePickerInPageState extends State<TimePickerInPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle hintTextStyle = Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
     return Scaffold(
       appBar: AppBar(title: Text("TimePicker In Page")),
       body: Container(
@@ -33,58 +36,71 @@ class _TimePickerInPageState extends State<TimePickerInPage> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
+            // min datetime hint
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
                   Container(
                     width: 115.0,
-                    child: Text(
-                      'min DateTime:',
-                      style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999)),
-                    ),
+                    child: Text('min DateTime:', style: hintTextStyle),
                   ),
                   Text(MIN_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
+            // max datetime hint
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
                   Container(
                     width: 115.0,
-                    child: Text('max DateTime:',
-                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                    child: Text('max DateTime:', style: hintTextStyle),
                   ),
                   Text(MAX_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
+            // init datetime hint
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
                   Container(
                     width: 115.0,
-                    child: Text('init DateTime:',
-                        style: Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999))),
+                    child: Text('init DateTime:', style: hintTextStyle),
                   ),
                   Text(INIT_DATETIME.substring(11), style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
 
+            // date format
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 115.0,
+                    child: Text('Date Format:', style: hintTextStyle),
+                  ),
+                  Text(DATE_FORMAT, style: Theme.of(context).textTheme.subhead),
+                ],
+              ),
+            ),
+
+            // date format input field
             Container(
               margin: EdgeInsets.only(top: 8.0, bottom: 40.0),
               child: TimePickerWidget(
                 minDateTime: DateTime.parse(MIN_DATETIME),
                 maxDateTime: DateTime.parse(MAX_DATETIME),
                 initDateTime: DateTime.parse(INIT_DATETIME),
-                dateFormat: 'HH时:mm分:s',
-                pickerTheme: DatePickerTheme(showTitle: false, backgroundColor: Color(0xFFe1bee7)),
+                dateFormat: DATE_FORMAT,
+                pickerTheme: DateTimePickerTheme(showTitle: false, backgroundColor: Color(0xFFe1bee7)),
                 onChange: (dateTime, selectedIndex) {
                   setState(() {
                     _dateTime = dateTime;
@@ -93,7 +109,7 @@ class _TimePickerInPageState extends State<TimePickerInPage> {
               ),
             ),
 
-            // Selected date
+            // selected time
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
