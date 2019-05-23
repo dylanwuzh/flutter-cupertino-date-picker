@@ -92,6 +92,21 @@ class LocaleMessage {
           "November",
           "December"
         ];
+      case 'ro':
+        return [
+          "Ianuarie",
+          "Februarie",
+          "Martie",
+          "Aprilie",
+          "Mai",
+          "Iunie",
+          "Iulie",
+          "August",
+          "Septembrie",
+          "Octombrie",
+          "Noiembrie",
+          "Decembrie"
+        ];
 
       case 'es':
         return [
