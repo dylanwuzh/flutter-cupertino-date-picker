@@ -1,17 +1,20 @@
 import 'dart:math';
 
 enum DateTimePickerLocale {
-  // English (EN) United States
+  /// English (EN) United States
   en_us,
 
-  // Chinese (ZH) Simplified
+  /// Chinese (ZH) Simplified
   zh_cn,
 
-  // Portuguese (PT) Brazil
+  /// Portuguese (PT) Brazil
   pt_br,
 
-  // Spanish (ES)
+  /// Spanish (ES)
   es,
+
+  /// Romanian (RO)
+  ro,
 }
 
 const DATETIME_PICKER_LOCALE_DEFAULT = DateTimePickerLocale.en_us;
@@ -80,10 +83,27 @@ const List<String> PT_BR_MONTHS = [
   "Dezembro"
 ];
 
+/// ro
+const List<String> RO_MONTHS = [
+  "Ianuarie",
+  "Februarie",
+  "Martie",
+  "Aprilie",
+  "Mai",
+  "Iunie",
+  "Iulie",
+  "August",
+  "Septembrie",
+  "Octombrie",
+  "Noiembrie",
+  "Decembrie"
+];
+
 const Map<DateTimePickerLocale, List<String>> MONTHS = {
   DateTimePickerLocale.en_us: EN_US_MONTHS,
   DateTimePickerLocale.pt_br: PT_BR_MONTHS,
   DateTimePickerLocale.es: ES_MONTHS,
+  DateTimePickerLocale.ro: RO_MONTHS,
 };
 
 /// en_US weeks with full name
