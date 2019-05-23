@@ -240,6 +240,10 @@ const DateTimePickerTheme({
 
 [Example sources](https://github.com/wuzhendev/flutter-cupertino-date-picker/tree/master/example)
 
+[Example APK](https://raw.githubusercontent.com/wuzhendev/assets/master/flutter-datepicker/flutter_cupertino_date_picker_v1.0.0.apk)
+
+![Example APK Download](https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/date_picker_qrcode_v1.0.0.png?raw=true)
+
 ### DatePicker
 
 ![Example: DatePicker][1]
