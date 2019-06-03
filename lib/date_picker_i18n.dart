@@ -15,6 +15,9 @@ enum DateTimePickerLocale {
 
   /// Romanian (RO)
   ro,
+
+  /// Bengali (BN)
+  bn
 }
 
 const DATETIME_PICKER_LOCALE_DEFAULT = DateTimePickerLocale.en_us;
@@ -24,6 +27,7 @@ const Map<DateTimePickerLocale, String> DONE = {
   DateTimePickerLocale.en_us: 'Done',
   DateTimePickerLocale.zh_cn: '确定',
   DateTimePickerLocale.pt_br: 'Feito',
+  DateTimePickerLocale.bn: 'সম্পন্ন',
 };
 
 /// Cancel widget's text
@@ -31,9 +35,23 @@ const Map<DateTimePickerLocale, String> CANCEL = {
   DateTimePickerLocale.en_us: 'Cancel',
   DateTimePickerLocale.zh_cn: '取消',
   DateTimePickerLocale.pt_br: 'Cancelar',
+  DateTimePickerLocale.bn: 'বাতিল',
 };
 
-const List<String> DEFAULT_MONTH = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+const List<String> DEFAULT_MONTH = [
+  "01",
+  "02",
+  "03",
+  "04",
+  "05",
+  "06",
+  "07",
+  "08",
+  "09",
+  "10",
+  "11",
+  "12"
+];
 
 /// en_US
 const List<String> EN_US_MONTHS = [
@@ -99,11 +117,28 @@ const List<String> RO_MONTHS = [
   "Decembrie"
 ];
 
+/// ro
+const List<String> BN_MONTHS = [
+  "জানুয়ারী",
+  "ফেব্রুয়ারি",
+  "মার্চ",
+  "এপ্রিল",
+  "মে",
+  "জুন",
+  "জুলাই",
+  "অগাস্ট",
+  "সেপ্টেম্বর",
+  "অক্টোবর",
+  "নভেম্বর",
+  "ডিসেম্বর"
+];
+
 const Map<DateTimePickerLocale, List<String>> MONTHS = {
   DateTimePickerLocale.en_us: EN_US_MONTHS,
   DateTimePickerLocale.pt_br: PT_BR_MONTHS,
   DateTimePickerLocale.es: ES_MONTHS,
   DateTimePickerLocale.ro: RO_MONTHS,
+  DateTimePickerLocale.bn: BN_MONTHS,
 };
 
 /// en_US weeks with full name
@@ -172,16 +207,40 @@ const List<String> ZH_CN_WEEKS_SHORT = [
   "周日",
 ];
 
+/// bn weeks with full name
+const List<String> BN_WEEKS_FULL = [
+  "রবিবার",
+  "সোমবার",
+  "মঙ্গলবার",
+  "বুধবার",
+  "বৃহস্পতিবার",
+  "শুক্রবার",
+  "শনিবার",
+];
+
+/// bn weeks with short name
+const List<String> BN_WEEKS_SHORT = [
+  "রবি",
+  "সোম",
+  "মঙ্গল",
+  "বুধ",
+  "বৃহস্পতি",
+  "শুক্র",
+  "শনি",
+];
+
 const Map<DateTimePickerLocale, List<String>> WEEKS_FULL = {
   DateTimePickerLocale.en_us: EN_US_WEEKS_FULL,
   DateTimePickerLocale.zh_cn: ZH_CN_WEEKS_FULL,
   DateTimePickerLocale.pt_br: PT_BR_WEEKS,
   DateTimePickerLocale.es: ES_WEEKS,
+  DateTimePickerLocale.bn: BN_WEEKS_FULL,
 };
 
 const Map<DateTimePickerLocale, List<String>> WEEKS_SHORT = {
   DateTimePickerLocale.en_us: EN_US_WEEKS_SHORT,
   DateTimePickerLocale.zh_cn: ZH_CN_WEEKS_SHORT,
+  DateTimePickerLocale.bn: BN_WEEKS_SHORT,
 };
 
 class DatePickerI18n {
@@ -201,7 +260,8 @@ class DatePickerI18n {
   }
 
   /// Get locale week array
-  static List<String> getLocaleWeeks(DateTimePickerLocale locale, [bool isFull = true]) {
+  static List<String> getLocaleWeeks(DateTimePickerLocale locale,
+      [bool isFull = true]) {
     if (isFull) {
       return WEEKS_FULL[locale] ?? WEEKS_FULL[DATETIME_PICKER_LOCALE_DEFAULT];
     }
@@ -210,8 +270,12 @@ class DatePickerI18n {
       return WEEKS_SHORT[locale];
     }
     if (WEEKS_FULL[locale] != null) {
-      return WEEKS_FULL[locale].map((item) => item.substring(0, min(3, item.length))).toList();
+      return WEEKS_FULL[locale]
+          .map((item) => item.substring(0, min(3, item.length)))
+          .toList();
     }
-    return WEEKS_FULL[DATETIME_PICKER_LOCALE_DEFAULT].map((item) => item.substring(0, min(3, item.length))).toList();
+    return WEEKS_FULL[DATETIME_PICKER_LOCALE_DEFAULT]
+        .map((item) => item.substring(0, min(3, item.length)))
+        .toList();
   }
 }
