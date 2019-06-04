@@ -33,7 +33,9 @@ class DateTimeFormatter {
   }
 
   /// Split date format to array.
-  static List<String> splitDateFormat(String dateFormat, {DateTimePickerMode mode}) {
+  static List<String> splitDateFormat(String dateFormat,
+      {DateTimePickerMode mode})
+  {
     if (dateFormat == null || dateFormat.length == 0) {
       return [];
     }
@@ -145,7 +147,10 @@ class DateTimeFormatter {
       return format.replaceAll('yyyy', value.toString());
     } else if (format.contains('yy')) {
       // yy: the digit count of year is 2, e.g. 19
-      return format.replaceAll('yy', value.toString().substring(max(0, value.toString().length - 2)));
+      return format.replaceAll('yy',
+          value.toString().substring(max(0, value
+              .toString()
+              .length - 2)));
     }
     return value.toString();
   }
@@ -198,7 +203,17 @@ class DateTimeFormatter {
 
   /// format number, if the digit count is 2, will pad zero on the left
   static String _formatNumber(int value, String format, String unit) {
-    if (format.contains('$unit$unit')) {
+    if (format.contains('$unit$unit$unit') && format.contains("H")) {
+      if (value == 0)
+        return format.replaceAll('$unit$unit$unit', "12 ص");
+      else if (value < 12)
+        return format.replaceAll('$unit$unit$unit', value.toString() + " ص");
+      else if (value == 12)
+        return format.replaceAll('$unit$unit$unit', "12" + " م");
+      else
+        return format.replaceAll('$unit$unit$unit', (value - 12).toString() + " م");
+    }
+    else if (format.contains('$unit$unit')) {
       return format.replaceAll('$unit$unit', value.toString().padLeft(2, '0'));
     } else if (format.contains('$unit')) {
       return format.replaceAll('$unit', value.toString());
