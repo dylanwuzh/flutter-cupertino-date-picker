@@ -17,7 +17,10 @@ enum DateTimePickerLocale {
   ro,
 
   /// Bengali (BN)
-  bn
+  bn,
+
+  /// Arabic (ar)
+  ar
 }
 
 const DATETIME_PICKER_LOCALE_DEFAULT = DateTimePickerLocale.en_us;
@@ -28,6 +31,7 @@ const Map<DateTimePickerLocale, String> DONE = {
   DateTimePickerLocale.zh_cn: '确定',
   DateTimePickerLocale.pt_br: 'Feito',
   DateTimePickerLocale.bn: 'সম্পন্ন',
+  DateTimePickerLocale.ar: 'تم',
 };
 
 /// Cancel widget's text
@@ -36,6 +40,7 @@ const Map<DateTimePickerLocale, String> CANCEL = {
   DateTimePickerLocale.zh_cn: '取消',
   DateTimePickerLocale.pt_br: 'Cancelar',
   DateTimePickerLocale.bn: 'বাতিল',
+   DateTimePickerLocale.ar: 'ألغاء',
 };
 
 const List<String> DEFAULT_MONTH = [
@@ -133,12 +138,30 @@ const List<String> BN_MONTHS = [
   "ডিসেম্বর"
 ];
 
+/// ar
+const List<String> AR_MONTHS = [
+  "كانون الثاني",
+  "شباط",
+  "آذار",
+  "نيسان",
+  "أيار",
+  "حزيران",
+  "تموز",
+  "آب",
+  "أيلول",
+  "تشرين الأول",
+  "تشرين الثاني",
+  "كانون الأول"
+];
+
+
 const Map<DateTimePickerLocale, List<String>> MONTHS = {
   DateTimePickerLocale.en_us: EN_US_MONTHS,
   DateTimePickerLocale.pt_br: PT_BR_MONTHS,
   DateTimePickerLocale.es: ES_MONTHS,
   DateTimePickerLocale.ro: RO_MONTHS,
   DateTimePickerLocale.bn: BN_MONTHS,
+  DateTimePickerLocale.ar: AR_MONTHS,
 };
 
 /// en_US weeks with full name
@@ -229,12 +252,26 @@ const List<String> BN_WEEKS_SHORT = [
   "শনি",
 ];
 
+
+/// ar weeks 
+const List<String> AR_WEEKS = [
+  "الأثنين",
+  "الثلاثاء",
+  "الأربعاء",
+  "الخميس",
+  "الجمعه",
+  "السبت",
+  "الأحد",
+];
+
 const Map<DateTimePickerLocale, List<String>> WEEKS_FULL = {
   DateTimePickerLocale.en_us: EN_US_WEEKS_FULL,
   DateTimePickerLocale.zh_cn: ZH_CN_WEEKS_FULL,
   DateTimePickerLocale.pt_br: PT_BR_WEEKS,
   DateTimePickerLocale.es: ES_WEEKS,
   DateTimePickerLocale.bn: BN_WEEKS_FULL,
+  DateTimePickerLocale.ar: AR_WEEKS,
+
 };
 
 const Map<DateTimePickerLocale, List<String>> WEEKS_SHORT = {
