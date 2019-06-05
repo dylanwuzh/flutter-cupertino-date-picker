@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Added Bengali language support.
+
 ## 1.0.0
 
 - Refactor code.

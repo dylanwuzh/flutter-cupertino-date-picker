@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:example/date_picker_bottom_sheet.dart';
-import 'package:example/date_picker_in_page.dart';
-import 'package:example/datetime_picker_bottom_sheet.dart';
-import 'package:example/datetime_picker_in_page.dart';
-import 'package:example/time_picker_bottom_sheet.dart';
-import 'package:example/time_picker_in_page.dart';
+import './date_picker_bottom_sheet.dart';
+import './date_picker_in_page.dart';
+import './datetime_picker_bottom_sheet.dart';
+import './datetime_picker_in_page.dart';
+import './time_picker_bottom_sheet.dart';
+import './time_picker_in_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,8 +38,7 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               child: Text("DatePicker Bottom Sheet", style: textStyle),
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                   return DatePickerBottomSheet();
                 }));
               },
@@ -48,8 +47,7 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               child: Text("DatePicker In Page", style: textStyle),
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                   return DatePickerInPage();
                 }));
               },
@@ -58,8 +56,7 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               child: Text("TimePicker Bottom Sheet", style: textStyle),
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                   return TimePickerBottomSheet();
                 }));
               },
@@ -68,8 +65,7 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               child: Text("TimePicker In Page", style: textStyle),
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                   return TimePickerInPage();
                 }));
               },
@@ -78,8 +74,7 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               child: Text("DateTimePicker Bottom Sheet", style: textStyle),
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                   return DateTimePickerBottomSheet();
                 }));
               },
@@ -88,8 +83,7 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               child: Text("DateTimePicker In Page", style: textStyle),
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                   return DateTimePickerInPage();
                 }));
               },

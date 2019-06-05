@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.0+1
+  flutter_cupertino_date_picker: ^1.0.1
 ```
 
 #### 2\. Install
@@ -31,7 +31,7 @@ $ flutter packages get
 Import in Dart code:
 
 ```dart
-import 'packages:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 ```
 
 #### 4\. Display DatePicker
