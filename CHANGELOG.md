@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Added Arabic language support.
+
 ## 1.0.1
 
 - Added Bengali language support.
