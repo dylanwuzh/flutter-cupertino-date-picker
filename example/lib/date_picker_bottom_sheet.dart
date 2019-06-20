@@ -185,6 +185,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   void _showDatePicker() {
     DatePicker.showDatePicker(
       context,
+      excludeDates: {2019:{5:[2,3,4]},},
       pickerTheme: DateTimePickerTheme(
         showTitle: _showTitle,
         confirm: Text('custom Done', style: TextStyle(color: Colors.red)),

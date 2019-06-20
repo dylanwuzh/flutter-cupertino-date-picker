@@ -41,6 +41,7 @@ class DatePicker {
     BuildContext context, {
     DateTime minDateTime,
     DateTime maxDateTime,
+    Map<int,Map<int,List<int>>> excludeDates,
     DateTime initialDateTime,
     String dateFormat,
     DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
@@ -73,6 +74,7 @@ class DatePicker {
         maxDateTime: maxDateTime,
         initialDateTime: initialDateTime,
         dateFormat: dateFormat,
+        excludeDates: excludeDates,
         locale: locale,
         pickerMode: pickerMode,
         pickerTheme: pickerTheme,
@@ -96,6 +98,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.pickerMode,
     this.pickerTheme,
     this.onCancel,
+    this.excludeDates,
     this.onChange,
     this.onConfirm,
     this.theme,
@@ -111,7 +114,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final VoidCallback onCancel;
   final DateValueCallback onChange;
   final DateValueCallback onConfirm;
-
+  final Map<int,Map<int,List<int>>> excludeDates;
   final ThemeData theme;
 
   @override
@@ -172,6 +175,7 @@ class _DatePickerComponent extends StatelessWidget {
           initialDateTime: route.initialDateTime,
           dateFormat: route.dateFormat,
           locale: route.locale,
+          excludeDates: route.excludeDates,
           pickerTheme: route.pickerTheme,
           onCancel: route.onCancel,
           onChange: route.onChange,
