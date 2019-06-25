@@ -246,7 +246,7 @@ Map<int,Map<int,List<int>>> _excludeDates;
 
   /// change the selection of day picker
   void _changeDaySelection(int index) {
-    int dayOfMonth = _dayRange.first + index;
+    int dayOfMonth = _dayRange[index];
     if (_currDay != dayOfMonth) {
       _currDay = dayOfMonth;
       _onSelectedChange();
