@@ -16,7 +16,7 @@ const String INIT_DATETIME = '2019-05-17';
 class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   bool _showTitle = true;
 
-  DateTimePickerLocale _locale = DateTimePickerLocale.en_us;
+  DateTimePickerLocale _locale = DateTimePickerLocale.vn;
   List<DateTimePickerLocale> _locales = DateTimePickerLocale.values;
 
   String _format = 'yyyy-MMMM-dd';
@@ -187,8 +187,8 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
       context,
       pickerTheme: DateTimePickerTheme(
         showTitle: _showTitle,
-        confirm: Text('custom Done', style: TextStyle(color: Colors.red)),
-        cancel: Text('custom cancel', style: TextStyle(color: Colors.cyan)),
+        confirm: Text('Đồng ý', style: TextStyle(color: Colors.red)),
+        cancel: Text('Hủy', style: TextStyle(color: Colors.cyan)),
       ),
       minDateTime: DateTime.parse(MIN_DATETIME),
       maxDateTime: DateTime.parse(MAX_DATETIME),

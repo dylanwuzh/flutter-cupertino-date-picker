@@ -22,30 +22,30 @@ enum DateTimePickerLocale {
   /// Arabic (ar)
   ar,
 
-  /// Japanese (JP)
-  jp
+  /// Japanese (VN)
+  vn,
 }
 
 const DATETIME_PICKER_LOCALE_DEFAULT = DateTimePickerLocale.en_us;
 
 /// Done widget's text
 const Map<DateTimePickerLocale, String> DONE = {
-  DateTimePickerLocale.en_us: 'Done',
+  DateTimePickerLocale.en_us: 'Đồng ý',
   DateTimePickerLocale.zh_cn: '确定',
   DateTimePickerLocale.pt_br: 'Feito',
   DateTimePickerLocale.bn: 'সম্পন্ন',
   DateTimePickerLocale.ar: 'تم',
-  DateTimePickerLocale.jp: '完了',
+  DateTimePickerLocale.vn: 'Đồng ý',
 };
 
 /// Cancel widget's text
 const Map<DateTimePickerLocale, String> CANCEL = {
-  DateTimePickerLocale.en_us: 'Cancel',
+  DateTimePickerLocale.en_us: 'Hủy',
   DateTimePickerLocale.zh_cn: '取消',
   DateTimePickerLocale.pt_br: 'Cancelar',
   DateTimePickerLocale.bn: 'বাতিল',
   DateTimePickerLocale.ar: 'ألغاء',
-  DateTimePickerLocale.jp: 'キャンセル',
+  DateTimePickerLocale.vn: 'Hủy',
 };
 
 const List<String> DEFAULT_MONTH = [
@@ -62,21 +62,35 @@ const List<String> DEFAULT_MONTH = [
   "11",
   "12"
 ];
+const List<String> VN_MONTHS = [
+  "Tháng 01",
+  "Tháng 02",
+  "Tháng 03",
+  "Tháng 04",
+  "Tháng 05",
+  "Tháng 06",
+  "Tháng 07",
+  "Tháng 08",
+  "Tháng 09",
+  "Tháng 10",
+  "Tháng 11",
+  "Tháng 12"
+];
 
 /// en_US
 const List<String> EN_US_MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
+  "Tháng 01",
+  "Tháng 02",
+  "Tháng 03",
+  "Tháng 04",
+  "Tháng 05",
+  "Tháng 06",
+  "Tháng 07",
+  "Tháng 08",
+  "Tháng 09",
+  "Tháng 10",
+  "Tháng 11",
+  "Tháng 12"
 ];
 
 /// es
@@ -160,20 +174,6 @@ const List<String> AR_MONTHS = [
 ];
 
 /// ro
-const List<String> JP_MONTHS = [
-  "1月",
-  "2月",
-  "3月",
-  "4月",
-  "5月",
-  "6月",
-  "7月",
-  "8月",
-  "9月",
-  "10月",
-  "11月",
-  "12月"
-];
 
 const Map<DateTimePickerLocale, List<String>> MONTHS = {
   DateTimePickerLocale.en_us: EN_US_MONTHS,
@@ -182,7 +182,7 @@ const Map<DateTimePickerLocale, List<String>> MONTHS = {
   DateTimePickerLocale.ro: RO_MONTHS,
   DateTimePickerLocale.bn: BN_MONTHS,
   DateTimePickerLocale.ar: AR_MONTHS,
-  DateTimePickerLocale.jp: JP_MONTHS,
+  DateTimePickerLocale.vn: VN_MONTHS,
 };
 
 /// en_US weeks with full name
@@ -284,8 +284,8 @@ const List<String> AR_WEEKS = [
   "الأحد",
 ];
 
-/// jp weeks with full name
-const List<String> JP_WEEKS_FULL = [
+/// VN weeks with full name
+const List<String> VN_WEEKS_FULL = [
   "月曜日",
   "火曜日",
   "水曜日",
@@ -295,8 +295,8 @@ const List<String> JP_WEEKS_FULL = [
   "日曜日",
 ];
 
-/// jp weeks with short name
-const List<String> JP_WEEKS_SHORT = [
+/// VN weeks with short name
+const List<String> VN_WEEKS_SHORT = [
   "月",
   "火",
   "水",
@@ -313,14 +313,14 @@ const Map<DateTimePickerLocale, List<String>> WEEKS_FULL = {
   DateTimePickerLocale.es: ES_WEEKS,
   DateTimePickerLocale.bn: BN_WEEKS_FULL,
   DateTimePickerLocale.ar: AR_WEEKS,
-  DateTimePickerLocale.jp: JP_WEEKS_FULL,
+  DateTimePickerLocale.vn: VN_WEEKS_FULL,
 };
 
 const Map<DateTimePickerLocale, List<String>> WEEKS_SHORT = {
   DateTimePickerLocale.en_us: EN_US_WEEKS_SHORT,
   DateTimePickerLocale.zh_cn: ZH_CN_WEEKS_SHORT,
   DateTimePickerLocale.bn: BN_WEEKS_SHORT,
-  DateTimePickerLocale.jp: JP_WEEKS_SHORT,
+  DateTimePickerLocale.vn: VN_WEEKS_SHORT,
 };
 
 class DatePickerI18n {
