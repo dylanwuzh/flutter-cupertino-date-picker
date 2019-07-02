@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Added Russian language support.
+
 ## 1.0.3
 
 - Added Japanese language support.
