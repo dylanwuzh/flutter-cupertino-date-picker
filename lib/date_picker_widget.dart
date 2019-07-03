@@ -78,6 +78,10 @@ Map<int,Map<int,List<int>>> _excludeDates;
 
     // limit the range of day
     this._dayRange = _calcDayRange();
+     if(this._dayRange.length == 0){
+      this._currMonth = this._currMonth - 1;
+      this._dayRange = _calcDayRange();
+    }
     this._currDay = min(max(_dayRange.first, _currDay), _dayRange.last);
 
     // create scroll controller
