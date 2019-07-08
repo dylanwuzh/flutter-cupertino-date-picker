@@ -18,6 +18,7 @@ class DatePickerWidget extends StatefulWidget {
     Key key,
     this.minDateTime,
     this.maxDateTime,
+    this.excludeDates,
     this.initialDateTime,
     this.dateFormat: DATETIME_PICKER_DATE_FORMAT,
     this.locale: DATETIME_PICKER_LOCALE_DEFAULT,
@@ -35,13 +36,13 @@ class DatePickerWidget extends StatefulWidget {
   final String dateFormat;
   final DateTimePickerLocale locale;
   final DateTimePickerTheme pickerTheme;
-
+  final Map<int,Map<int,List<int>>> excludeDates;
   final DateVoidCallback onCancel;
   final DateValueCallback onChange, onConfirm;
 
   @override
   State<StatefulWidget> createState() =>
-      _DatePickerWidgetState(this.minDateTime, this.maxDateTime, this.initialDateTime);
+      _DatePickerWidgetState(this.minDateTime, this.maxDateTime, this.initialDateTime, this.excludeDates);
 }
 
 class _DatePickerWidgetState extends State<DatePickerWidget> {
@@ -49,18 +50,19 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   int _currYear, _currMonth, _currDay;
   List<int> _yearRange, _monthRange, _dayRange;
   FixedExtentScrollController _yearScrollCtrl, _monthScrollCtrl, _dayScrollCtrl;
-
+Map<int,Map<int,List<int>>> _excludeDates;
   Map<String, FixedExtentScrollController> _scrollCtrlMap;
   Map<String, List<int>> _valueRangeMap;
 
   bool _isChangeDateRange = false;
 
-  _DatePickerWidgetState(DateTime minDateTime, DateTime maxDateTime, DateTime initialDateTime) {
+  _DatePickerWidgetState(DateTime minDateTime, DateTime maxDateTime, DateTime initialDateTime, Map<int,Map<int,List<int>>> excludeDates) {
     // handle current selected year、month、day
     DateTime initDateTime = initialDateTime ?? DateTime.now();
     this._currYear = initDateTime.year;
     this._currMonth = initDateTime.month;
     this._currDay = initDateTime.day;
+    this._excludeDates = excludeDates;
 
     // handle DateTime range
     this._minDateTime = minDateTime ?? DateTime.parse(DATE_PICKER_MIN_DATETIME);
@@ -76,6 +78,10 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
     // limit the range of day
     this._dayRange = _calcDayRange();
+     if(this._dayRange.length == 0){
+      this._currMonth = this._currMonth - 1;
+      this._dayRange = _calcDayRange();
+    }
     this._currDay = min(max(_dayRange.first, _currDay), _dayRange.last);
 
     // create scroll controller
@@ -169,6 +175,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         scrollCtrl: _findScrollCtrl(format),
         valueRange: valueRange,
         format: format,
+        isDay: format.contains('d'),
         valueChanged: (value) {
           if (format.contains('y')) {
             _changeYearSelection(value);
@@ -189,7 +196,9 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
     @required List<int> valueRange,
     @required String format,
     @required ValueChanged<int> valueChanged,
+    bool isDay
   }) {
+    
     return Expanded(
       flex: 1,
       child: Container(
@@ -201,8 +210,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           scrollController: scrollCtrl,
           itemExtent: widget.pickerTheme.itemHeight,
           onSelectedItemChanged: valueChanged,
-          childCount: valueRange.last - valueRange.first + 1,
-          itemBuilder: (context, index) => _renderDatePickerItemComponent(valueRange.first + index, format),
+          childCount: isDay ? valueRange.length :valueRange.last - valueRange.first + 1,
+          itemBuilder: (context, index) => _renderDatePickerItemComponent(isDay ? valueRange[index] :valueRange.first + index, format),
         ),
       ),
     );
@@ -241,7 +250,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   /// change the selection of day picker
   void _changeDaySelection(int index) {
-    int dayOfMonth = _dayRange.first + index;
+    int dayOfMonth = _dayRange[index];
     if (_currDay != dayOfMonth) {
       _currDay = dayOfMonth;
       _onSelectedChange();
@@ -360,6 +369,20 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       // selected maximum year and month, limit day range
       maxDay = _maxDateTime.day;
     }
-    return [minDay, maxDay];
+    List<int> returnable =List<int>();
+    
+
+      for (var i = minDay; i <= maxDay; i++) {
+        
+        if(_excludeDates[_currYear] != null && _excludeDates[_currYear][currMonth] != null && _excludeDates[_currYear][currMonth].contains(i)){
+        
+          
+        
+        }else{
+          returnable.add(i);
+        }
+      }
+    // return [minDay, maxDay];
+    return returnable;
   }
 }
