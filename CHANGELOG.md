@@ -1,3 +1,7 @@
+## 1.0.5
+
+- Added  language support.
+
 ## 1.0.4
 
 - Added Russian language support.
