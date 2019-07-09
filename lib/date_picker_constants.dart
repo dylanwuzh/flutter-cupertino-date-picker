@@ -23,4 +23,12 @@ const String DATETIME_PICKER_DATETIME_FORMAT = 'yyyyMMdd HH:mm:ss';
 const int DATETIME_PICKER_MONTH_COUNT_OF_YEAR = 12;
 
 /// Solar months of 31 days.
-const List<int> DATETIME_PICKER_31_DAYS_MONTHS = const <int>[1, 3, 5, 7, 8, 10, 12];
+const List<int> DATETIME_PICKER_31_DAYS_MONTHS = const <int>[
+  1,
+  3,
+  5,
+  7,
+  8,
+  10,
+  12
+];

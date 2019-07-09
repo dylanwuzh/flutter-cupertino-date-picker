@@ -7,7 +7,8 @@ const String DATE_FORMAT_SEPARATOR = r'[|,-\._: ]+';
 
 class DateTimeFormatter {
   /// Get default value of date format.
-  static String generateDateFormat(String dateFormat, DateTimePickerMode pickerMode) {
+  static String generateDateFormat(
+      String dateFormat, DateTimePickerMode pickerMode) {
     if (dateFormat != null && dateFormat.length > 0) {
       return dateFormat;
     }
@@ -33,7 +34,8 @@ class DateTimeFormatter {
   }
 
   /// Split date format to array.
-  static List<String> splitDateFormat(String dateFormat, {DateTimePickerMode mode}) {
+  static List<String> splitDateFormat(String dateFormat,
+      {DateTimePickerMode mode}) {
     if (dateFormat == null || dateFormat.length == 0) {
       return [];
     }
@@ -71,7 +73,8 @@ class DateTimeFormatter {
   }
 
   /// Format datetime string
-  static String formatDateTime(int value, String format, DateTimePickerLocale locale) {
+  static String formatDateTime(
+      int value, String format, DateTimePickerLocale locale) {
     if (format == null || format.length == 0) {
       return value.toString();
     }
@@ -111,7 +114,8 @@ class DateTimeFormatter {
   }
 
   /// Format day display
-  static String formatDate(DateTime dateTime, String format, DateTimePickerLocale locale) {
+  static String formatDate(
+      DateTime dateTime, String format, DateTimePickerLocale locale) {
     if (format == null || format.length == 0) {
       return dateTime.toString();
     }
@@ -139,19 +143,22 @@ class DateTimeFormatter {
   }
 
   /// format year text
-  static String _formatYear(int value, String format, DateTimePickerLocale locale) {
+  static String _formatYear(
+      int value, String format, DateTimePickerLocale locale) {
     if (format.contains('yyyy')) {
       // yyyy: the digit count of year is 4, e.g. 2019
       return format.replaceAll('yyyy', value.toString());
     } else if (format.contains('yy')) {
       // yy: the digit count of year is 2, e.g. 19
-      return format.replaceAll('yy', value.toString().substring(max(0, value.toString().length - 2)));
+      return format.replaceAll('yy',
+          value.toString().substring(max(0, value.toString().length - 2)));
     }
     return value.toString();
   }
 
   /// format month text
-  static String _formatMonth(int value, String format, DateTimePickerLocale locale) {
+  static String _formatMonth(
+      int value, String format, DateTimePickerLocale locale) {
     List<String> months = DatePickerI18n.getLocaleMonths(locale);
     if (format.contains('MMMM')) {
       // MMMM: the full name of month, e.g. January
@@ -165,12 +172,14 @@ class DateTimeFormatter {
   }
 
   /// format day text
-  static String _formatDay(int value, String format, DateTimePickerLocale locale) {
+  static String _formatDay(
+      int value, String format, DateTimePickerLocale locale) {
     return _formatNumber(value, format, 'd');
   }
 
   /// format week text
-  static String _formatWeek(int value, String format, DateTimePickerLocale locale) {
+  static String _formatWeek(
+      int value, String format, DateTimePickerLocale locale) {
     if (format.contains('EEEE')) {
       // EEEE: the full name of week, e.g. Monday
       List<String> weeks = DatePickerI18n.getLocaleWeeks(locale);
@@ -182,17 +191,20 @@ class DateTimeFormatter {
   }
 
   /// format hour text
-  static String _formatHour(int value, String format, DateTimePickerLocale locale) {
+  static String _formatHour(
+      int value, String format, DateTimePickerLocale locale) {
     return _formatNumber(value, format, 'H');
   }
 
   /// format minute text
-  static String _formatMinute(int value, String format, DateTimePickerLocale locale) {
+  static String _formatMinute(
+      int value, String format, DateTimePickerLocale locale) {
     return _formatNumber(value, format, 'm');
   }
 
   /// format second text
-  static String _formatSecond(int value, String format, DateTimePickerLocale locale) {
+  static String _formatSecond(
+      int value, String format, DateTimePickerLocale locale) {
     return _formatNumber(value, format, 's');
   }
 

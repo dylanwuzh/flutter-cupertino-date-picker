@@ -33,11 +33,15 @@ class DatePickerTitleWidget extends StatelessWidget {
         children: <Widget>[
           Container(
             height: pickerTheme.titleHeight,
-            child: FlatButton(child: _renderCancelWidget(context), onPressed: () => this.onCancel()),
+            child: FlatButton(
+                child: _renderCancelWidget(context),
+                onPressed: () => this.onCancel()),
           ),
           Container(
             height: pickerTheme.titleHeight,
-            child: FlatButton(child: _renderConfirmWidget(context), onPressed: () => this.onConfirm()),
+            child: FlatButton(
+                child: _renderConfirmWidget(context),
+                onPressed: () => this.onConfirm()),
           ),
         ],
       ),
@@ -48,9 +52,11 @@ class DatePickerTitleWidget extends StatelessWidget {
   Widget _renderCancelWidget(BuildContext context) {
     Widget cancelWidget = pickerTheme.cancel;
     if (cancelWidget == null) {
-      TextStyle textStyle =
-          pickerTheme.cancelTextStyle ?? TextStyle(color: Theme.of(context).unselectedWidgetColor, fontSize: 16.0);
-      cancelWidget = Text(DatePickerI18n.getLocaleCancel(locale), style: textStyle);
+      TextStyle textStyle = pickerTheme.cancelTextStyle ??
+          TextStyle(
+              color: Theme.of(context).unselectedWidgetColor, fontSize: 16.0);
+      cancelWidget =
+          Text(DatePickerI18n.getLocaleCancel(locale), style: textStyle);
     }
     return cancelWidget;
   }
@@ -59,9 +65,10 @@ class DatePickerTitleWidget extends StatelessWidget {
   Widget _renderConfirmWidget(BuildContext context) {
     Widget confirmWidget = pickerTheme.confirm;
     if (confirmWidget == null) {
-      TextStyle textStyle =
-          pickerTheme.confirmTextStyle ?? TextStyle(color: Theme.of(context).primaryColor, fontSize: 16.0);
-      confirmWidget = Text(DatePickerI18n.getLocaleDone(locale), style: textStyle);
+      TextStyle textStyle = pickerTheme.confirmTextStyle ??
+          TextStyle(color: Theme.of(context).primaryColor, fontSize: 16.0);
+      confirmWidget =
+          Text(DatePickerI18n.getLocaleDone(locale), style: textStyle);
     }
     return confirmWidget;
   }
