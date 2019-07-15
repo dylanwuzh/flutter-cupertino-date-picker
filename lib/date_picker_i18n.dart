@@ -29,7 +29,10 @@ enum DateTimePickerLocale {
   ru,
 
   /// German (DE)
-  de
+  de,
+
+  /// Korea (KO)
+  ko,
 }
 
 const DATETIME_PICKER_LOCALE_DEFAULT = DateTimePickerLocale.en_us;
@@ -44,6 +47,7 @@ const Map<DateTimePickerLocale, String> DONE = {
   DateTimePickerLocale.jp: '完了',
   DateTimePickerLocale.ru: 'Готово',
   DateTimePickerLocale.de: 'Fertig',
+  DateTimePickerLocale.ko: '완료',
 };
 
 /// Cancel widget's text
@@ -56,6 +60,7 @@ const Map<DateTimePickerLocale, String> CANCEL = {
   DateTimePickerLocale.jp: 'キャンセル',
   DateTimePickerLocale.ru: 'Отмена',
   DateTimePickerLocale.de: 'Abbrechen',
+  DateTimePickerLocale.ko: '취소',
 };
 
 const List<String> DEFAULT_MONTH = [
@@ -217,6 +222,22 @@ const List<String> DE_MONTHS = [
   "Dezember",
 ];
 
+/// korea months
+const List<String> KO_MONTHS = [
+  "1월",
+  "2월",
+  "3월",
+  "4월",
+  "5월",
+  "6월",
+  "7월",
+  "8월",
+  "9월",
+  "10월",
+  "11월",
+  "12월"
+];
+
 const Map<DateTimePickerLocale, List<String>> MONTHS = {
   DateTimePickerLocale.en_us: EN_US_MONTHS,
   DateTimePickerLocale.pt_br: PT_BR_MONTHS,
@@ -227,6 +248,7 @@ const Map<DateTimePickerLocale, List<String>> MONTHS = {
   DateTimePickerLocale.jp: JP_MONTHS,
   DateTimePickerLocale.ru: RU_MONTHS,
   DateTimePickerLocale.de: DE_MONTHS,
+  DateTimePickerLocale.ko: KO_MONTHS,
 };
 
 /// en_US weeks with full name
@@ -394,6 +416,28 @@ const List<String> DE_WEEKS_SHORT = [
   "So",
 ];
 
+/// korea weeks with full name
+const List<String> KO_WEEKS_FULL = [
+  "월요일",
+  "화요일",
+  "수요일",
+  "목요일",
+  "금요일",
+  "토요일",
+  "일요일",
+];
+
+/// korea weeks with short name
+const List<String> KO_WEEKS_SHORT = [
+  "월",
+  "화",
+  "수",
+  "목",
+  "금",
+  "토",
+  "일",
+];
+
 const Map<DateTimePickerLocale, List<String>> WEEKS_FULL = {
   DateTimePickerLocale.en_us: EN_US_WEEKS_FULL,
   DateTimePickerLocale.zh_cn: ZH_CN_WEEKS_FULL,
@@ -404,6 +448,7 @@ const Map<DateTimePickerLocale, List<String>> WEEKS_FULL = {
   DateTimePickerLocale.jp: JP_WEEKS_FULL,
   DateTimePickerLocale.ru: RU_WEEKS_FULL,
   DateTimePickerLocale.de: DE_WEEKS_FULL,
+  DateTimePickerLocale.ko: KO_WEEKS_FULL,
 };
 
 const Map<DateTimePickerLocale, List<String>> WEEKS_SHORT = {
@@ -413,6 +458,7 @@ const Map<DateTimePickerLocale, List<String>> WEEKS_SHORT = {
   DateTimePickerLocale.jp: JP_WEEKS_SHORT,
   DateTimePickerLocale.ru: RU_WEEKS_SHORT,
   DateTimePickerLocale.de: DE_WEEKS_SHORT,
+  DateTimePickerLocale.ko: KO_WEEKS_SHORT,
 };
 
 class DatePickerI18n {
