@@ -1,6 +1,10 @@
+## 1.0.6
+
+- Added Korea language support.
+
 ## 1.0.5
 
-- Added  language support.
+- Added German language support.
 
 ## 1.0.4
 

@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.5
+  flutter_cupertino_date_picker: ^1.0.6
 ```
 
 #### 2\. Install
@@ -161,6 +161,8 @@ Support:
 - ar: Arabic (ar)
 - jp: Japanese (JP)
 - ru: Russian (RU)
+- de: German (DE)
+- ko: Korea (KO)
 
 ##### Add more language
 
