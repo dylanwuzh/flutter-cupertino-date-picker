@@ -1,3 +1,7 @@
+## 1.0.7
+
+- Added Italian language support.
+
 ## 1.0.6
 
 - Added Korea language support.
