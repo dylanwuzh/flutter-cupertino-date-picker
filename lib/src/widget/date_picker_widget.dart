@@ -3,11 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:flutter_cupertino_date_picker/date_picker_constants.dart';
-import 'package:flutter_cupertino_date_picker/date_picker_i18n.dart';
-import 'package:flutter_cupertino_date_picker/date_picker_theme.dart';
-import 'package:flutter_cupertino_date_picker/date_picker_title_widget.dart';
-import 'package:flutter_cupertino_date_picker/date_time_formatter.dart';
+import '../date_time_formatter.dart';
+import '../date_picker_theme.dart';
+import '../date_picker_constants.dart';
+import '../i18n/date_picker_i18n.dart';
+import 'date_picker_title_widget.dart';
+
+/// Solar months of 31 days.
+const List<int> _solarMonthsOf31Days = const <int>[1, 3, 5, 7, 8, 10, 12];
 
 /// DatePicker widget.
 ///
@@ -317,7 +320,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
   int _calcDayCountOfMonth() {
     if (_currMonth == 2) {
       return isLeapYear(_currYear) ? 29 : 28;
-    } else if (DATETIME_PICKER_31_DAYS_MONTHS.contains(_currMonth)) {
+    } else if (_solarMonthsOf31Days.contains(_currMonth)) {
       return 31;
     }
     return 30;

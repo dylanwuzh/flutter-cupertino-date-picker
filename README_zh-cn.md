@@ -14,7 +14,7 @@ Flutter 的日期选择器控件，iOS 样式。
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.7
+  flutter_cupertino_date_picker: ^1.0.8
 ```
 
 #### 2\. 获取包
@@ -167,23 +167,66 @@ DateTimePickerWidget({
 
 ##### 添加更多的语言
 
-Fork 该项目, 在 `lib/date_picker_i18n.dart` 文件中添加语言对应的文字（标题栏按钮、月份、星期）.
+###### 1. 添加语言文件
+
+Fork 该项目, 在 `lib/src/i18n/` 文件夹中添加语言文件。参考 `strings_en_us.dart` 文件。
 
 ```dart
-/// Done widget's text
-const Map<DateTimePickerLocale, String> DONE = { ... };
+/// English (EN) United States
+class _StringsEnUs extends _StringsI18n {
+  const _StringsEnUs();
 
-/// Cancel widget's text
-const Map<DateTimePickerLocale, String> CANCEL = { ... };
+  @override
+  String getCancelText() {
+    // TODO return cancel widget's text
+    return null;
+  }
 
-/// en_US
-const List<String> EN_US_MONTHS = [ ... ];
+  @override
+  String getDoneText() {
+    // TODO return done widget's text
+    return null;
+  }
 
-/// en_US weeks with full name
-const List<String> EN_US_WEEKS_FULL = [ ... ];
+  @override
+  List<String> getMonths() {
+    // TODO return the array of month
+    return null;
+  }
 
-/// en_US weeks with short name
-const List<String> EN_US_WEEKS_SHORT = [ ... ];
+  @override
+  List<String> getWeeksFull() {
+    // TODO return the array of week's full name
+    return null;
+  }
+
+  @override
+  List<String> getWeeksShort() {
+    // TODO return the array of week's short name
+    return null;
+  }
+}
+```
+
+###### 2. 添加 DateTimePickerLocale
+
+在 `lib/src/i18n/date_picker_i18n.dart` 文件中添加新语言对应的 `DateTimePickerLocale`。
+
+```dart
+enum DateTimePickerLocale {
+  /// English (EN) United States
+  en_us,
+}
+```
+
+###### 3. 添加 DateTimePickerLocale 和语言的对应关系
+
+在 `lib/src/i18n/date_picker_i18n.dart` 文件中添加 DateTimePickerLocale 和语言的对应关系。
+
+```dart
+const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
+  DateTimePickerLocale.en_us: const _StringsEnUs(),
+};
 ```
 
 #### 6\. dateFormat
@@ -248,9 +291,9 @@ const DateTimePickerTheme({
 
 [Example sources](https://github.com/wuzhendev/flutter-cupertino-date-picker/tree/master/example)
 
-[Example APK](https://raw.githubusercontent.com/wuzhendev/assets/master/flutter-datepicker/flutter_cupertino_date_picker_v1.0.0.apk)
+[Example APK](https://raw.githubusercontent.com/wuzhendev/assets/master/flutter-datepicker/flutter_cupertino_date_picker_v1.0.8.apk)
 
-![Example APK Download](https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/date_picker_qrcode_v1.0.0.png?raw=true)
+![Example APK Download](https://github.com/wuzhendev/assets/blob/master/flutter-datepicker/date_picker_qrcode_v1.0.8.png?raw=true)
 
 ### DatePicker
 

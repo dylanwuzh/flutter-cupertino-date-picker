@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_cupertino_date_picker/date_picker_constants.dart';
-import 'package:flutter_cupertino_date_picker/date_picker_i18n.dart';
-import 'package:flutter_cupertino_date_picker/date_picker_theme.dart';
-import 'package:flutter_cupertino_date_picker/date_picker_widget.dart';
-import 'package:flutter_cupertino_date_picker/date_time_formatter.dart';
-import 'package:flutter_cupertino_date_picker/datetime_picker_widget.dart';
-import 'package:flutter_cupertino_date_picker/time_picker_widget.dart';
+import 'date_picker_theme.dart';
+import 'date_picker_constants.dart';
+import 'date_time_formatter.dart';
+import 'i18n/date_picker_i18n.dart';
+import 'widget/date_picker_widget.dart';
+import 'widget/datetime_picker_widget.dart';
+import 'widget/time_picker_widget.dart';
 
 enum DateTimePickerMode {
   /// Display DatePicker

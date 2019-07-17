@@ -101,11 +101,11 @@ class _DatePickerInPageState extends State<DatePickerInPage> {
                 showDialog(
                   context: context,
                   builder: (_) => new AlertDialog(
-                        titlePadding: EdgeInsets.only(left: 16.0, top: 16.0),
-                        title: new Text("DateTimePickerTheme"),
-                        contentPadding: EdgeInsets.all(16.0),
-                        content: new Text(
-                          '''
+                    titlePadding: EdgeInsets.only(left: 16.0, top: 16.0),
+                    title: new Text("DateTimePickerTheme"),
+                    contentPadding: EdgeInsets.all(16.0),
+                    content: new Text(
+                      '''
 DateTimePickerTheme(
         backgroundColor: Color(0xFF80cbc4),
         cancelTextStyle: TextStyle(color: Colors.white),
@@ -116,17 +116,17 @@ DateTimePickerTheme(
         itemHeight: 30.0,
 )
                     ''',
-                          style: TextStyle(fontSize: 14.0),
-                        ),
-                        actions: <Widget>[
-                          new FlatButton(
-                            child: new Text("OK"),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
-                      ),
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                    actions: <Widget>[
+                      new FlatButton(
+                        child: new Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                  ),
                 );
               },
               child: Padding(

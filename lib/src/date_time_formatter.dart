@@ -1,7 +1,8 @@
 import 'dart:math';
-import 'package:flutter_cupertino_date_picker/date_picker_constants.dart';
-import 'package:flutter_cupertino_date_picker/date_picker_i18n.dart';
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+
+import 'date_picker.dart';
+import 'date_picker_constants.dart';
+import 'i18n/date_picker_i18n.dart';
 
 const String DATE_FORMAT_SEPARATOR = r'[|,-\._: ]+';
 
