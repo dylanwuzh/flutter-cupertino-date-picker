@@ -51,7 +51,7 @@ class _StringsHu extends _StringsI18n {
       "H",
       "K",
       "Sze",
-      "Css",
+      "Cs",
       "P",
       "Szo",
       "V",
