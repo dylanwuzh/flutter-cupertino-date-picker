@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.9
+  flutter_cupertino_date_picker: ^1.0.10
 ```
 
 #### 2\. Install
@@ -50,6 +50,7 @@ import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart
 /// pickerMode: [DateTimePickerMode] display mode: date(DatePicker)、time(TimePicker)、datetime(DateTimePicker)
 /// pickerTheme: [DateTimePickerTheme] the theme of date time picker
 /// onCancel: [DateVoidCallback] pressed title cancel widget event
+/// onClose: [DateVoidCallback] date picker closed event
 /// onChange: [DateValueCallback] selected date time changed event
 /// onConfirm: [DateValueCallback] pressed title confirm widget event
 DatePicker.showDatePicker(
@@ -62,6 +63,7 @@ DatePicker.showDatePicker(
   DateTimePickerMode pickerMode: DateTimePickerMode.date,
   DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
   DateVoidCallback onCancel,
+  DateVoidCallback onClose,
   DateValueCallback onChange,
   DateValueCallback onConfirm,
 });
@@ -191,19 +193,19 @@ class _StringsEnUs extends _StringsI18n {
 
   @override
   List<String> getMonths() {
-    // TODO return the array of month
+    // TODO return the array of month [January, February ... December]
     return null;
   }
 
   @override
   List<String> getWeeksFull() {
-    // TODO return the array of week's full name
+    // TODO return the array of week's full name [Monday, Tuesday ... Sunday]
     return null;
   }
 
   @override
   List<String> getWeeksShort() {
-    // TODO return the array of week's short name
+    // TODO return the array of week's short name [Mon, Tue ... Sun]
     return null;
   }
 }

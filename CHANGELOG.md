@@ -1,3 +1,7 @@
+## 1.0.10
+
+- Added `onClose` callback.
+
 ## 1.0.9
 
 - Added Hungarian language support.

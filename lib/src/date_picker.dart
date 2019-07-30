@@ -35,6 +35,7 @@ class DatePicker {
   /// pickerMode: [DateTimePickerMode] display mode: date(DatePicker)、time(TimePicker)、datetime(DateTimePicker)
   /// pickerTheme: [DateTimePickerTheme] the theme of date time picker
   /// onCancel: [DateVoidCallback] pressed title cancel widget event
+  /// onClose: [DateVoidCallback] date picker closed event
   /// onChange: [DateValueCallback] selected date time changed event
   /// onConfirm: [DateValueCallback] pressed title confirm widget event
   static void showDatePicker(

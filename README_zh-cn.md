@@ -14,7 +14,7 @@ Flutter 的日期选择器控件，iOS 样式。
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.9
+  flutter_cupertino_date_picker: ^1.0.10
 ```
 
 #### 2\. 获取包
@@ -50,6 +50,7 @@ import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart
 /// pickerMode: [DateTimePickerMode] 显示的类型: date(日期选择器)、time(时间选择器)、datetime(日期时间选择器)
 /// pickerTheme: [DateTimePickerTheme] 日期选择器的样式
 /// onCancel: [DateVoidCallback] 点击标题取消按钮的回调事件
+/// onClose: [DateVoidCallback] 关闭日期时间选择器的回调事件
 /// onChange: [DateValueCallback] 选择的日期时间改变的事件
 /// onConfirm: [DateValueCallback] 点击标题确定按钮的回调事件
 DatePicker.showDatePicker(
@@ -62,6 +63,7 @@ DatePicker.showDatePicker(
   DateTimePickerMode pickerMode: DateTimePickerMode.date,
   DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
   DateVoidCallback onCancel,
+  DateVoidCallback onClose,
   DateValueCallback onChange,
   DateValueCallback onConfirm,
 });
@@ -179,31 +181,31 @@ class _StringsEnUs extends _StringsI18n {
 
   @override
   String getCancelText() {
-    // TODO return cancel widget's text
+    // TODO 返回标题栏取消按钮的显示文字
     return null;
   }
 
   @override
   String getDoneText() {
-    // TODO return done widget's text
+    // TODO 返回标题栏确定按钮的显示文字
     return null;
   }
 
   @override
   List<String> getMonths() {
-    // TODO return the array of month
+    // TODO 返回月份列表 [1月, 2月 ... 12月]
     return null;
   }
 
   @override
   List<String> getWeeksFull() {
-    // TODO return the array of week's full name
+    // TODO 返回星期几的全称 [周一, 周二 ... 周日]
     return null;
   }
 
   @override
   List<String> getWeeksShort() {
-    // TODO return the array of week's short name
+    // TODO 返回星期几的缩写 [周一, 周二 ... 周日]
     return null;
   }
 }
