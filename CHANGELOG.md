@@ -1,3 +1,7 @@
+## 1.0.11
+
+- Added `minuteDivider` parameter.
+
 ## 1.0.10
 
 - Added `onClose` callback.

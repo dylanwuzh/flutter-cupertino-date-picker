@@ -14,7 +14,7 @@ Flutter 的日期选择器控件，iOS 样式。
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.10
+  flutter_cupertino_date_picker: ^1.0.11
 ```
 
 #### 2\. 获取包
@@ -107,6 +107,7 @@ DatePickerWidget({
 /// dateFormat: [String] 日期时间格式化
 /// locale: [DateTimePickerLocale] 国际化，语言地区
 /// pickerTheme: [DateTimePickerTheme] 日期选择器的样式
+/// minuteDivider: [int] minute restriction, e.g. 5: every 5th minute will be shown (0, 5, 10, 15 ...)
 /// onCancel: [DateVoidCallback] 点击标题取消按钮的回调事件
 /// onChange: [DateValueCallback] 选择的日期时间改变的事件
 /// onConfirm: [DateValueCallback] 点击标题确定按钮的回调事件
@@ -117,6 +118,7 @@ TimePickerWidget({
   String dateFormat: DATETIME_PICKER_DATE_FORMAT,
   DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
   DateTimePickerTheme pickerTheme: DatePickerTheme.Default,
+  int minuteDivider: 1,
   DateVoidCallback onCancel,
   DateValueCallback onChange,
   DateValueCallback onConfirm,
