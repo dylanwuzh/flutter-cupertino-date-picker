@@ -107,6 +107,7 @@ DatePickerWidget({
 /// dateFormat: [String] date format pattern
 /// locale: [DateTimePickerLocale] internationalization
 /// pickerTheme: [DateTimePickerTheme] the theme of date time picker
+/// minuteDivider: [int] minute restriction, e.g. 5: every 5th minute will be shown (0, 5, 10, 15 ...)
 /// onCancel: [DateVoidCallback] pressed title cancel widget event
 /// onChange: [DateValueCallback] selected date time changed event
 /// onConfirm: [DateValueCallback] pressed title confirm widget event
