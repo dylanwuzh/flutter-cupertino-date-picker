@@ -1,3 +1,7 @@
+## 1.0.9
+
+- Added Hungarian language support.
+
 ## 1.0.8
 
 - Refactor i18n codes.

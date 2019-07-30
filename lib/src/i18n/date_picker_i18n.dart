@@ -70,7 +70,7 @@ enum DateTimePickerLocale {
   /// Italian (IT)
   it,
 
-  /// Hungarian
+  /// Hungarian (HU)
   hu,
 }
 
