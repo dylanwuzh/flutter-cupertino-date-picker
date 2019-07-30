@@ -47,6 +47,7 @@ class DatePicker {
     DateTimePickerMode pickerMode: DateTimePickerMode.date,
     DateTimePickerTheme pickerTheme: DateTimePickerTheme.Default,
     DateVoidCallback onCancel,
+    DateVoidCallback onClose,
     DateValueCallback onChange,
     DateValueCallback onConfirm,
   }) {
@@ -83,7 +84,7 @@ class DatePicker {
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
       ),
-    );
+    ).whenComplete(onClose);
   }
 }
 
