@@ -50,16 +50,13 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
                 });
               },
             ),
-            Text(locale
-                .toString()
-                .substring(locale.toString().indexOf('.') + 1)),
+            Text(locale.toString().substring(locale.toString().indexOf('.') + 1)),
           ],
         ),
       ));
     });
 
-    TextStyle hintTextStyle =
-        Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
+    TextStyle hintTextStyle = Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
     return Scaffold(
       appBar: AppBar(title: Text('DatePicker Bottom Sheet')),
       body: Container(
@@ -75,8 +72,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
                     width: 115.0,
                     child: Text('min DateTime:', style: hintTextStyle),
                   ),
-                  Text(MIN_DATETIME,
-                      style: Theme.of(context).textTheme.subhead),
+                  Text(MIN_DATETIME, style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -86,11 +82,8 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
-                  Container(
-                      width: 115.0,
-                      child: Text('max DateTime:', style: hintTextStyle)),
-                  Text(MAX_DATETIME,
-                      style: Theme.of(context).textTheme.subhead),
+                  Container(width: 115.0, child: Text('max DateTime:', style: hintTextStyle)),
+                  Text(MAX_DATETIME, style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -100,11 +93,8 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: <Widget>[
-                  Container(
-                      width: 115.0,
-                      child: Text('init DateTime:', style: hintTextStyle)),
-                  Text(INIT_DATETIME,
-                      style: Theme.of(context).textTheme.subhead),
+                  Container(width: 115.0, child: Text('init DateTime:', style: hintTextStyle)),
+                  Text(INIT_DATETIME, style: Theme.of(context).textTheme.subhead),
                 ],
               ),
             ),
@@ -144,10 +134,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
               margin: EdgeInsets.only(top: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('Locale: '),
-                  Wrap(direction: Axis.horizontal, children: radios)
-                ],
+                children: <Widget>[Text('Locale: '), Wrap(direction: Axis.horizontal, children: radios)],
               ),
             ),
 
@@ -157,8 +144,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text('Selected Date:',
-                      style: Theme.of(context).textTheme.subhead),
+                  Text('Selected Date:', style: Theme.of(context).textTheme.subhead),
                   Container(
                     padding: EdgeInsets.only(left: 12.0),
                     child: Text(
@@ -195,9 +181,8 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
       initialDateTime: _dateTime,
       dateFormat: _format,
       locale: _locale,
-      onCancel: () {
-        debugPrint('onCancel');
-      },
+      onClose: () => print("----- onClose -----"),
+      onCancel: () => print('onCancel'),
       onChange: (dateTime, List<int> index) {
         setState(() {
           _dateTime = dateTime;
