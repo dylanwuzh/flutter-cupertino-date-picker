@@ -62,9 +62,8 @@ class _DateTimePickerBottomSheetState extends State<DateTimePickerBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> radios = List<Widget>();
-    _locales.forEach((locale) {
-      radios.add(Container(
+    List<Widget> radios = _locales.map((locale) {
+      return Container(
         margin: EdgeInsets.only(right: 8.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -82,8 +81,8 @@ class _DateTimePickerBottomSheetState extends State<DateTimePickerBottomSheet> {
                 .substring(locale.toString().indexOf('.') + 1)),
           ],
         ),
-      ));
-    });
+      );
+    }).toList();
 
     TextStyle hintTextStyle =
         Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));

@@ -50,12 +50,14 @@ class TimePickerWidget extends StatefulWidget {
 
 class _TimePickerWidgetState extends State<TimePickerWidget> {
   DateTime _minTime, _maxTime;
-  int _currHour, _currMinute, _currSecond;
+  int _currHour, _currMinute, _currSecond, _currAmpm;
   int _minuteDivider;
-  List<int> _hourRange, _minuteRange, _secondRange;
-  FixedExtentScrollController _hourScrollCtrl,
+  List<int> _12HourRange, _24HourRange, _minuteRange, _secondRange, _ampmRange;
+  FixedExtentScrollController _12HourScrollCtrl,
+      _24HourScrollCtrl,
       _minuteScrollCtrl,
-      _secondScrollCtrl;
+      _secondScrollCtrl,
+      _ampmScrollCtrl;
 
   Map<String, FixedExtentScrollController> _scrollCtrlMap;
   Map<String, List<int>> _valueRangeMap;
@@ -83,8 +85,9 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     this._minuteDivider = minuteDivider;
 
     // limit the range of hour
-    this._hourRange = _calcHourRange();
-    this._currHour = min(max(_hourRange.first, _currHour), _hourRange.last);
+    this._12HourRange = _calc12HourRange();
+    this._24HourRange = _calc24HourRange();
+    this._currHour = min(max(_24HourRange.first, _currHour), _24HourRange.last);
 
     // limit the range of minute
     this._minuteRange = _calcMinuteRange();
@@ -96,20 +99,29 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     this._currSecond =
         min(max(_secondRange.first, _currSecond), _secondRange.last);
 
+    this._ampmRange = _calcAmpmRange();
+    this._currAmpm = _currHour < 12 ? 0 : 1;
+
     // create scroll controller
-    _hourScrollCtrl =
-        FixedExtentScrollController(initialItem: _currHour - _hourRange.first);
+    _24HourScrollCtrl =
+        FixedExtentScrollController(initialItem: _currHour - _24HourRange.first);
+    _12HourScrollCtrl =
+      FixedExtentScrollController(initialItem: (_currHour % 12 == 0 ? 12 : _currHour % 12) - _12HourRange.first);
     _minuteScrollCtrl = FixedExtentScrollController(
         initialItem: (_currMinute - _minuteRange.first) ~/ _minuteDivider);
     _secondScrollCtrl = FixedExtentScrollController(
         initialItem: _currSecond - _secondRange.first);
+    _ampmScrollCtrl = FixedExtentScrollController(
+      initialItem: (_currHour / 12).floor());
 
     _scrollCtrlMap = {
-      'H': _hourScrollCtrl,
+      'H': _24HourScrollCtrl,
+      'h': _12HourScrollCtrl,
       'm': _minuteScrollCtrl,
-      's': _secondScrollCtrl
+      's': _secondScrollCtrl,
+      'a': _ampmScrollCtrl,
     };
-    _valueRangeMap = {'H': _hourRange, 'm': _minuteRange, 's': _secondRange};
+    _valueRangeMap = {'H': _24HourRange, 'h': _12HourRange, 'm': _minuteRange, 's': _secondRange, 'a': _ampmRange};
   }
 
   @override
@@ -168,51 +180,46 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
 
   /// find scroll controller by specified format
   FixedExtentScrollController _findScrollCtrl(String format) {
-    FixedExtentScrollController scrollCtrl;
-    _scrollCtrlMap.forEach((key, value) {
-      if (format.contains(key)) {
-        scrollCtrl = value;
-      }
-    });
-    return scrollCtrl;
+    String key = _scrollCtrlMap.keys.firstWhere((key) => format.contains(key));
+
+    return _scrollCtrlMap[key];
   }
 
   /// find item value range by specified format
   List<int> _findPickerItemRange(String format) {
-    List<int> valueRange;
-    _valueRangeMap.forEach((key, value) {
-      if (format.contains(key)) {
-        valueRange = value;
-      }
-    });
-    return valueRange;
+    String key = _valueRangeMap.keys.firstWhere((key) => format.contains(key));
+
+    return _valueRangeMap[key];
   }
 
   /// render the picker widget of year、month and day
   Widget _renderDatePickerWidget() {
-    List<Widget> pickers = List<Widget>();
     List<String> formatArr =
         DateTimeFormatter.splitDateFormat(widget.dateFormat);
-    formatArr.forEach((format) {
+
+    List<Widget> pickers = formatArr.map((format) {
       List<int> valueRange = _findPickerItemRange(format);
 
-      Widget pickerColumn = _renderDatePickerColumnComponent(
+      return _renderDatePickerColumnComponent(
         scrollCtrl: _findScrollCtrl(format),
         valueRange: valueRange,
         format: format,
         minuteDivider: widget.minuteDivider,
         valueChanged: (value) {
-          if (format.contains('H')) {
-            _changeHourSelection(value);
+          if (format.contains('h')) {
+            _change12HourSelection(value);
+          } else if (format.contains('H')) {
+            _change24HourSelection(value);
           } else if (format.contains('m')) {
             _changeMinuteSelection(value);
           } else if (format.contains('s')) {
             _changeSecondSelection(value);
+          } else if (format.contains('a')) {
+            _changeAmPmSelection(value);
           }
         },
       );
-      pickers.add(pickerColumn);
-    });
+    }).toList();
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween, children: pickers);
   }
@@ -224,6 +231,9 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     @required ValueChanged<int> valueChanged,
     int minuteDivider,
   }) {
+    int count = format.contains('m')
+      ? _calculateMinuteChildCount(valueRange, minuteDivider)
+      : valueRange.last - valueRange.first + 1;
     return Expanded(
       flex: 1,
       child: Container(
@@ -235,9 +245,7 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
           scrollController: scrollCtrl,
           itemExtent: widget.pickerTheme.itemHeight,
           onSelectedItemChanged: valueChanged,
-          childCount: format.contains('m')
-              ? _calculateMinuteChildCount(valueRange, minuteDivider)
-              : valueRange.last - valueRange.first + 1,
+          childCount: count,
           itemBuilder: (context, index) {
             int value = valueRange.first + index;
 
@@ -274,8 +282,8 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
   }
 
   /// change the selection of hour picker
-  void _changeHourSelection(int index) {
-    int value = _hourRange.first + index;
+  void _change24HourSelection(int index) {
+    int value = _24HourRange.first + index;
     if (_currHour != value) {
       _currHour = value;
       _changeTimeRange();
@@ -283,7 +291,17 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     }
   }
 
-  /// change the selection of minute picker
+  /// change the selection of hour picker
+  void _change12HourSelection(int index) {
+    int value = _12HourRange.first + index;
+    if (_currHour != value) {
+      _currHour = (value == 12 ? 0 : value) + 12 * _currAmpm;
+      _changeTimeRange();
+      _onSelectedChange();
+    }
+  }
+
+  /// change the selection of hour picker
   void _changeMinuteSelection(int index) {
     // TODO: this looks like it would break date ranges but not taking into account _minuteRange.first
     int value = index * _minuteDivider;
@@ -299,6 +317,15 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     int value = _secondRange.first + index;
     if (_currSecond != value) {
       _currSecond = value;
+      _onSelectedChange();
+    }
+  }
+
+  /// change the selection of ampm picker
+  void _changeAmPmSelection(int index) {
+    int value = _secondRange.first + index;
+    if (_currSecond != value) {
+      _currHour = _currHour % 12 + index * 12;
       _onSelectedChange();
     }
   }
@@ -358,14 +385,36 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
 
   /// calculate selected index list
   List<int> _calcSelectIndexList() {
-    int hourIndex = _currHour - _hourRange.first;
+    int hourIndex = _currHour - _24HourRange.first;
     int minuteIndex = _currMinute - _minuteRange.first;
     int secondIndex = _currSecond - _secondRange.first;
-    return [hourIndex, minuteIndex, secondIndex];
+    int ampmIndex = _currAmpm;
+    return [hourIndex, minuteIndex, secondIndex, ampmIndex];
   }
 
   /// calculate the range of hour
-  List<int> _calcHourRange() {
+  List<int> _calc12HourRange() {
+    int minHour = 1, maxHour = 12;
+    if (_currAmpm == 0) {
+      if (_minTime.hour < 12) {
+        minHour = _minTime.hour;
+      }
+      if (_maxTime.hour < 12) {
+        maxHour = _maxTime.hour;
+      }
+    } else if (_currAmpm == 1) {
+      if (_minTime.hour >= 12) {
+        minHour = _minTime.hour;
+      }
+      if (_maxTime.hour >= 12) {
+        maxHour = _maxTime.hour;
+      }
+    }
+    return [minHour, maxHour];
+  }
+
+  /// calculate the range of hour
+  List<int> _calc24HourRange() {
     return [_minTime.hour, _maxTime.hour];
   }
 
@@ -414,4 +463,14 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     }
     return [minSecond, maxSecond];
   }
+
+  List<int> _calcAmpmRange({currHour, currMinute}) {
+    if (_24HourRange.first < 12 && _24HourRange.last > 12) {
+      return [ 0, 1 ];
+    } else if (_24HourRange.first < 12) {
+      return [ 0 ];
+    }
+    return [ 1 ];
+  }
+
 }
