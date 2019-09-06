@@ -213,6 +213,7 @@ class _DatePickerComponent extends StatelessWidget {
           onCancel: route.onCancel,
           onChange: route.onChange,
           onConfirm: route.onConfirm,
+          minuteDivider: route.minuteDivider,
         );
         break;
     }
