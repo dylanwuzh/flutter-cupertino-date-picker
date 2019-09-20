@@ -27,7 +27,7 @@ const DATETIME_PICKER_LOCALE_DEFAULT = DateTimePickerLocale.en_us;
 
 /// Done widget's text
 const Map<DateTimePickerLocale, String> DONE = {
-  DateTimePickerLocale.en_us: 'Done',
+  DateTimePickerLocale.en_us: 'Kies',
   DateTimePickerLocale.zh_cn: '确定',
   DateTimePickerLocale.pt_br: 'Feito',
   DateTimePickerLocale.bn: 'সম্পন্ন',
@@ -36,7 +36,7 @@ const Map<DateTimePickerLocale, String> DONE = {
 
 /// Cancel widget's text
 const Map<DateTimePickerLocale, String> CANCEL = {
-  DateTimePickerLocale.en_us: 'Cancel',
+  DateTimePickerLocale.en_us: 'Annuleer',
   DateTimePickerLocale.zh_cn: '取消',
   DateTimePickerLocale.pt_br: 'Cancelar',
   DateTimePickerLocale.bn: 'বাতিল',
@@ -60,16 +60,16 @@ const List<String> DEFAULT_MONTH = [
 
 /// en_US
 const List<String> EN_US_MONTHS = [
-  "January",
-  "February",
-  "March",
+  "Januari",
+  "Februari",
+  "Maart",
   "April",
-  "May",
-  "June",
-  "July",
-  "August",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Augustus",
   "September",
-  "October",
+  "Oktober",
   "November",
   "December"
 ];
