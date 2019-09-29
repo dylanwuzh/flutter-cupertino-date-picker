@@ -324,11 +324,8 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
 
   /// change the selection of ampm picker
   void _changeAmPmSelection(int index) {
-    int value = _secondRange.first + index;
-    if (_currSecond != value) {
       _currHour = _currHour % 12 + index * 12;
       _onSelectedChange();
-    }
   }
 
   /// change range of minute and second
