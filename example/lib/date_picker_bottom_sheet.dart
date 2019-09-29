@@ -34,9 +34,8 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   @override
   Widget build(BuildContext context) {
     // create locale radio list
-    List<Widget> radios = List<Widget>();
-    _locales.forEach((locale) {
-      radios.add(Container(
+    List<Widget> radios = _locales.map((locale) {
+      return Container(
         margin: EdgeInsets.only(right: 8.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -55,8 +54,8 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
                 .substring(locale.toString().indexOf('.') + 1)),
           ],
         ),
-      ));
-    });
+      );
+    }).toList();
 
     TextStyle hintTextStyle =
         Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
