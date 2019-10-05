@@ -259,9 +259,9 @@ Map<int,Map<int,List<int>>> _excludeDates;
 
   /// change range of month and day
   void _changeDateRange() {
-    if (_isChangeDateRange) {
-      return;
-    }
+//     if (_isChangeDateRange) {
+//       return;
+//     }
     _isChangeDateRange = true;
 
     List<int> monthRange = _calcMonthRange();
