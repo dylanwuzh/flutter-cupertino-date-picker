@@ -74,7 +74,7 @@ enum DateTimePickerLocale {
   /// Hungarian (HU)
   hu,
 
-  /// Hungarian (VN)
+  /// Vietnamese (VN)
   vi,
 }
 
