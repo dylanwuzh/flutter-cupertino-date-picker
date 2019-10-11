@@ -393,11 +393,8 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
 
   /// change the selection of ampm picker
   void _changeAmPmSelection(int index) {
-    int value = _secondRange.first + index;
-    if (_currSecond != value) {
-      _currHour = _currHour % 12 + index * 12;
-      _onSelectedChange();
-    }
+    _currHour = _currHour % 12 + index * 12;
+    _onSelectedChange();
   }
 
   /// change range of hour, minute, second and ampm
