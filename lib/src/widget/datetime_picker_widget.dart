@@ -43,14 +43,22 @@ class DateTimePickerWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _DateTimePickerWidgetState(
-      this.minDateTime, this.maxDateTime, this.initDateTime, this.minuteDivider);
+      this.minDateTime,
+      this.maxDateTime,
+      this.initDateTime,
+      this.minuteDivider);
 }
 
 class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
   DateTime _minTime, _maxTime;
   int _currDay, _currHour, _currMinute, _currSecond, _currAmpm;
   int _minuteDivider;
-  List<int> _dayRange, _12HourRange, _24HourRange, _minuteRange, _secondRange, _ampmRange;
+  List<int> _dayRange,
+      _12HourRange,
+      _24HourRange,
+      _minuteRange,
+      _secondRange,
+      _ampmRange;
   FixedExtentScrollController _dayScrollCtrl,
       _12HourScrollCtrl,
       _24HourScrollCtrl,
@@ -65,8 +73,8 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
 
   final DateTime _baselineDate = DateTime(1900, 1, 1);
 
-  _DateTimePickerWidgetState(
-      DateTime minTime, DateTime maxTime, DateTime initTime, int minuteDivider) {
+  _DateTimePickerWidgetState(DateTime minTime, DateTime maxTime,
+      DateTime initTime, int minuteDivider) {
     // check minTime value
     if (minTime == null) {
       minTime = DateTime.parse(DATE_PICKER_MIN_DATETIME);
@@ -121,16 +129,17 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     // create scroll controller
     _dayScrollCtrl =
         FixedExtentScrollController(initialItem: _currDay - _dayRange.first);
-    _24HourScrollCtrl =
-        FixedExtentScrollController(initialItem: _currHour - _24HourRange.first);
-    _12HourScrollCtrl =
-        FixedExtentScrollController(initialItem: (_currHour % 12 == 0 ? 12 : _currHour % 12) - _12HourRange.first);
+    _24HourScrollCtrl = FixedExtentScrollController(
+        initialItem: _currHour - _24HourRange.first);
+    _12HourScrollCtrl = FixedExtentScrollController(
+        initialItem:
+            (_currHour % 12 == 0 ? 12 : _currHour % 12) - _12HourRange.first);
     _minuteScrollCtrl = FixedExtentScrollController(
         initialItem: (_currMinute - _minuteRange.first) ~/ _minuteDivider);
     _secondScrollCtrl = FixedExtentScrollController(
         initialItem: _currSecond - _secondRange.first);
-    _ampmScrollCtrl = FixedExtentScrollController(
-        initialItem: (_currHour / 12).floor());
+    _ampmScrollCtrl =
+        FixedExtentScrollController(initialItem: (_currHour / 12).floor());
 
     _scrollCtrlMap = {
       'H': _24HourScrollCtrl,
@@ -139,7 +148,13 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
       's': _secondScrollCtrl,
       'a': _ampmScrollCtrl,
     };
-    _valueRangeMap = {'H': _24HourRange, 'h': _12HourRange, 'm': _minuteRange, 's': _secondRange, 'a': _ampmRange};
+    _valueRangeMap = {
+      'H': _24HourRange,
+      'h': _12HourRange,
+      'm': _minuteRange,
+      's': _secondRange,
+      'a': _ampmRange
+    };
   }
 
   @override
@@ -285,17 +300,18 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
         itemExtent: widget.pickerTheme.itemHeight,
         onSelectedItemChanged: valueChanged,
         childCount: format.contains('m')
-          ? _calculateMinuteChildCount(valueRange, minuteDivider)
-          : valueRange.last - valueRange.first + 1,
-        itemBuilder: itemBuilder ?? (context, index) {
-          int value = valueRange.first + index;
+            ? _calculateMinuteChildCount(valueRange, minuteDivider)
+            : valueRange.last - valueRange.first + 1,
+        itemBuilder: itemBuilder ??
+            (context, index) {
+              int value = valueRange.first + index;
 
-          if (format.contains('m')) {
-            value = minuteDivider * index;
-          }
+              if (format.contains('m')) {
+                value = minuteDivider * index;
+              }
 
-          return _renderDatePickerItemComponent(value, format);
-        },
+              return _renderDatePickerItemComponent(value, format);
+            },
       ),
     );
     return Expanded(
@@ -409,14 +425,14 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     List<int> hourRange24 = _calc24HourRange();
     if (widget.dateFormat.contains('h')) {
       hourRangeChanged = _12HourRange.first != hourRange12.first ||
-        _12HourRange.last != hourRange12.last;
+          _12HourRange.last != hourRange12.last;
       if (hourRangeChanged) {
         // selected day changed
         _currHour = max(min(_currHour, hourRange12.last), hourRange12.first);
       }
     } else {
       hourRangeChanged = _24HourRange.first != hourRange24.first ||
-        _24HourRange.last != hourRange24.last;
+          _24HourRange.last != hourRange24.last;
       if (hourRangeChanged) {
         // selected day changed
         _currHour = max(min(_currHour, hourRange24.last), hourRange24.first);
@@ -441,7 +457,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
 
     List<int> ampmRange = _calcAmpmRange();
     bool ampmRangeChanged = _ampmRange.first != ampmRange.first ||
-      _ampmRange.last != ampmRange.last;
+        _ampmRange.last != ampmRange.last;
     if (ampmRangeChanged) {
       // ampm range changed, need limit the value of selected ampm
       _currAmpm = max(min(_currAmpm, ampmRange.last), ampmRange.first);
@@ -478,7 +494,8 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     if (minuteRangeChanged) {
       // CupertinoPicker refresh data not working (https://github.com/flutter/flutter/issues/22999)
       int currMinute = _currMinute;
-      _minuteScrollCtrl.jumpToItem((minuteRange.last - minuteRange.first) ~/ _minuteDivider);
+      _minuteScrollCtrl
+          .jumpToItem((minuteRange.last - minuteRange.first) ~/ _minuteDivider);
       if (currMinute < minuteRange.last) {
         _minuteScrollCtrl.jumpToItem(currMinute - minuteRange.first);
       }
@@ -591,10 +608,10 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
 
   List<int> _calcAmpmRange({currHour, currMinute}) {
     if (_24HourRange.first < 12 && _24HourRange.last > 12) {
-      return [ 0, 1 ];
+      return [0, 1];
     } else if (_24HourRange.first < 12) {
-      return [ 0 ];
+      return [0];
     }
-    return [ 1 ];
+    return [1];
   }
 }

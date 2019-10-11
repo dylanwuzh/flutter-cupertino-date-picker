@@ -103,16 +103,17 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     this._currAmpm = _currHour < 12 ? 0 : 1;
 
     // create scroll controller
-    _24HourScrollCtrl =
-        FixedExtentScrollController(initialItem: _currHour - _24HourRange.first);
-    _12HourScrollCtrl =
-      FixedExtentScrollController(initialItem: (_currHour % 12 == 0 ? 12 : _currHour % 12) - _12HourRange.first);
+    _24HourScrollCtrl = FixedExtentScrollController(
+        initialItem: _currHour - _24HourRange.first);
+    _12HourScrollCtrl = FixedExtentScrollController(
+        initialItem:
+            (_currHour % 12 == 0 ? 12 : _currHour % 12) - _12HourRange.first);
     _minuteScrollCtrl = FixedExtentScrollController(
         initialItem: (_currMinute - _minuteRange.first) ~/ _minuteDivider);
     _secondScrollCtrl = FixedExtentScrollController(
         initialItem: _currSecond - _secondRange.first);
-    _ampmScrollCtrl = FixedExtentScrollController(
-      initialItem: (_currHour / 12).floor());
+    _ampmScrollCtrl =
+        FixedExtentScrollController(initialItem: (_currHour / 12).floor());
 
     _scrollCtrlMap = {
       'H': _24HourScrollCtrl,
@@ -121,7 +122,13 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
       's': _secondScrollCtrl,
       'a': _ampmScrollCtrl,
     };
-    _valueRangeMap = {'H': _24HourRange, 'h': _12HourRange, 'm': _minuteRange, 's': _secondRange, 'a': _ampmRange};
+    _valueRangeMap = {
+      'H': _24HourRange,
+      'h': _12HourRange,
+      'm': _minuteRange,
+      's': _secondRange,
+      'a': _ampmRange
+    };
   }
 
   @override
@@ -232,8 +239,8 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     int minuteDivider,
   }) {
     int count = format.contains('m')
-      ? _calculateMinuteChildCount(valueRange, minuteDivider)
-      : valueRange.last - valueRange.first + 1;
+        ? _calculateMinuteChildCount(valueRange, minuteDivider)
+        : valueRange.last - valueRange.first + 1;
     return Expanded(
       flex: 1,
       child: Container(
@@ -463,11 +470,10 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
 
   List<int> _calcAmpmRange({currHour, currMinute}) {
     if (_24HourRange.first < 12 && _24HourRange.last > 12) {
-      return [ 0, 1 ];
+      return [0, 1];
     } else if (_24HourRange.first < 12) {
-      return [ 0 ];
+      return [0];
     }
-    return [ 1 ];
+    return [1];
   }
-
 }

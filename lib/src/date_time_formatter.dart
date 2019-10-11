@@ -201,13 +201,13 @@ class DateTimeFormatter {
 
   /// format hour text
   static String _format24Hour(
-    int value, String format, DateTimePickerLocale locale) {
+      int value, String format, DateTimePickerLocale locale) {
     return _formatNumber(value, format, 'H');
   }
 
   /// format hour text
   static String _format12Hour(
-    int value, String format, DateTimePickerLocale locale) {
+      int value, String format, DateTimePickerLocale locale) {
     return _formatNumber(value % 12 == 0 ? 12 : value % 12, format, 'h');
   }
 
@@ -219,13 +219,13 @@ class DateTimeFormatter {
 
   /// format second text
   static String _formatSecond(
-    int value, String format, DateTimePickerLocale locale) {
+      int value, String format, DateTimePickerLocale locale) {
     return _formatNumber(value, format, 's');
   }
 
   /// format ampm text
   static String _formatAmpm(
-    int value, String format, DateTimePickerLocale locale) {
+      int value, String format, DateTimePickerLocale locale) {
     if (value == 0) {
       return 'AM';
     }
