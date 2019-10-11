@@ -308,9 +308,9 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     }
   }
 
-  /// change the selection of hour picker
+  /// change the selection of minute picker
   void _changeMinuteSelection(int index) {
-    // TODO: this looks like it would break date ranges but not taking into account _minuteRange.first
+    // TODO: this looks like it would break date ranges by not taking into account _minuteRange.first
     int value = index * _minuteDivider;
     if (_currMinute != value) {
       _currMinute = value;

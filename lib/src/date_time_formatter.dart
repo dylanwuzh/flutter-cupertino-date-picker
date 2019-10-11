@@ -24,14 +24,14 @@ class DateTimeFormatter {
     return '';
   }
 
-  /// Check if the date format is for day(contain y、M、d、E) or not.
+  /// Check if the date format is for day(contain y, M, d, E) or not.
   static bool isDayFormat(String format) {
     return format.contains(RegExp(r'[yMdE]'));
   }
 
-  /// Check if the date format is for time(contain H、m、s) or not.
+  /// Check if the date format is for time(contain H, h, m, s, a) or not.
   static bool isTimeFormat(String format) {
-    return format.contains(RegExp(r'[Hms]'));
+    return format.contains(RegExp(r'[Hhmsa]'));
   }
 
   /// Split date format to array.

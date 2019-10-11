@@ -273,7 +273,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
           }
         },
       );
-    });
+    }).toList();
     pickers.addAll(timePickers);
 
     return Row(
@@ -388,7 +388,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
 
   /// change the selection of month picker
   void _changeMinuteSelection(int index) {
-    // TODO: copied from time_picker_widget - this looks like it would break date ranges but not taking into account _minuteRange.first
+    // TODO: copied from time_picker_widget - this looks like it would break date ranges by not taking into account _minuteRange.first
     int value = index * _minuteDivider;
 //    int value = _minuteRange.first + index;
     if (_currMinute != value) {
