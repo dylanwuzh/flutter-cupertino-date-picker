@@ -87,7 +87,7 @@ Map<int,Map<int,List<int>>> _excludeDates;
     // create scroll controller
     _yearScrollCtrl = FixedExtentScrollController(initialItem: _currYear - _yearRange.first);
     _monthScrollCtrl = FixedExtentScrollController(initialItem: _currMonth - _monthRange.first);
-    _dayScrollCtrl = FixedExtentScrollController(initialItem: _currDay - _dayRange.first);
+    _dayScrollCtrl = FixedExtentScrollController(initialItem: _dayRange.length - _dayRange.first);
 
     _scrollCtrlMap = {'y': _yearScrollCtrl, 'M': _monthScrollCtrl, 'd': _dayScrollCtrl};
     _valueRangeMap = {'y': _yearRange, 'M': _monthRange, 'd': _dayRange};
