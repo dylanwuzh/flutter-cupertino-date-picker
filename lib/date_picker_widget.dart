@@ -87,7 +87,7 @@ Map<int,Map<int,List<int>>> _excludeDates;
     // create scroll controller
     _yearScrollCtrl = FixedExtentScrollController(initialItem: _currYear - _yearRange.first);
     _monthScrollCtrl = FixedExtentScrollController(initialItem: _currMonth - _monthRange.first);
-    _dayScrollCtrl = FixedExtentScrollController(initialItem: _dayRange.length - _dayRange.first);
+    _dayScrollCtrl = FixedExtentScrollController(initialItem: _dayRange.indexOf(this._currDay));
 
     _scrollCtrlMap = {'y': _yearScrollCtrl, 'M': _monthScrollCtrl, 'd': _dayScrollCtrl};
     _valueRangeMap = {'y': _yearRange, 'M': _monthRange, 'd': _dayRange};
@@ -298,7 +298,7 @@ Map<int,Map<int,List<int>>> _excludeDates;
     if (dayRangeChanged) {
       // CupertinoPicker refresh data not working (https://github.com/flutter/flutter/issues/22999)
       int currDay = _currDay;
-      _dayScrollCtrl.jumpToItem(dayRange.last - dayRange.first);
+      _dayScrollCtrl.jumpToItem(dayRange.indexOf(currDay));
       if (currDay < dayRange.last) {
         _dayScrollCtrl.jumpToItem(currDay - dayRange.first);
       }
