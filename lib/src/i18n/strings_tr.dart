@@ -1,8 +1,8 @@
 part of 'date_picker_i18n.dart';
 
 /// Turkish (TR)
-class _StringsEnUs extends _StringsI18n {
-  const _StringsEnUs();
+class _StringsTr extends _StringsI18n {
+  const _StringsTr();
 
   @override
   String getCancelText() {
