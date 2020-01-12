@@ -57,4 +57,10 @@ class _StringsFr extends _StringsI18n {
       "Dim.",
     ];
   }
+
+  @override
+  List<String> getMonthsShort() {
+    // TODO: implement getMonthsShort
+    return null;
+  }
 }

@@ -57,4 +57,10 @@ class _StringsKo extends _StringsI18n {
       "일",
     ];
   }
+
+  @override
+  List<String> getMonthsShort() {
+    // TODO: implement getMonthsShort
+    return null;
+  }
 }
