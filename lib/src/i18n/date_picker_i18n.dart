@@ -27,6 +27,9 @@ abstract class _StringsI18n {
   /// Get the name of month
   List<String> getMonths();
 
+  /// Get the short name of month
+  List<String> getMonthsShort();
+
   /// Get the full name of week
   List<String> getWeeksFull();
 
