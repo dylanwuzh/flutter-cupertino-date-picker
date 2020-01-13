@@ -33,6 +33,24 @@ class _StringsEnUs extends _StringsI18n {
   }
 
   @override
+  List<String> getMonthsShort() {
+    return [
+      "Jan.",
+      "Feb.",
+      "Mar.",
+      "Apr.",
+      "May",
+      "Jun",
+      "Jul.",
+      "Aug.",
+      "Sep.",
+      "Oct.",
+      "Nov.",
+      "Dec.",
+    ];
+  }
+
+  @override
   List<String> getWeeksFull() {
     return [
       "Monday",
@@ -56,11 +74,5 @@ class _StringsEnUs extends _StringsI18n {
       "Sat",
       "Sun",
     ];
-  }
-
-  @override
-  List<String> getMonthsShort() {
-    // TODO: implement getMonthsShort
-    return null;
   }
 }
