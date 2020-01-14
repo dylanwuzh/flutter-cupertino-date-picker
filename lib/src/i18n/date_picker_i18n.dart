@@ -3,6 +3,7 @@ import 'dart:math';
 part 'strings_en_us.dart';
 part 'strings_zh_cn.dart';
 part 'strings_pt_br.dart';
+part 'strings_ar_eg.dart';
 part 'strings_es.dart';
 part 'strings_ro.dart';
 part 'strings_bn.dart';
@@ -55,6 +56,9 @@ enum DateTimePickerLocale {
   /// Arabic (ar)
   ar,
 
+  /// Arabic (ar) Egypt
+  ar_eg,
+
   /// Japanese (JP)
   jp,
 
@@ -82,6 +86,7 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
   DateTimePickerLocale.en_us: const _StringsEnUs(),
   DateTimePickerLocale.zh_cn: const _StringsZhCn(),
   DateTimePickerLocale.pt_br: const _StringsPtBr(),
+  DateTimePickerLocale.ar_eg: const _StringsArEg(),
   DateTimePickerLocale.es: const _StringsEs(),
   DateTimePickerLocale.ro: const _StringsRo(),
   DateTimePickerLocale.bn: const _StringsBn(),
