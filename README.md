@@ -159,6 +159,7 @@ Support:
 - en_us: English (EN) United States ***[Default locale]***
 - zh_cn: Chinese (ZH) Simplified
 - pt_br: Portuguese (PT) Brazil
+- ar_eg: Arabic (ar) Egypt
 - es: Spanish (ES)
 - ro: Romanian (RO)
 - bn: Bengali (BN)
