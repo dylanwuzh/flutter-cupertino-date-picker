@@ -19,7 +19,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   DateTimePickerLocale _locale = DateTimePickerLocale.en_us;
   List<DateTimePickerLocale> _locales = DateTimePickerLocale.values;
 
-  String _format = 'yyyy-MMMM-dd';
+  String _format = 'MMM-dd';
   TextEditingController _formatCtrl = TextEditingController();
 
   DateTime _dateTime;
@@ -185,6 +185,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   void _showDatePicker() {
     DatePicker.showDatePicker(
       context,
+      onMonthChangeStartWithFirstDate: true,
       pickerTheme: DateTimePickerTheme(
         showTitle: _showTitle,
         confirm: Text('custom Done', style: TextStyle(color: Colors.red)),
