@@ -19,7 +19,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   DateTimePickerLocale _locale = DateTimePickerLocale.en_us;
   List<DateTimePickerLocale> _locales = DateTimePickerLocale.values;
 
-  String _format = 'MMM-dd';
+  String _format = 'yyyy-MMMM-dd';
   TextEditingController _formatCtrl = TextEditingController();
 
   DateTime _dateTime;
