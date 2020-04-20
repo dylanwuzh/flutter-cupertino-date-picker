@@ -11,7 +11,7 @@ class _StringsSl extends _StringsI18n {
 
   @override
   String getDoneText() {
-    return 'Done';
+    return 'Potrdi';
   }
 
   @override
