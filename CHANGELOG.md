@@ -1,3 +1,7 @@
+## 1.0.13
+
+- Compatible with Flutter `dev` channel.
+
 ## 1.0.12
 
 - Fixed bug: when `onClose` is null, catch exception `Unhandled Exception: NoSuchMethodError: The method 'call' was called on null. Receiver: null`. Issues: [#40](https://github.com/wuzhendev/flutter-cupertino-date-picker/issues/40) and [#43](https://github.com/wuzhendev/flutter-cupertino-date-picker/issues/43).
