@@ -24,14 +24,14 @@ class DateTimeFormatter {
     return '';
   }
 
-  /// Check if the date format is for day(contain y、M、d、E) or not.
+  /// Check if the date format is for day(contain y, M, d, E) or not.
   static bool isDayFormat(String format) {
     return format.contains(RegExp(r'[yMdE]'));
   }
 
-  /// Check if the date format is for time(contain H、m、s) or not.
+  /// Check if the date format is for time(contain H, h, m, s, a) or not.
   static bool isTimeFormat(String format) {
-    return format.contains(RegExp(r'[Hms]'));
+    return format.contains(RegExp(r'[Hhmsa]'));
   }
 
   /// Split date format to array.
@@ -97,8 +97,12 @@ class DateTimeFormatter {
       result = _formatWeek(value, result, locale);
     }
     // format hour text
+    if (format.contains('h')) {
+      result = _format12Hour(value, result, locale);
+    }
+    // format hour text
     if (format.contains('H')) {
-      result = _formatHour(value, result, locale);
+      result = _format24Hour(value, result, locale);
     }
     // format minute text
     if (format.contains('m')) {
@@ -107,6 +111,10 @@ class DateTimeFormatter {
     // format second text
     if (format.contains('s')) {
       result = _formatSecond(value, result, locale);
+    }
+    // format second text
+    if (format.contains('a')) {
+      result = _formatAmpm(value, result, locale);
     }
     if (result == format) {
       return value.toString();
@@ -192,9 +200,15 @@ class DateTimeFormatter {
   }
 
   /// format hour text
-  static String _formatHour(
+  static String _format24Hour(
       int value, String format, DateTimePickerLocale locale) {
     return _formatNumber(value, format, 'H');
+  }
+
+  /// format hour text
+  static String _format12Hour(
+      int value, String format, DateTimePickerLocale locale) {
+    return _formatNumber(value % 12 == 0 ? 12 : value % 12, format, 'h');
   }
 
   /// format minute text
@@ -207,6 +221,15 @@ class DateTimeFormatter {
   static String _formatSecond(
       int value, String format, DateTimePickerLocale locale) {
     return _formatNumber(value, format, 's');
+  }
+
+  /// format ampm text
+  static String _formatAmpm(
+      int value, String format, DateTimePickerLocale locale) {
+    if (value == 0) {
+      return 'AM';
+    }
+    return 'PM';
   }
 
   /// format number, if the digit count is 2, will pad zero on the left
