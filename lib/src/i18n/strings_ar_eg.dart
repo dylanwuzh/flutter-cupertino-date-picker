@@ -47,7 +47,7 @@ class _StringsArEg extends _StringsI18n {
 
   @override
   List<String> getWeeksShort() {
-        return [
+    return [
       "ن",
       "ث",
       "ر",
