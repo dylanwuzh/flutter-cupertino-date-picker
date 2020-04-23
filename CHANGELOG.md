@@ -1,3 +1,7 @@
+## 1.0.13+1
+
+- Fixed bug: `DateTimePickerMode.datetime` mode display error. Issues: [#91](https://github.com/dylanwuzh/flutter-cupertino-date-picker/issues/91)
+
 ## 1.0.13
 
 - Compatible with Flutter `dev` channel.
