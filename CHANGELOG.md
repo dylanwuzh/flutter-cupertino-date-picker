@@ -1,3 +1,7 @@
+## 1.0.17
+
+- Added language support: Vietnamese (DateTimePickerLocale.vi).
+
 ## 1.0.16
 
 - Added language support: French (DateTimePickerLocale.fr).
