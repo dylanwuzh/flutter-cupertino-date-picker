@@ -1,3 +1,7 @@
+## 1.0.16
+
+- Added language support: French (DateTimePickerLocale.fr).
+
 ## 1.0.15
 
 - Added language support: Bahasa Indonesia (DateTimePickerLocale.in_id).
