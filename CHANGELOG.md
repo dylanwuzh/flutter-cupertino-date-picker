@@ -1,6 +1,10 @@
+## 1.0.15
+
+- Added language support: Bahasa Indonesia (DateTimePickerLocale.in_id).
+
 ## 1.0.14
 
-- Added Arabic Egypt language support(DateTimePickerLocale.ar_eg).
+- Added language support: Arabic Egypt (DateTimePickerLocale.ar_eg).
 
 ## 1.0.13+1
 
@@ -24,7 +28,7 @@
 
 ## 1.0.9
 
-- Added Hungarian language support.
+- Added language support: Hungarian (DateTimePickerLocale.hu).
 
 ## 1.0.8
 
@@ -32,31 +36,31 @@
 
 ## 1.0.7
 
-- Added Italian language support.
+- Added language support: Italian (DateTimePickerLocale.it).
 
 ## 1.0.6
 
-- Added Korea language support.
+- Added language support: Korea (DateTimePickerLocale.ko).
 
 ## 1.0.5
 
-- Added German language support.
+- Added language support: German (DateTimePickerLocale.de).
 
 ## 1.0.4
 
-- Added Russian language support.
+- Added language support: Russian (DateTimePickerLocale.ru).
 
 ## 1.0.3
 
-- Added Japanese language support.
+- Added language support: Japanese (DateTimePickerLocale.jp).
 
 ## 1.0.2
 
-- Added Arabic language support.
+- Added language support: Arabic (DateTimePickerLocale.ar).
 
 ## 1.0.1
 
-- Added Bengali language support.
+- Added language support: Bengali (DateTimePickerLocale.bn).
 
 ## 1.0.0
 
@@ -105,7 +109,7 @@
 
 ## 0.0.7
 
-- Support locale Portuguese Brazil (pt-br)
+- Support language support: Portuguese Brazil (DateTimePickerLocale.pt_br).
 
 ## 0.0.6
 
