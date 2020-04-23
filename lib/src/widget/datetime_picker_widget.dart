@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-import '../date_time_formatter.dart';
 import '../date_picker.dart';
-import '../date_picker_theme.dart';
 import '../date_picker_constants.dart';
+import '../date_picker_theme.dart';
+import '../date_time_formatter.dart';
 import '../i18n/date_picker_i18n.dart';
 import 'date_picker_title_widget.dart';
 
@@ -43,7 +43,10 @@ class DateTimePickerWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _DateTimePickerWidgetState(
-      this.minDateTime, this.maxDateTime, this.initDateTime, this.minuteDivider);
+      this.minDateTime,
+      this.maxDateTime,
+      this.initDateTime,
+      this.minuteDivider);
 }
 
 class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
@@ -63,8 +66,8 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
 
   final DateTime _baselineDate = DateTime(1900, 1, 1);
 
-  _DateTimePickerWidgetState(
-      DateTime minTime, DateTime maxTime, DateTime initTime, int minuteDivider) {
+  _DateTimePickerWidgetState(DateTime minTime, DateTime maxTime,
+      DateTime initTime, int minuteDivider) {
     // check minTime value
     if (minTime == null) {
       minTime = DateTime.parse(DATE_PICKER_MIN_DATETIME);
@@ -265,6 +268,18 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     int flex,
     IndexedWidgetBuilder itemBuilder,
   }) {
+    IndexedWidgetBuilder builder = itemBuilder != null
+        ? itemBuilder
+        : (context, index) {
+            int value = valueRange.first + index;
+
+            if (format.contains('m')) {
+              value = minuteDivider * index;
+            }
+
+            return _renderDatePickerItemComponent(value, format);
+          };
+
     Widget columnWidget = Container(
       padding: EdgeInsets.all(8.0),
       width: double.infinity,
@@ -276,17 +291,9 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
         itemExtent: widget.pickerTheme.itemHeight,
         onSelectedItemChanged: valueChanged,
         childCount: format.contains('m')
-          ? _calculateMinuteChildCount(valueRange, minuteDivider)
-          : valueRange.last - valueRange.first + 1,
-        itemBuilder: (context, index) {
-          int value = valueRange.first + index;
-
-          if (format.contains('m')) {
-            value = minuteDivider * index;
-          }
-
-          return _renderDatePickerItemComponent(value, format);
-        },
+            ? _calculateMinuteChildCount(valueRange, minuteDivider)
+            : valueRange.last - valueRange.first + 1,
+        itemBuilder: builder,
       ),
     );
     return Expanded(
@@ -297,7 +304,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
 
   _calculateMinuteChildCount(List<int> valueRange, int divider) {
     if (divider == 0) {
-      print("Cant devide by 0");
+      debugPrint("Cant devide by 0");
       return (valueRange.last - valueRange.first + 1);
     }
 
@@ -425,7 +432,8 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     if (minuteRangeChanged) {
       // CupertinoPicker refresh data not working (https://github.com/flutter/flutter/issues/22999)
       int currMinute = _currMinute;
-      _minuteScrollCtrl.jumpToItem((minuteRange.last - minuteRange.first) ~/ _minuteDivider);
+      _minuteScrollCtrl
+          .jumpToItem((minuteRange.last - minuteRange.first) ~/ _minuteDivider);
       if (currMinute < minuteRange.last) {
         _minuteScrollCtrl.jumpToItem(currMinute - minuteRange.first);
       }
