@@ -3,6 +3,8 @@ import 'dart:math';
 part 'strings_en_us.dart';
 part 'strings_zh_cn.dart';
 part 'strings_pt_br.dart';
+part 'strings_in_id.dart';
+part 'strings_ar_eg.dart';
 part 'strings_es.dart';
 part 'strings_ro.dart';
 part 'strings_bn.dart';
@@ -14,6 +16,8 @@ part 'strings_ko.dart';
 part 'strings_it.dart';
 part 'strings_hu.dart';
 part 'strings_tr.dart';
+part 'strings_vi.dart';
+part 'strings_fr.dart';
 
 abstract class _StringsI18n {
   const _StringsI18n();
@@ -44,11 +48,17 @@ enum DateTimePickerLocale {
   /// Portuguese (PT) Brazil
   pt_br,
 
+  /// Bahasa (ID) Indonesia
+  in_id,
+
   /// Spanish (ES)
   es,
   
   /// Turkish (TR)
   tr,
+
+  /// French (FR)
+  fr,
 
   /// Romanian (RO)
   ro,
@@ -58,6 +68,9 @@ enum DateTimePickerLocale {
 
   /// Arabic (ar)
   ar,
+
+  /// Arabic (ar) Egypt
+  ar_eg,
 
   /// Japanese (JP)
   jp,
@@ -76,6 +89,9 @@ enum DateTimePickerLocale {
 
   /// Hungarian (HU)
   hu,
+
+  /// Vietnamese (VN)
+  vi,
 }
 
 /// Default value of date locale
@@ -86,7 +102,10 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
   DateTimePickerLocale.en_us: const _StringsEnUs(),
   DateTimePickerLocale.zh_cn: const _StringsZhCn(),
   DateTimePickerLocale.pt_br: const _StringsPtBr(),
+  DateTimePickerLocale.in_id: const _StringsInId(),
+  DateTimePickerLocale.ar_eg: const _StringsArEg(),
   DateTimePickerLocale.es: const _StringsEs(),
+  DateTimePickerLocale.fr: const _StringsFr(),
   DateTimePickerLocale.ro: const _StringsRo(),
   DateTimePickerLocale.bn: const _StringsBn(),
   DateTimePickerLocale.ar: const _StringsAr(),
@@ -97,6 +116,7 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
   DateTimePickerLocale.it: const _StringsIt(),
   DateTimePickerLocale.hu: const _StringsHu(),
   DateTimePickerLocale.tr: const _StringsTr(),
+  DateTimePickerLocale.vi: const _StringsVn(),
 };
 
 class DatePickerI18n {
