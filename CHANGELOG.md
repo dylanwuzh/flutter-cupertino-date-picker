@@ -1,3 +1,7 @@
+## 1.0.19+1
+
+- Update LICENSE file.
+
 ## 1.0.19
 
 - Added language support: Serbia Cyrillic(DateTimePickerLocale.sr_cyrl) and Latin(DateTimePickerLocale.sr_latn).
