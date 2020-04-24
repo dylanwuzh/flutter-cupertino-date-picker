@@ -1,3 +1,7 @@
+## 1.0.19
+
+- Added language support: Serbia Cyrillic(DateTimePickerLocale.sr_cyrl) and Latin(DateTimePickerLocale.sr_latn).
+
 ## 1.0.18
 
 - Added language support: Turkish (DateTimePickerLocale.tr).

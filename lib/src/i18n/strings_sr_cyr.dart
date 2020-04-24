@@ -1,8 +1,8 @@
 part of 'date_picker_i18n.dart';
 
-/// English (EN) United States
-class _StringsEnUs extends _StringsI18n {
-  const _StringsEnUs();
+/// Serbia (sr) Cyrillic
+class _StringsSrCyrillic extends _StringsI18n {
+  const _StringsSrCyrillic();
 
   @override
   String getCancelText() {
