@@ -1,8 +1,8 @@
 part of 'date_picker_i18n.dart';
 
-/// Bahasa (IN) Indonesia
-class _StringsInId extends _StringsI18n {
-  const _StringsInId();
+/// Indonesia (ID)
+class _StringsId extends _StringsI18n {
+  const _StringsId();
 
   @override
   String getCancelText() {
