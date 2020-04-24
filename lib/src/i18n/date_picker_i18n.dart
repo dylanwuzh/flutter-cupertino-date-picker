@@ -53,7 +53,7 @@ enum DateTimePickerLocale {
 
   /// Spanish (ES)
   es,
-  
+
   /// Turkish (TR)
   tr,
 

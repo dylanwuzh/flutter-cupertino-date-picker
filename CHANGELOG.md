@@ -1,3 +1,7 @@
+## 1.0.18
+
+- Added language support: Turkish (DateTimePickerLocale.tr).
+
 ## 1.0.17
 
 - Added language support: Vietnamese (DateTimePickerLocale.vi).
