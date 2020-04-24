@@ -33,6 +33,9 @@ abstract class _StringsI18n {
   /// Get the name of month
   List<String> getMonths();
 
+  /// Get the short name of month
+  List<String> getMonthsShort();
+
   /// Get the full name of week
   List<String> getWeeksFull();
 
@@ -147,14 +150,24 @@ class DatePickerI18n {
   }
 
   /// Get locale month array
-  static List<String> getLocaleMonths(DateTimePickerLocale locale) {
+  static List<String> getLocaleMonths(DateTimePickerLocale locale,
+      [bool isFull = true]) {
     _StringsI18n i18n = datePickerI18n[locale] ??
         datePickerI18n[DATETIME_PICKER_LOCALE_DEFAULT];
-    List<String> months = i18n.getMonths();
+
+    if (isFull) {
+      List<String> months = i18n.getMonths();
+      if (months != null && months.isNotEmpty) {
+        return months;
+      }
+      return datePickerI18n[DATETIME_PICKER_LOCALE_DEFAULT].getMonths();
+    }
+
+    List<String> months = i18n.getMonthsShort();
     if (months != null && months.isNotEmpty) {
       return months;
     }
-    return datePickerI18n[DATETIME_PICKER_LOCALE_DEFAULT].getMonths();
+    return datePickerI18n[DATETIME_PICKER_LOCALE_DEFAULT].getMonthsShort();
   }
 
   /// Get locale week array

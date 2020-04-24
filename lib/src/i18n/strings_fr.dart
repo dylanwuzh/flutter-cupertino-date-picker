@@ -33,6 +33,24 @@ class _StringsFr extends _StringsI18n {
   }
 
   @override
+  List<String> getMonthsShort() {
+    return [
+      "Janv.",
+      "Févr.",
+      "Mars",
+      "Avr.",
+      "Mai",
+      "Juin",
+      "Juil.",
+      "Août",
+      "Sept.",
+      "Oct.",
+      "Nov.",
+      "Déc."
+    ];
+  }
+
+  @override
   List<String> getWeeksFull() {
     return [
       "Lundi",

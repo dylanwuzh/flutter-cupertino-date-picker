@@ -57,4 +57,10 @@ class _StringsIt extends _StringsI18n {
       "Do",
     ];
   }
+
+  @override
+  List<String> getMonthsShort() {
+    // TODO: implement getMonthsShort
+    return null;
+  }
 }
