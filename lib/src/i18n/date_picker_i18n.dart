@@ -3,7 +3,7 @@ import 'dart:math';
 part 'strings_en_us.dart';
 part 'strings_zh_cn.dart';
 part 'strings_pt_br.dart';
-part 'strings_in_id.dart';
+part 'strings_id.dart';
 part 'strings_ar_eg.dart';
 part 'strings_es.dart';
 part 'strings_ro.dart';
@@ -45,8 +45,8 @@ enum DateTimePickerLocale {
   /// Portuguese (PT) Brazil
   pt_br,
 
-  /// Bahasa (ID) Indonesia
-  in_id,
+  /// Indonesia (ID)
+  id,
 
   /// Spanish (ES)
   es,
@@ -90,7 +90,7 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
   DateTimePickerLocale.en_us: const _StringsEnUs(),
   DateTimePickerLocale.zh_cn: const _StringsZhCn(),
   DateTimePickerLocale.pt_br: const _StringsPtBr(),
-  DateTimePickerLocale.in_id: const _StringsInId(),
+  DateTimePickerLocale.id: const _StringsId(),
   DateTimePickerLocale.ar_eg: const _StringsArEg(),
   DateTimePickerLocale.es: const _StringsEs(),
   DateTimePickerLocale.ro: const _StringsRo(),

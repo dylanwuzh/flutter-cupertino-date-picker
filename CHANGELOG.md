@@ -1,3 +1,7 @@
+## 1.0.15+1
+
+- Modified Indonesia's subtag: DateTimePickerLocale.in_id -> DateTimePickerLocale.id
+
 ## 1.0.15
 
 - Added language support: Bahasa Indonesia (DateTimePickerLocale.in_id).
