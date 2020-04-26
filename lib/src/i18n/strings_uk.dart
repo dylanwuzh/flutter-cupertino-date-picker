@@ -1,8 +1,8 @@
 part of 'date_picker_i18n.dart';
 
-/// Ukraine (UA)
-class _StringsUa extends _StringsI18n {
-  const _StringsUa();
+/// Ukraine (UK)
+class _StringsUk extends _StringsI18n {
+  const _StringsUk();
 
   @override
   String getCancelText() {
@@ -30,6 +30,11 @@ class _StringsUa extends _StringsI18n {
       "Листопад",
       "Грудень",
     ];
+  }
+
+  @override
+  List<String> getMonthsShort() {
+    return null;
   }
 
   @override

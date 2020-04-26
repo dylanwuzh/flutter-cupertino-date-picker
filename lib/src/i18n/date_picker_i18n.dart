@@ -15,7 +15,7 @@ part 'strings_de.dart';
 part 'strings_ko.dart';
 part 'strings_it.dart';
 part 'strings_hu.dart';
-part 'strings_ua.dart';
+part 'strings_uk.dart';
 part 'strings_tr.dart';
 part 'strings_vi.dart';
 part 'strings_fr.dart';
@@ -95,10 +95,10 @@ enum DateTimePickerLocale {
 
   /// Hungarian (HU)
   hu,
-  
+
   /// Ukrainian (UK)
   uk,
-  
+
   /// Vietnamese (VN)
   vi,
 
@@ -130,7 +130,7 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
   DateTimePickerLocale.ko: const _StringsKo(),
   DateTimePickerLocale.it: const _StringsIt(),
   DateTimePickerLocale.hu: const _StringsHu(),
-  DateTimePickerLocale.uk: const _StringsUa(),
+  DateTimePickerLocale.uk: const _StringsUk(),
   DateTimePickerLocale.tr: const _StringsTr(),
   DateTimePickerLocale.vi: const _StringsVn(),
   DateTimePickerLocale.sr_cyrl: const _StringsSrCyrillic(),

@@ -14,7 +14,7 @@ Flutter 的日期选择器控件，iOS 样式。
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.19+1
+  flutter_cupertino_date_picker: ^1.0.20
 ```
 
 #### 2\. 获取包
@@ -174,6 +174,7 @@ DateTimePickerWidget({
 - sr_cyrl: 塞尔维亚(西里尔)
 - sr_latn: 塞尔维亚(拉丁文)
 - tr: 土耳其语
+- uk: 乌克兰语
 - vi: 越南语
 - zh_cn: 简体中文
 
@@ -202,7 +203,13 @@ class _StringsEnUs extends _StringsI18n {
 
   @override
   List<String> getMonths() {
-    // TODO 返回月份列表 [1月, 2月 ... 12月]
+    // TODO 返回月份的全称 [1月, 2月 ... 12月]
+    return null;
+  }
+
+  @override
+  List<String> getMonthsShort() {
+    // TODO 返回月份的简称 [Jan, Feb ... Dec]，返回null默认对全程进行截取，最多截取3位
     return null;
   }
 

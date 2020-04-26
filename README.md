@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.19+1
+  flutter_cupertino_date_picker: ^1.0.20
 ```
 
 #### 2\. Install
@@ -174,6 +174,7 @@ Support:
 - sr_cyrl: Serbia (sr) Cyrillic
 - sr_latn: Serbia (sr) Latin
 - tr: Turkish (TR)
+- uk: Ukraine (UK)
 - vi: Vietnamese (VI) Vietnam
 - zh_cn: Chinese (ZH) Simplified
 
@@ -202,7 +203,13 @@ class _StringsEnUs extends _StringsI18n {
 
   @override
   List<String> getMonths() {
-    // TODO return the array of month [January, February ... December]
+    // TODO return the array of month's full name [January, February ... December]
+    return null;
+  }
+
+  @override
+  List<String> getMonthsShort() {
+    // TODO return the array of month's short name [Jan, Feb ... Dec]. If return null, will substring the full name (max length is 3)
     return null;
   }
 

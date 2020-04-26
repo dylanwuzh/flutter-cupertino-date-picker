@@ -1,3 +1,7 @@
+## 1.0.20
+
+- Added language support: Ukraine (UK).
+
 ## 1.0.19+1
 
 - Update LICENSE file.

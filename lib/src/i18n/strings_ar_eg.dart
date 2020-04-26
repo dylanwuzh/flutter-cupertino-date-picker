@@ -36,7 +36,7 @@ class _StringsArEg extends _StringsI18n {
   List<String> getMonthsShort() {
     return null;
   }
-  
+
   @override
   List<String> getWeeksFull() {
     return [
