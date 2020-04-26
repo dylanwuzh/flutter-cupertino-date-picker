@@ -1,3 +1,43 @@
+## 1.0.19+1
+
+- Update LICENSE file.
+
+## 1.0.19
+
+- Added language support: Serbia Cyrillic(DateTimePickerLocale.sr_cyrl) and Latin(DateTimePickerLocale.sr_latn).
+
+## 1.0.18
+
+- Added language support: Turkish (DateTimePickerLocale.tr).
+
+## 1.0.17
+
+- Added language support: Vietnamese (DateTimePickerLocale.vi).
+
+## 1.0.16
+
+- Added language support: French (DateTimePickerLocale.fr).
+
+## 1.0.15+1
+
+- Modified Indonesia's subtag: DateTimePickerLocale.in_id -> DateTimePickerLocale.id
+
+## 1.0.15
+
+- Added language support: Bahasa Indonesia (DateTimePickerLocale.in_id).
+
+## 1.0.14
+
+- Added language support: Arabic Egypt (DateTimePickerLocale.ar_eg).
+
+## 1.0.13+1
+
+- Fixed bug: `DateTimePickerMode.datetime` mode display error. Issues: [#91](https://github.com/dylanwuzh/flutter-cupertino-date-picker/issues/91)
+
+## 1.0.13
+
+- Compatible with Flutter `dev` channel.
+
 ## 1.0.12
 
 - Fixed bug: when `onClose` is null, catch exception `Unhandled Exception: NoSuchMethodError: The method 'call' was called on null. Receiver: null`. Issues: [#40](https://github.com/wuzhendev/flutter-cupertino-date-picker/issues/40) and [#43](https://github.com/wuzhendev/flutter-cupertino-date-picker/issues/43).
@@ -12,7 +52,7 @@
 
 ## 1.0.9
 
-- Added Hungarian language support.
+- Added language support: Hungarian (DateTimePickerLocale.hu).
 
 ## 1.0.8
 
@@ -20,31 +60,31 @@
 
 ## 1.0.7
 
-- Added Italian language support.
+- Added language support: Italian (DateTimePickerLocale.it).
 
 ## 1.0.6
 
-- Added Korea language support.
+- Added language support: Korea (DateTimePickerLocale.ko).
 
 ## 1.0.5
 
-- Added German language support.
+- Added language support: German (DateTimePickerLocale.de).
 
 ## 1.0.4
 
-- Added Russian language support.
+- Added language support: Russian (DateTimePickerLocale.ru).
 
 ## 1.0.3
 
-- Added Japanese language support.
+- Added language support: Japanese (DateTimePickerLocale.jp).
 
 ## 1.0.2
 
-- Added Arabic language support.
+- Added language support: Arabic (DateTimePickerLocale.ar).
 
 ## 1.0.1
 
-- Added Bengali language support.
+- Added language support: Bengali (DateTimePickerLocale.bn).
 
 ## 1.0.0
 
@@ -93,7 +133,7 @@
 
 ## 0.0.7
 
-- Support locale Portuguese Brazil (pt-br)
+- Support language support: Portuguese Brazil (DateTimePickerLocale.pt_br).
 
 ## 0.0.6
 

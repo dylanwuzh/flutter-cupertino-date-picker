@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.12
+  flutter_cupertino_date_picker: ^1.0.19+1
 ```
 
 #### 2\. Install
@@ -157,18 +157,25 @@ DateTimePickerWidget({
 Support:
 
 - en_us: English (EN) United States ***[Default locale]***
-- zh_cn: Chinese (ZH) Simplified
-- pt_br: Portuguese (PT) Brazil
-- es: Spanish (ES)
-- ro: Romanian (RO)
-- bn: Bengali (BN)
 - ar: Arabic (ar)
-- jp: Japanese (JP)
-- ru: Russian (RU)
+- ar_eg: Arabic (ar) Egypt
+- bn: Bengali (BN)
 - de: German (DE)
-- ko: Korea (KO)
+- es: Spanish (ES)
+- fr: French (FR)
+- hu: Hungarian (HU)
+- in_id: Bahasa (IN) Indonesia
 - it: Italian (IT)
-- hu: Hungarian(HU)
+- jp: Japanese (JP)
+- ko: Korea (KO)
+- pt_br: Portuguese (PT) Brazil
+- ro: Romanian (RO)
+- ru: Russian (RU)
+- sr_cyrl: Serbia (sr) Cyrillic
+- sr_latn: Serbia (sr) Latin
+- tr: Turkish (TR)
+- vi: Vietnamese (VI) Vietnam
+- zh_cn: Chinese (ZH) Simplified
 
 ##### Add more language
 
