@@ -3,6 +3,8 @@ import 'dart:math';
 part 'strings_en_us.dart';
 part 'strings_zh_cn.dart';
 part 'strings_pt_br.dart';
+part 'strings_id.dart';
+part 'strings_ar_eg.dart';
 part 'strings_es.dart';
 part 'strings_ro.dart';
 part 'strings_bn.dart';
@@ -15,6 +17,12 @@ part 'strings_ko.dart';
 part 'strings_it.dart';
 part 'strings_hu.dart';
 part 'strings_hr.dart';
+part 'strings_uk.dart';
+part 'strings_tr.dart';
+part 'strings_vi.dart';
+part 'strings_fr.dart';
+part 'strings_sr_cyr.dart';
+part 'strings_sr_lat.dart';
 
 abstract class _StringsI18n {
   const _StringsI18n();
@@ -27,6 +35,9 @@ abstract class _StringsI18n {
 
   /// Get the name of month
   List<String> getMonths();
+
+  /// Get the short name of month
+  List<String> getMonthsShort();
 
   /// Get the full name of week
   List<String> getWeeksFull();
@@ -45,8 +56,17 @@ enum DateTimePickerLocale {
   /// Portuguese (PT) Brazil
   pt_br,
 
+  /// Indonesia (ID)
+  id,
+
   /// Spanish (ES)
   es,
+
+  /// Turkish (TR)
+  tr,
+
+  /// French (FR)
+  fr,
 
   /// Romanian (RO)
   ro,
@@ -59,6 +79,9 @@ enum DateTimePickerLocale {
 
   /// Arabic (ar)
   ar,
+
+  /// Arabic (ar) Egypt
+  ar_eg,
 
   /// Japanese (JP)
   jp,
@@ -80,6 +103,18 @@ enum DateTimePickerLocale {
 
   /// Croatian (HR)
   hr,
+
+  /// Ukrainian (UK)
+  uk,
+
+  /// Vietnamese (VN)
+  vi,
+
+  /// Serbia (sr) Cyrillic
+  sr_cyrl,
+
+  /// Serbia (sr) Latin
+  sr_latn,
 }
 
 /// Default value of date locale
@@ -89,7 +124,10 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
   DateTimePickerLocale.en_us: const _StringsEnUs(),
   DateTimePickerLocale.zh_cn: const _StringsZhCn(),
   DateTimePickerLocale.pt_br: const _StringsPtBr(),
+  DateTimePickerLocale.id: const _StringsId(),
+  DateTimePickerLocale.ar_eg: const _StringsArEg(),
   DateTimePickerLocale.es: const _StringsEs(),
+  DateTimePickerLocale.fr: const _StringsFr(),
   DateTimePickerLocale.ro: const _StringsRo(),
   DateTimePickerLocale.bn: const _StringsBn(),
   DateTimePickerLocale.bs: const _StringsBs(),
@@ -101,6 +139,11 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
   DateTimePickerLocale.it: const _StringsIt(),
   DateTimePickerLocale.hu: const _StringsHu(),
   DateTimePickerLocale.hr: const _StringsHr(),
+  DateTimePickerLocale.uk: const _StringsUk(),
+  DateTimePickerLocale.tr: const _StringsTr(),
+  DateTimePickerLocale.vi: const _StringsVn(),
+  DateTimePickerLocale.sr_cyrl: const _StringsSrCyrillic(),
+  DateTimePickerLocale.sr_latn: const _StringsSrLatin(),
 };
 
 class DatePickerI18n {
@@ -120,10 +163,24 @@ class DatePickerI18n {
   static List<String> getLocaleMonths(DateTimePickerLocale locale) {
     _StringsI18n i18n = datePickerI18n[locale] ?? datePickerI18n[DATETIME_PICKER_LOCALE_DEFAULT];
     List<String> months = i18n.getMonths();
+  static List<String> getLocaleMonths(DateTimePickerLocale locale,
+      [bool isFull = true]) {
+    _StringsI18n i18n = datePickerI18n[locale] ??
+        datePickerI18n[DATETIME_PICKER_LOCALE_DEFAULT];
+
+    if (isFull) {
+      List<String> months = i18n.getMonths();
+      if (months != null && months.isNotEmpty) {
+        return months;
+      }
+      return datePickerI18n[DATETIME_PICKER_LOCALE_DEFAULT].getMonths();
+    }
+
+    List<String> months = i18n.getMonthsShort();
     if (months != null && months.isNotEmpty) {
       return months;
     }
-    return datePickerI18n[DATETIME_PICKER_LOCALE_DEFAULT].getMonths();
+    return datePickerI18n[DATETIME_PICKER_LOCALE_DEFAULT].getMonthsShort();
   }
 
   /// Get locale week array
