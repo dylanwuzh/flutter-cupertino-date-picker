@@ -1,3 +1,7 @@
+## 1.0.22
+
+- Support `onMonthChangeStartWithFirstDate` for DatePicker: When the selected month changes, whether to set the selected date as the first day of the month.
+
 ## 1.0.21
 
 - Added language support: Bosnian (BS) and Croatian (HR).
