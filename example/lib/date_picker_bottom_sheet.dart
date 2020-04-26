@@ -185,6 +185,7 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   void _showDatePicker() {
     DatePicker.showDatePicker(
       context,
+      onMonthChangeStartWithFirstDate: true,
       pickerTheme: DateTimePickerTheme(
         showTitle: _showTitle,
         confirm: Text('custom Done', style: TextStyle(color: Colors.red)),
