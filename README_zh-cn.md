@@ -160,9 +160,11 @@ DateTimePickerWidget({
 - ar: 阿拉伯语
 - ar_eg: 阿拉伯语(埃及)
 - bn: 孟加拉语
+- bs: 波斯尼亚语
 - de: 德语
 - es: 西班牙语
 - fr: 法语
+- hr: 克罗地亚语
 - hu: 匈牙利语
 - in_id: 印尼语
 - it: 意大利语

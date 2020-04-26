@@ -1,3 +1,7 @@
+## 1.0.21
+
+- Added language support: Bosnian (BS) and Croatian (HR).
+
 ## 1.0.20
 
 - Added language support: Ukraine (UK).
