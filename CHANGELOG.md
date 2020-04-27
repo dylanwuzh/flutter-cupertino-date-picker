@@ -1,3 +1,8 @@
+## 1.0.23
+
+- Added date format separator: `/`.
+- `DatePicker.showDatePicker`: check pickerMode is legal or not by date format.
+
 ## 1.0.22
 
 - Support `onMonthChangeStartWithFirstDate` for DatePicker: When the selected month changes, whether to set the selected date as the first day of the month.

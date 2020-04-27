@@ -1,20 +1,14 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
-
 import 'date_picker.dart';
 import 'date_picker_constants.dart';
 import 'i18n/date_picker_i18n.dart';
 
-const String DATE_FORMAT_SEPARATOR = r'[|,-\._: ]+';
+const String DATE_FORMAT_SEPARATOR = r'[|,-/\._: ]+';
 
 class DateTimeFormatter {
   /// Get default value of date format.
-  static String generateDateFormat(
-      String dateFormat, DateTimePickerMode pickerMode) {
-    if (dateFormat != null && dateFormat.length > 0) {
-      return dateFormat;
-    }
+  static String generateDateFormat(DateTimePickerMode pickerMode) {
     switch (pickerMode) {
       case DateTimePickerMode.date:
         return DATETIME_PICKER_DATE_FORMAT;

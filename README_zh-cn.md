@@ -14,7 +14,7 @@ Flutter 的日期选择器控件，iOS 样式。
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.22
+  flutter_cupertino_date_picker: ^1.0.23
 ```
 
 #### 2\. 获取包
@@ -275,7 +275,7 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
 
 ##### Date Format Separator
 
-支持的分隔符: `|,-._: `.
+支持的分隔符: `|,-/\._: `.
 
 #### 7\. DateTimePickerTheme
 

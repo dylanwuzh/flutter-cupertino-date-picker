@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.22
+  flutter_cupertino_date_picker: ^1.0.23
 ```
 
 #### 2\. Install
@@ -275,7 +275,7 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
 
 ##### Date Format Separator
 
-Support separator: `|,-._: `.
+Support separator: `|,-/\._: `.
 
 #### 7\. DateTimePickerTheme
 

@@ -68,7 +68,23 @@ class DatePicker {
     }
 
     // Set value of date format
-    dateFormat = DateTimeFormatter.generateDateFormat(dateFormat, pickerMode);
+    if (dateFormat != null && dateFormat.length > 0) {
+      // Check whether date format is legal or not
+      if (DateTimeFormatter.isDayFormat(dateFormat)) {
+        if (pickerMode == DateTimePickerMode.time) {
+          pickerMode = DateTimeFormatter.isTimeFormat(dateFormat)
+              ? DateTimePickerMode.datetime
+              : DateTimePickerMode.date;
+        }
+      } else {
+        if (pickerMode == DateTimePickerMode.date ||
+            pickerMode == DateTimePickerMode.datetime) {
+          pickerMode = DateTimePickerMode.time;
+        }
+      }
+    } else {
+      dateFormat = DateTimeFormatter.generateDateFormat(pickerMode);
+    }
 
     Navigator.push(
       context,

@@ -347,6 +347,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   /// calculate the range of year
   List<int> _calcYearRange() {
+    print(_minDateTime.year.toString() + ", " + _maxDateTime.year.toString());
     return [_minDateTime.year, _maxDateTime.year];
   }
 
