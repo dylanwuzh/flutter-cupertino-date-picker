@@ -1,3 +1,7 @@
+## 1.0.23+1
+
+- Remove `keystore.properties`.
+
 ## 1.0.23
 
 - Added date format separator: `/`.

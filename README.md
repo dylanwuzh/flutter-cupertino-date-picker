@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.23
+  flutter_cupertino_date_picker: ^1.0.23+1
 ```
 
 #### 2\. Install
