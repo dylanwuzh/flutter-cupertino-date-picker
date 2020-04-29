@@ -6,12 +6,12 @@ class _StringsNl extends _StringsI18n {
 
   @override
   String getCancelText() {
-    return 'Annuleren';
+    return 'Annuleer';
   }
 
   @override
   String getDoneText() {
-    return 'Accepteren';
+    return 'Bewaar';
   }
 
   @override
