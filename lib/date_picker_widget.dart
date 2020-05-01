@@ -297,6 +297,7 @@ Map<int,Map<int,List<int>>> _excludeDates;
 
     if (dayRangeChanged) {
       // CupertinoPicker refresh data not working (https://github.com/flutter/flutter/issues/22999)
+      _dayScrollCtrl.jumpTo(_dayScrollCtrl.position.minScrollExtent - 0.1);
       int currDay = _currDay;
       _dayScrollCtrl.jumpToItem(dayRange.indexOf(currDay));
       if (currDay < dayRange.last) {
