@@ -33,8 +33,21 @@ class _StringsTr extends _StringsI18n {
   }
 
   @override
-  List<String> getMonthsShort() {
-    return null;
+   List<String> getMonthsShort() {
+    return [
+      "Ock.",
+      "Şub.",
+      "Mar.",
+      "Nis.",
+      "May",
+      "Haz",
+      "Tem.",
+      "Ağu.",
+      "Eyl.",
+      "Eki.",
+      "Kas.",
+      "Ara.",
+    ];
   }
 
   @override
@@ -55,7 +68,7 @@ class _StringsTr extends _StringsI18n {
     return [
       "Pzt",
       "Sal",
-      "Çrs",
+      "Çrş",
       "Per",
       "Cum",
       "Cmt",
