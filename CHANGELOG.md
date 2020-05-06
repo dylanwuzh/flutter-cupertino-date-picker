@@ -1,3 +1,7 @@
+## 1.0.24
+
+- Added language support: Dutch (NL).
+
 ## 1.0.23+1
 
 - Remove `keystore.properties`.
