@@ -1,3 +1,7 @@
+## 1.0.25
+
+- Fixed bug: [Issues #89](https://github.com/dylanwuzh/flutter-cupertino-date-picker/issues/89)
+
 ## 1.0.24
 
 - Added language support: Dutch (NL).
