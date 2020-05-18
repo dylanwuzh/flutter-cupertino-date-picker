@@ -1,3 +1,17 @@
+## 1.0.26
+
+- Modify the button widget of the custom title bar to support hidden title and button widget:
+
+```dart
+DatePicker.showDatePicker(
+  pickerTheme: DateTimePickerTheme(
+    showTitle: true,
+    confirm: Text('custom Done', style: TextStyle(color: Colors.red)),
+    cancel: null, // If a custom title bar is set, the widget(title/confirm/cancel) will not be displayed when the value is null
+  ),
+);
+```
+
 ## 1.0.25
 
 - Fixed bug: [Issues #89](https://github.com/dylanwuzh/flutter-cupertino-date-picker/issues/89)
