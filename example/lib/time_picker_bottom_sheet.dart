@@ -14,7 +14,7 @@ const String MAX_DATETIME = '2021-11-25 22:45:10';
 const String INIT_DATETIME = '2019-05-17 18:13:15';
 
 class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
-  String _format = 'HH:mm';
+  String _format = 'hh:mm a';
   TextEditingController _formatCtrl = TextEditingController();
 
   DateTime _dateTime;

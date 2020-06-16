@@ -314,19 +314,6 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
         childCount: format.contains('m')
             ? _calculateMinuteChildCount(valueRange, minuteDivider)
             : valueRange.last - valueRange.first + 1,
-        itemBuilder: itemBuilder == null
-            ? (context, index) {
-                int value = valueRange.first + index;
-
-                if (format.contains('m')) {
-                  value = minuteDivider * index;
-                }
-
-                return _renderDatePickerItemComponent(value, format);
-              }
-            : itemBuilder,
-            ? _calculateMinuteChildCount(valueRange, minuteDivider)
-            : valueRange.last - valueRange.first + 1,
         itemBuilder: builder,
       ),
     );
@@ -424,8 +411,8 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
 
   /// change the selection of ampm picker
   void _changeAmPmSelection(int index) {
-      _currHour = _currHour % 12 + index * 12;
-      _onSelectedChange();
+    _currHour = _currHour % 12 + index * 12;
+    _onSelectedChange();
   }
 
   /// change range of hour, minute, second and ampm
