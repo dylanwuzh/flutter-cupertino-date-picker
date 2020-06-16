@@ -33,20 +33,7 @@ class _StringsPtBr extends _StringsI18n {
   }
 
   @override
-  List<String> getWeeksFull() {
-    return [
-      "Segunda",
-      "Terca",
-      "Quarta",
-      "Quinta",
-      "Sexta",
-      "Sabado",
-      "Domingo",
-    ];
-  }
-
-  @override
-  List<String> getWeeksShort() {
+  List<String> getMonthsShort() {
     return [
       "Jan.",
       "Fev.",
@@ -64,7 +51,20 @@ class _StringsPtBr extends _StringsI18n {
   }
 
   @override
-  List<String> getMonthsShort() {
+  List<String> getWeeksFull() {
+    return [
+      "Segunda",
+      "Terca",
+      "Quarta",
+      "Quinta",
+      "Sexta",
+      "Sabado",
+      "Domingo",
+    ];
+  }
+
+  @override
+  List<String> getWeeksShort() {
     return [
       "Seg",
       "Ter",

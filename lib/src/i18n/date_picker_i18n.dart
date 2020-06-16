@@ -184,7 +184,7 @@ class DatePickerI18n {
     }
 
     List<String> months = i18n.getMonthsShort();
-    if (months != null && months.isNotEmpty) {
+    if (months != null && months.isNotEmpty && months.length == 12) {
       return months;
     }
     return datePickerI18n[DATETIME_PICKER_LOCALE_DEFAULT].getMonthsShort();

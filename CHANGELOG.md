@@ -1,3 +1,7 @@
+## 1.0.26+2
+
+- Update pt_br language.
+
 ## 1.0.26+1
 
 - Update pt_br language.
