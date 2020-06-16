@@ -52,6 +52,7 @@ class DatePicker {
     DateValueCallback onChange,
     DateValueCallback onConfirm,
     int minuteDivider = 1,
+    bool onMonthChangeStartWithFirstDate = false,
   }) {
     // handle the range of datetime
     if (minDateTime == null) {
@@ -67,11 +68,28 @@ class DatePicker {
     }
 
     // Set value of date format
-    dateFormat = DateTimeFormatter.generateDateFormat(dateFormat, pickerMode);
+    if (dateFormat != null && dateFormat.length > 0) {
+      // Check whether date format is legal or not
+      if (DateTimeFormatter.isDayFormat(dateFormat)) {
+        if (pickerMode == DateTimePickerMode.time) {
+          pickerMode = DateTimeFormatter.isTimeFormat(dateFormat)
+              ? DateTimePickerMode.datetime
+              : DateTimePickerMode.date;
+        }
+      } else {
+        if (pickerMode == DateTimePickerMode.date ||
+            pickerMode == DateTimePickerMode.datetime) {
+          pickerMode = DateTimePickerMode.time;
+        }
+      }
+    } else {
+      dateFormat = DateTimeFormatter.generateDateFormat(pickerMode);
+    }
 
     Navigator.push(
       context,
       new _DatePickerRoute(
+        onMonthChangeStartWithFirstDate: onMonthChangeStartWithFirstDate,
         minDateTime: minDateTime,
         maxDateTime: maxDateTime,
         initialDateTime: initialDateTime,
@@ -93,6 +111,7 @@ class DatePicker {
 
 class _DatePickerRoute<T> extends PopupRoute<T> {
   _DatePickerRoute({
+    this.onMonthChangeStartWithFirstDate,
     this.minDateTime,
     this.maxDateTime,
     this.initialDateTime,
@@ -118,6 +137,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final DateValueCallback onChange;
   final DateValueCallback onConfirm;
   final int minuteDivider;
+  final bool onMonthChangeStartWithFirstDate;
 
   final ThemeData theme;
 
@@ -177,6 +197,8 @@ class _DatePickerComponent extends StatelessWidget {
     switch (route.pickerMode) {
       case DateTimePickerMode.date:
         pickerWidget = DatePickerWidget(
+          onMonthChangeStartWithFirstDate:
+              route.onMonthChangeStartWithFirstDate,
           minDateTime: route.minDateTime,
           maxDateTime: route.maxDateTime,
           initialDateTime: route.initialDateTime,

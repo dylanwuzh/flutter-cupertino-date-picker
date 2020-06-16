@@ -15,7 +15,7 @@ Add this to you package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.12
+  flutter_cupertino_date_picker: ^1.0.26+2
 ```
 
 #### 2\. Install
@@ -157,18 +157,29 @@ DateTimePickerWidget({
 Support:
 
 - en_us: English (EN) United States ***[Default locale]***
-- zh_cn: Chinese (ZH) Simplified
-- pt_br: Portuguese (PT) Brazil
-- es: Spanish (ES)
-- ro: Romanian (RO)
-- bn: Bengali (BN)
 - ar: Arabic (ar)
-- jp: Japanese (JP)
-- ru: Russian (RU)
+- ar_eg: Arabic (ar) Egypt
+- bn: Bengali (BN)
+- bs: Bosnian (BS)
 - de: German (DE)
-- ko: Korea (KO)
+- es: Spanish (ES)
+- fr: French (FR)
+- hr: Croatian (HR)
+- hu: Hungarian (HU)
+- in_id: Bahasa (IN) Indonesia
 - it: Italian (IT)
-- hu: Hungarian(HU)
+- jp: Japanese (JP)
+- ko: Korea (KO)
+- nl: Dutch (NL)
+- pt_br: Portuguese (PT) Brazil
+- ro: Romanian (RO)
+- ru: Russian (RU)
+- sr_cyrl: Serbia (sr) Cyrillic
+- sr_latn: Serbia (sr) Latin
+- tr: Turkish (TR)
+- uk: Ukraine (UK)
+- vi: Vietnamese (VI) Vietnam
+- zh_cn: Chinese (ZH) Simplified
 
 ##### Add more language
 
@@ -195,7 +206,13 @@ class _StringsEnUs extends _StringsI18n {
 
   @override
   List<String> getMonths() {
-    // TODO return the array of month [January, February ... December]
+    // TODO return the array of month's full name [January, February ... December]
+    return null;
+  }
+
+  @override
+  List<String> getMonthsShort() {
+    // TODO return the array of month's short name [Jan, Feb ... Dec]. If return null, will substring the full name (max length is 3)
     return null;
   }
 
@@ -259,7 +276,7 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
 
 ##### Date Format Separator
 
-Support separator: `|,-._: `.
+Support separator: `|,-/\._: `.
 
 #### 7\. DateTimePickerTheme
 

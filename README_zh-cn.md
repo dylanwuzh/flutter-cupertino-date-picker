@@ -14,7 +14,7 @@ Flutter 的日期选择器控件，iOS 样式。
 
 ```yaml
 dependencies:
-  flutter_cupertino_date_picker: ^1.0.12
+  flutter_cupertino_date_picker: ^1.0.26+2
 ```
 
 #### 2\. 获取包
@@ -157,18 +157,29 @@ DateTimePickerWidget({
 多语言支持:
 
 - en_us: 美式英语 ***[Default locale]***
-- zh_cn: 简体中文
-- pt_br: 葡萄牙语(巴西)
-- es: 西班牙语
-- ro: 罗马尼亚语
-- bn: 孟加拉语
 - ar: 阿拉伯语
-- jp: 日语
-- ru: 俄语
+- ar_eg: 阿拉伯语(埃及)
+- bn: 孟加拉语
+- bs: 波斯尼亚语
 - de: 德语
-- ko: 韩语
-- it: 意大利语
+- es: 西班牙语
+- fr: 法语
+- hr: 克罗地亚语
 - hu: 匈牙利语
+- in_id: 印尼语
+- it: 意大利语
+- jp: 日语
+- ko: 韩语
+- nl: 荷兰语
+- pt_br: 葡萄牙语(巴西)
+- ro: 罗马尼亚语
+- ru: 俄语
+- sr_cyrl: 塞尔维亚(西里尔)
+- sr_latn: 塞尔维亚(拉丁文)
+- tr: 土耳其语
+- uk: 乌克兰语
+- vi: 越南语
+- zh_cn: 简体中文
 
 ##### 添加更多的语言
 
@@ -195,7 +206,13 @@ class _StringsEnUs extends _StringsI18n {
 
   @override
   List<String> getMonths() {
-    // TODO 返回月份列表 [1月, 2月 ... 12月]
+    // TODO 返回月份的全称 [1月, 2月 ... 12月]
+    return null;
+  }
+
+  @override
+  List<String> getMonthsShort() {
+    // TODO 返回月份的简称 [Jan, Feb ... Dec]，返回null默认对全程进行截取，最多截取3位
     return null;
   }
 
@@ -259,7 +276,7 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
 
 ##### Date Format Separator
 
-支持的分隔符: `|,-._: `.
+支持的分隔符: `|,-/\._: `.
 
 #### 7\. DateTimePickerTheme
 

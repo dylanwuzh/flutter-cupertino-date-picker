@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-import '../date_time_formatter.dart';
 import '../date_picker.dart';
-import '../date_picker_theme.dart';
 import '../date_picker_constants.dart';
+import '../date_picker_theme.dart';
+import '../date_time_formatter.dart';
 import '../i18n/date_picker_i18n.dart';
 import 'date_picker_title_widget.dart';
 
@@ -289,6 +289,18 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
     int flex,
     IndexedWidgetBuilder itemBuilder,
   }) {
+    IndexedWidgetBuilder builder = itemBuilder != null
+        ? itemBuilder
+        : (context, index) {
+            int value = valueRange.first + index;
+
+            if (format.contains('m')) {
+              value = minuteDivider * index;
+            }
+
+            return _renderDatePickerItemComponent(value, format);
+          };
+
     Widget columnWidget = Container(
       padding: EdgeInsets.all(8.0),
       width: double.infinity,
@@ -313,6 +325,9 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
                 return _renderDatePickerItemComponent(value, format);
               }
             : itemBuilder,
+            ? _calculateMinuteChildCount(valueRange, minuteDivider)
+            : valueRange.last - valueRange.first + 1,
+        itemBuilder: builder,
       ),
     );
     return Expanded(
@@ -323,7 +338,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
 
   _calculateMinuteChildCount(List<int> valueRange, int divider) {
     if (divider == 0) {
-      print("Cant devide by 0");
+      debugPrint("Cant devide by 0");
       return (valueRange.last - valueRange.first + 1);
     }
 

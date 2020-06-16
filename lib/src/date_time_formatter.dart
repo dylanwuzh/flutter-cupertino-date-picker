@@ -4,15 +4,11 @@ import 'date_picker.dart';
 import 'date_picker_constants.dart';
 import 'i18n/date_picker_i18n.dart';
 
-const String DATE_FORMAT_SEPARATOR = r'[|,-\._: ]+';
+const String DATE_FORMAT_SEPARATOR = r'[|,-/\._: ]+';
 
 class DateTimeFormatter {
   /// Get default value of date format.
-  static String generateDateFormat(
-      String dateFormat, DateTimePickerMode pickerMode) {
-    if (dateFormat != null && dateFormat.length > 0) {
-      return dateFormat;
-    }
+  static String generateDateFormat(DateTimePickerMode pickerMode) {
     switch (pickerMode) {
       case DateTimePickerMode.date:
         return DATETIME_PICKER_DATE_FORMAT;
@@ -174,8 +170,9 @@ class DateTimeFormatter {
       return format.replaceAll('MMMM', months[value - 1]);
     } else if (format.contains('MMM')) {
       // MMM: the short name of month, e.g. Jan
+      months = DatePickerI18n.getLocaleMonths(locale, false);
       String month = months[value - 1];
-      return format.replaceAll('MMM', month.substring(0, min(3, month.length)));
+      return format.replaceAll('MMM', month);
     }
     return _formatNumber(value, format, 'M');
   }

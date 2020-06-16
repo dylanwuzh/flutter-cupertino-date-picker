@@ -184,10 +184,10 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
   void _showDatePicker() {
     DatePicker.showDatePicker(
       context,
+      onMonthChangeStartWithFirstDate: true,
       pickerTheme: DateTimePickerTheme(
         showTitle: _showTitle,
         confirm: Text('custom Done', style: TextStyle(color: Colors.red)),
-        cancel: Text('custom cancel', style: TextStyle(color: Colors.cyan)),
       ),
       minDateTime: DateTime.parse(MIN_DATETIME),
       maxDateTime: DateTime.parse(MAX_DATETIME),

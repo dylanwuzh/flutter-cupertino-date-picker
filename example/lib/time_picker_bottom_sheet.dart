@@ -9,12 +9,12 @@ class TimePickerBottomSheet extends StatefulWidget {
   State<StatefulWidget> createState() => _TimePickerBottomSheetState();
 }
 
-const String MIN_DATETIME = '2010-05-12 05:15:20';
+const String MIN_DATETIME = '2010-05-12 10:47:00';
 const String MAX_DATETIME = '2021-11-25 22:45:10';
 const String INIT_DATETIME = '2019-05-17 18:13:15';
 
 class _TimePickerBottomSheetState extends State<TimePickerBottomSheet> {
-  String _format = 'H时:mm分';
+  String _format = 'HH:mm';
   TextEditingController _formatCtrl = TextEditingController();
 
   DateTime _dateTime;

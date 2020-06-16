@@ -11,7 +11,7 @@ class _StringsPtBr extends _StringsI18n {
 
   @override
   String getDoneText() {
-    return 'Feito';
+    return 'Confirmar';
   }
 
   @override
@@ -33,6 +33,24 @@ class _StringsPtBr extends _StringsI18n {
   }
 
   @override
+  List<String> getMonthsShort() {
+    return [
+      "Jan.",
+      "Fev.",
+      "Mar.",
+      "Abr.",
+      "Mai.",
+      "Jun.",
+      "Jul.",
+      "Ago.",
+      "Set.",
+      "Out.",
+      "Nov.",
+      "Dez.",
+    ];
+  }
+
+  @override
   List<String> getWeeksFull() {
     return [
       "Segunda",
@@ -47,6 +65,14 @@ class _StringsPtBr extends _StringsI18n {
 
   @override
   List<String> getWeeksShort() {
-    return null;
+    return [
+      "Seg",
+      "Ter",
+      "Qua",
+      "Qui",
+      "Sex",
+      "Sab",
+      "Dom",
+    ];
   }
 }

@@ -57,4 +57,10 @@ class _StringsRu extends _StringsI18n {
       "вс",
     ];
   }
+
+  @override
+  List<String> getMonthsShort() {
+    // TODO: implement getMonthsShort
+    return null;
+  }
 }
