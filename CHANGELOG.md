@@ -1,3 +1,7 @@
+## 1.0.26+1
+
+- Update pt_br language.
+
 ## 1.0.26
 
 - Modify the button widget of the custom title bar to support hidden title and button widget:
