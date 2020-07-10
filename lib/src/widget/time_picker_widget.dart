@@ -64,21 +64,6 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
   void initState() {
     super.initState();
     print("init");
-    // create scroll controller
-    _24HourScrollCtrl = FixedExtentScrollController();
-    _12HourScrollCtrl = FixedExtentScrollController();
-    _minuteScrollCtrl = FixedExtentScrollController();
-    _secondScrollCtrl = FixedExtentScrollController();
-    _ampmScrollCtrl = FixedExtentScrollController();
-
-    _scrollCtrlMap = {
-      'H': _24HourScrollCtrl,
-      'h': _12HourScrollCtrl,
-      'm': _minuteScrollCtrl,
-      's': _secondScrollCtrl,
-      'a': _ampmScrollCtrl,
-    };
-
     _updatePicker();
   }
 
@@ -131,14 +116,36 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
     this._ampmRange = _calcAmpmRange();
     this._currAmpm = _currHour < 12 ? 0 : 1;
 
-    _24HourScrollCtrl.jumpToItem(_currHour - _24HourRange.first);
-    _12HourScrollCtrl.jumpToItem(
-        (_currHour % 12 == 0 ? 12 : _currHour % 12) - _12HourRange.first);
-    _minuteScrollCtrl
-        .jumpToItem((_currMinute - _minuteRange.first) ~/ _minuteDivider);
-    _secondScrollCtrl.jumpToItem(_currSecond - _secondRange.first);
-    _ampmScrollCtrl.jumpToItem((_currHour / 12).floor());
+    // create scroll controller
+    if (_scrollCtrlMap == null) {
+      _24HourScrollCtrl = FixedExtentScrollController(
+          initialItem: _currHour - _24HourRange.first);
+      _12HourScrollCtrl = FixedExtentScrollController(
+          initialItem:
+              (_currHour % 12 == 0 ? 12 : _currHour % 12) - _12HourRange.first);
+      _minuteScrollCtrl = FixedExtentScrollController(
+          initialItem: (_currMinute - _minuteRange.first) ~/ _minuteDivider);
+      _secondScrollCtrl = FixedExtentScrollController(
+          initialItem: _currSecond - _secondRange.first);
+      _ampmScrollCtrl =
+          FixedExtentScrollController(initialItem: (_currHour / 12).floor());
 
+      _scrollCtrlMap = {
+        'H': _24HourScrollCtrl,
+        'h': _12HourScrollCtrl,
+        'm': _minuteScrollCtrl,
+        's': _secondScrollCtrl,
+        'a': _ampmScrollCtrl,
+      };
+    } else {
+      _24HourScrollCtrl.jumpToItem(_currHour - _24HourRange.first);
+      _12HourScrollCtrl.jumpToItem(
+          (_currHour % 12 == 0 ? 12 : _currHour % 12) - _12HourRange.first);
+      _minuteScrollCtrl
+          .jumpToItem((_currMinute - _minuteRange.first) ~/ _minuteDivider);
+      _secondScrollCtrl.jumpToItem(_currSecond - _secondRange.first);
+      _ampmScrollCtrl.jumpToItem((_currHour / 12).floor());
+    }
     _valueRangeMap = {
       'H': _24HourRange,
       'h': _12HourRange,
