@@ -122,7 +122,7 @@ enum DateTimePickerLocale {
   nl,
 
   /// Thai (TH)
-  th_TH,
+  th_th,
 }
 
 /// Default value of date locale
@@ -154,7 +154,7 @@ const Map<DateTimePickerLocale, _StringsI18n> datePickerI18n = {
   DateTimePickerLocale.sr_cyrl: const _StringsSrCyrillic(),
   DateTimePickerLocale.sr_latn: const _StringsSrLatin(),
   DateTimePickerLocale.nl: const _StringsNl(),
-  DateTimePickerLocale.th_TH: const _StringsTh(),
+  DateTimePickerLocale.th_th: const _StringsTh(),
 };
 
 class DatePickerI18n {
