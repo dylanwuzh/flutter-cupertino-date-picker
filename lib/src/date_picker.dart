@@ -100,7 +100,6 @@ class DatePicker {
         onCancel: onCancel,
         onChange: onChange,
         onConfirm: onConfirm,
-        theme: Theme.of(context, shadowThemeOnly: true),
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
         minuteDivider: minuteDivider,
