@@ -152,35 +152,26 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
   /// find scroll controller by specified format
   FixedExtentScrollController _findScrollCtrl(String format) {
-    FixedExtentScrollController scrollCtrl;
-    _scrollCtrlMap.forEach((key, value) {
-      if (format.contains(key)) {
-        scrollCtrl = value;
-      }
-    });
-    return scrollCtrl;
+    String key = _scrollCtrlMap.keys.firstWhere((key) => format.contains(key));
+
+    return _scrollCtrlMap[key];
   }
 
   /// find item value range by specified format
   List<int> _findPickerItemRange(String format) {
-    List<int> valueRange;
-    _valueRangeMap.forEach((key, value) {
-      if (format.contains(key)) {
-        valueRange = value;
-      }
-    });
-    return valueRange;
+    String key = _valueRangeMap.keys.firstWhere((key) => format.contains(key));
+
+    return _valueRangeMap[key];
   }
 
   /// render the picker widget of year、month and day
   Widget _renderDatePickerWidget() {
-    List<Widget> pickers = List<Widget>();
     List<String> formatArr =
         DateTimeFormatter.splitDateFormat(widget.dateFormat);
-    formatArr.forEach((format) {
+    List<Widget> pickers = formatArr.map((format) {
       List<int> valueRange = _findPickerItemRange(format);
 
-      Widget pickerColumn = _renderDatePickerColumnComponent(
+      return _renderDatePickerColumnComponent(
         scrollCtrl: _findScrollCtrl(format),
         valueRange: valueRange,
         format: format,
@@ -194,8 +185,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           }
         },
       );
-      pickers.add(pickerColumn);
-    });
+    }).toList();
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween, children: pickers);
   }
