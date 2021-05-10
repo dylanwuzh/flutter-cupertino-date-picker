@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'date_picker_theme.dart';
 import 'date_picker_constants.dart';
+import 'date_picker_theme.dart';
 import 'date_time_formatter.dart';
 import 'i18n/date_picker_i18n.dart';
 import 'widget/date_picker_widget.dart';
@@ -43,6 +43,7 @@ class DatePicker {
     DateTime minDateTime,
     DateTime maxDateTime,
     DateTime initialDateTime,
+    Widget selectedOverlay,
     String dateFormat,
     DateTimePickerLocale locale: DATETIME_PICKER_LOCALE_DEFAULT,
     DateTimePickerMode pickerMode: DateTimePickerMode.date,
@@ -60,6 +61,11 @@ class DatePicker {
     }
     if (maxDateTime == null) {
       maxDateTime = DateTime.parse(DATE_PICKER_MAX_DATETIME);
+    }
+    if (selectedOverlay == null) {
+      selectedOverlay = CupertinoPickerDefaultSelectionOverlay(
+        background: Colors.transparent,
+      );
     }
 
     // handle initial DateTime
@@ -125,6 +131,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.theme,
     this.barrierLabel,
     this.minuteDivider,
+    this.selectionOverlay,
     RouteSettings settings,
   }) : super(settings: settings);
 
@@ -138,7 +145,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final DateValueCallback onConfirm;
   final int minuteDivider;
   final bool onMonthChangeStartWithFirstDate;
-
+  final Widget selectionOverlay;
   final ThemeData theme;
 
   @override
@@ -197,6 +204,7 @@ class _DatePickerComponent extends StatelessWidget {
     switch (route.pickerMode) {
       case DateTimePickerMode.date:
         pickerWidget = DatePickerWidget(
+          selectionOverlay: route.selectionOverlay,
           onMonthChangeStartWithFirstDate:
               route.onMonthChangeStartWithFirstDate,
           minDateTime: route.minDateTime,

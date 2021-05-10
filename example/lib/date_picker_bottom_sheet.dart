@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 class DatePickerBottomSheet extends StatefulWidget {
@@ -193,6 +193,9 @@ class _DatePickerBottomSheetState extends State<DatePickerBottomSheet> {
       minDateTime: DateTime.parse(MIN_DATETIME),
       maxDateTime: DateTime.parse(MAX_DATETIME),
       initialDateTime: _dateTime,
+      selectedOverlay: CupertinoPickerDefaultSelectionOverlay(
+        background: Colors.transparent,
+      ),
       dateFormat: _format,
       locale: _locale,
       onClose: () => print("----- onClose -----"),

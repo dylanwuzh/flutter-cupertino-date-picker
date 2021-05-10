@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-import '../date_time_formatter.dart';
-import '../date_picker_theme.dart';
 import '../date_picker_constants.dart';
+import '../date_picker_theme.dart';
+import '../date_time_formatter.dart';
 import '../i18n/date_picker_i18n.dart';
 import 'date_picker_title_widget.dart';
 
@@ -29,6 +29,7 @@ class DatePickerWidget extends StatefulWidget {
     this.onCancel,
     this.onChange,
     this.onConfirm,
+    this.selectionOverlay = const CupertinoPickerDefaultSelectionOverlay(),
   }) : super(key: key) {
     DateTime minTime = minDateTime ?? DateTime.parse(DATE_PICKER_MIN_DATETIME);
     DateTime maxTime = maxDateTime ?? DateTime.parse(DATE_PICKER_MAX_DATETIME);
@@ -39,7 +40,7 @@ class DatePickerWidget extends StatefulWidget {
   final String dateFormat;
   final DateTimePickerLocale locale;
   final DateTimePickerTheme pickerTheme;
-
+  final Widget selectionOverlay;
   final DateVoidCallback onCancel;
   final DateValueCallback onChange, onConfirm;
   final onMonthChangeStartWithFirstDate;
@@ -213,6 +214,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         height: widget.pickerTheme.pickerHeight,
         decoration: BoxDecoration(color: widget.pickerTheme.backgroundColor),
         child: CupertinoPicker.builder(
+          selectionOverlay: widget.selectionOverlay,
           backgroundColor: widget.pickerTheme.backgroundColor,
           scrollController: scrollCtrl,
           itemExtent: widget.pickerTheme.itemHeight,
