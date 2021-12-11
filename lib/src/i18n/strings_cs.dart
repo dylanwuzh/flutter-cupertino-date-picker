@@ -1,6 +1,6 @@
 part of 'date_picker_i18n.dart';
 
-/// English (EN) United States
+/// Czech (CZ)
 class _StringsCs extends _StringsI18n {
   const _StringsCs();
 
