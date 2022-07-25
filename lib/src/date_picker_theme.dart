@@ -55,19 +55,19 @@ class DateTimePickerTheme with Diagnosticable {
   final Color backgroundColor;
 
   /// Default cancel widget's [TextStyle].
-  final TextStyle cancelTextStyle;
+  final TextStyle? cancelTextStyle;
 
   /// Default confirm widget's [TextStyle].
-  final TextStyle confirmTextStyle;
+  final TextStyle? confirmTextStyle;
 
   /// Custom cancel [Widget].
-  final Widget cancel;
+  final Widget? cancel;
 
   /// Custom confirm [Widget].
-  final Widget confirm;
+  final Widget? confirm;
 
   /// Custom title [Widget]. If specify a title widget, the cancel and confirm widgets will not display.
-  final Widget title;
+  final Widget? title;
 
   /// Whether display title widget or not. If set false, the default cancel and confirm widgets will not display, but the custom title widget will display if had specified one custom title widget.
   final bool showTitle;
@@ -82,5 +82,5 @@ class DateTimePickerTheme with Diagnosticable {
   final double itemHeight;
 
   /// The value of DatePicker's column [TextStyle].
-  final TextStyle itemTextStyle;
+  final TextStyle? itemTextStyle;
 }

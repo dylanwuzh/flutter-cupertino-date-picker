@@ -47,6 +47,6 @@ class _StringsEs extends _StringsI18n {
 
   @override
   List<String> getWeeksShort() {
-    return null;
+    return [];
   }
 }

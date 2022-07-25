@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 ///
 /// @author dylan wu
 /// @since 2019-05-10
 class DateTimePickerInPage extends StatefulWidget {
-  DateTimePickerInPage({Key key}) : super(key: key);
+  DateTimePickerInPage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DateTimePickerInPageState();
@@ -18,7 +17,7 @@ const String INIT_DATETIME = '2019-05-16 09:00:58';
 const String DATE_FORMAT = 'yyyy-MM-dd,H时:m分';
 
 class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
-  DateTime _dateTime;
+  DateTime? _dateTime;
 
   @override
   void initState() {
@@ -28,8 +27,7 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle hintTextStyle =
-        Theme.of(context).textTheme.subhead.apply(color: Color(0xFF999999));
+    TextStyle hintTextStyle = Theme.of(context).textTheme.subtitle1!.apply(color: Color(0xFF999999));
     return Scaffold(
       appBar: AppBar(title: Text("DateTimePicker In Page")),
       body: Container(
@@ -46,8 +44,7 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
                     width: 115.0,
                     child: Text('min DateTime:', style: hintTextStyle),
                   ),
-                  Text(MIN_DATETIME,
-                      style: Theme.of(context).textTheme.subhead),
+                  Text(MIN_DATETIME, style: Theme.of(context).textTheme.subtitle1),
                 ],
               ),
             ),
@@ -61,8 +58,7 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
                     width: 115.0,
                     child: Text('max DateTime:', style: hintTextStyle),
                   ),
-                  Text(MAX_DATETIME,
-                      style: Theme.of(context).textTheme.subhead),
+                  Text(MAX_DATETIME, style: Theme.of(context).textTheme.subtitle1),
                 ],
               ),
             ),
@@ -76,8 +72,7 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
                     width: 115.0,
                     child: Text('init DateTime:', style: hintTextStyle),
                   ),
-                  Text(INIT_DATETIME,
-                      style: Theme.of(context).textTheme.subhead),
+                  Text(INIT_DATETIME, style: Theme.of(context).textTheme.subtitle1),
                 ],
               ),
             ),
@@ -91,7 +86,7 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
                     width: 115.0,
                     child: Text('Date Format:', style: hintTextStyle),
                   ),
-                  Text(DATE_FORMAT, style: Theme.of(context).textTheme.subhead),
+                  Text(DATE_FORMAT, style: Theme.of(context).textTheme.subtitle1),
                 ],
               ),
             ),
@@ -113,7 +108,7 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
                     margin: EdgeInsets.only(right: 8.0),
                     child: Text('custom title height:', style: hintTextStyle),
                   ),
-                  Text('40.0', style: Theme.of(context).textTheme.subhead),
+                  Text('40.0', style: Theme.of(context).textTheme.subtitle1),
                 ],
               ),
             ),
@@ -149,16 +144,15 @@ class _DateTimePickerInPageState extends State<DateTimePickerInPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Selected DateTime:',
-                    style: Theme.of(context).textTheme.subhead),
+                Text('Selected DateTime:', style: Theme.of(context).textTheme.subtitle1),
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.only(top: 4.0),
                   child: Text(
                     _dateTime != null
-                        ? '${_dateTime.year}-${_dateTime.month.toString().padLeft(2, '0')}-${_dateTime.day.toString().padLeft(2, '0')} ${_dateTime.hour.toString().padLeft(2, '0')}:${_dateTime.minute.toString().padLeft(2, '0')}:${_dateTime.second.toString().padLeft(2, '0')}'
+                        ? '${_dateTime!.year}-${_dateTime!.month.toString().padLeft(2, '0')}-${_dateTime!.day.toString().padLeft(2, '0')} ${_dateTime!.hour.toString().padLeft(2, '0')}:${_dateTime!.minute.toString().padLeft(2, '0')}:${_dateTime!.second.toString().padLeft(2, '0')}'
                         : '',
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
               ],
